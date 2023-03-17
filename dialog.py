@@ -9,4 +9,4 @@ class Dialog(QtWidgets.QDialog):
     def __init__(self, *args, **kwargs):
         super(Dialog, self).__init__(*args, **kwargs)
         self.setWindowTitle("Configurações")
-        uic.loadUi("AddObject.ui", self)
+        uic.loadUi("UI/AddPolygon.ui", self)

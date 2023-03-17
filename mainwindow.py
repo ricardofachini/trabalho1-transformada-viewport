@@ -13,7 +13,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setWindowTitle("Trabalho 1 - Computação gráfica")
-        uic.loadUi("MainWindow.ui", self)
+        uic.loadUi("UI/MainWindow.ui", self)
 
         # self.listOfCurrentObjects.setObjectName("listView")
         # self.listOfCurrentObjects.addItems(["One", "two"])
