@@ -2,6 +2,7 @@
 import sys
 from PyQt6 import uic, QtWidgets
 from objeto import Tipo
+import images_rcc
 
 
 class MainWindow(QtWidgets.QMainWindow):

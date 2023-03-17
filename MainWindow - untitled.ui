@@ -91,7 +91,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset theme="zoom-in"/>
+      <iconset resource="images/images.qrc">
+       <normaloff>:/images/zoom-in.png</normaloff>:/images/zoom-in.png</iconset>
      </property>
     </widget>
     <widget class="QToolButton" name="toolButton_2">
@@ -110,7 +111,8 @@
       <string>-</string>
      </property>
      <property name="icon">
-      <iconset theme="zoom-out"/>
+      <iconset resource="images/images.qrc">
+       <normaloff>:/images/zoom-out.png</normaloff>:/images/zoom-out.png</iconset>
      </property>
     </widget>
     <widget class="QLabel" name="label_4">
@@ -162,7 +164,8 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset theme="go-left"/>
+      <iconset resource="images/images.qrc">
+       <normaloff>:/images/seta-esquerda.png</normaloff>:/images/seta-esquerda.png</iconset>
      </property>
     </widget>
     <widget class="QToolButton" name="toolButton_4">
@@ -178,7 +181,8 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset theme="go-up"/>
+      <iconset resource="images/images.qrc">
+       <normaloff>:/images/sinal-cima.png</normaloff>:/images/sinal-cima.png</iconset>
      </property>
     </widget>
     <widget class="QToolButton" name="toolButton_5">
@@ -194,7 +198,8 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset theme="go-right"/>
+      <iconset resource="images/images.qrc">
+       <normaloff>:/images/seta-direita.png</normaloff>:/images/seta-direita.png</iconset>
      </property>
     </widget>
     <widget class="QToolButton" name="toolButton_6">
@@ -210,7 +215,8 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset theme="go-down"/>
+      <iconset resource="images/images.qrc">
+       <normaloff>:/images/sinal-baixo.png</normaloff>:/images/sinal-baixo.png</iconset>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
@@ -240,6 +246,8 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="images/images.qrc"/>
+ </resources>
  <connections/>
 </ui>

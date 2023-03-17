@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="images">
+    <file>seta-direita.png</file>
+    <file>seta-esquerda.png</file>
+    <file>sinal-cima.png</file>
+    <file>sinal-baixo.png</file>
+    <file>zoom-out.png</file>
+    <file>zoom-in.png</file>
+  </qresource>
+</RCC>

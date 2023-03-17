@@ -6,7 +6,6 @@ class Tipo(Enum):
     POLIGONO = "POLIGONO"
 
 class Objeto:
-    def __init__(self, nome: str, tipo: Tipo, coordenadas: list[tuple[float]]) -> None:
+    def __init__(self, nome: str, tipo: Tipo) -> None:
         self.nome = nome
         self.tipo = tipo
-        self.coord = coordenadas
