@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>220</width>
+    <width>280</width>
     <height>301</height>
    </rect>
   </property>
@@ -31,7 +31,7 @@
     <rect>
      <x>10</x>
      <y>30</y>
-     <width>200</width>
+     <width>261</width>
      <height>21</height>
     </rect>
    </property>
@@ -41,21 +41,21 @@
     <rect>
      <x>10</x>
      <y>60</y>
-     <width>201</width>
+     <width>261</width>
      <height>231</height>
     </rect>
    </property>
    <property name="currentIndex">
     <number>0</number>
    </property>
-   <widget class="QWidget" name="tab_3">
+   <widget class="QWidget" name="tabPoint">
     <attribute name="title">
      <string>Ponto</string>
     </attribute>
     <widget class="QPushButton" name="cancelPointButton">
      <property name="geometry">
       <rect>
-       <x>110</x>
+       <x>170</x>
        <y>170</y>
        <width>80</width>
        <height>24</height>
@@ -68,7 +68,7 @@
     <widget class="QPushButton" name="okPointButton">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>70</x>
        <y>170</y>
        <width>80</width>
        <height>24</height>
@@ -78,19 +78,19 @@
       <string>OK</string>
      </property>
     </widget>
-    <widget class="QGroupBox" name="groupBox_6">
+    <widget class="QGroupBox" name="groupBoxPosPoint">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>0</y>
-       <width>180</width>
+       <width>240</width>
        <height>81</height>
       </rect>
      </property>
      <property name="title">
       <string>Posição</string>
      </property>
-     <widget class="QLabel" name="label_10">
+     <widget class="QLabel" name="labelXPoint">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -103,20 +103,20 @@
        <string>X</string>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox_7">
+     <widget class="QSpinBox" name="posXPoint">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>40</y>
-        <width>61</width>
+        <width>90</width>
         <height>22</height>
        </rect>
       </property>
      </widget>
-     <widget class="QLabel" name="label_11">
+     <widget class="QLabel" name="labelYPoint">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>140</x>
         <y>20</y>
         <width>49</width>
         <height>16</height>
@@ -126,35 +126,35 @@
        <string>Y</string>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox_8">
+     <widget class="QSpinBox" name="posYPoint">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>140</x>
         <y>40</y>
-        <width>61</width>
+        <width>90</width>
         <height>22</height>
        </rect>
       </property>
      </widget>
     </widget>
    </widget>
-   <widget class="QWidget" name="tab_4">
+   <widget class="QWidget" name="tabLine">
     <attribute name="title">
      <string>Reta</string>
     </attribute>
-    <widget class="QGroupBox" name="groupBox_4">
+    <widget class="QGroupBox" name="groupBoxP1Line">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>0</y>
-       <width>180</width>
+       <width>240</width>
        <height>81</height>
       </rect>
      </property>
      <property name="title">
       <string>Posição Do Ponto 1</string>
      </property>
-     <widget class="QLabel" name="label_6">
+     <widget class="QLabel" name="labelX1Line">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -167,20 +167,20 @@
        <string>X</string>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox_4">
+     <widget class="QSpinBox" name="spinBoxX1Line">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>40</y>
-        <width>61</width>
+        <width>90</width>
         <height>22</height>
        </rect>
       </property>
      </widget>
-     <widget class="QLabel" name="label_7">
+     <widget class="QLabel" name="labelY1Line">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>140</x>
         <y>20</y>
         <width>49</width>
         <height>16</height>
@@ -190,12 +190,12 @@
        <string>Y</string>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox_5">
+     <widget class="QSpinBox" name="spinBoxY1Line">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>140</x>
         <y>40</y>
-        <width>61</width>
+        <width>90</width>
         <height>22</height>
        </rect>
       </property>
@@ -204,7 +204,7 @@
     <widget class="QPushButton" name="canceLineButton">
      <property name="geometry">
       <rect>
-       <x>110</x>
+       <x>170</x>
        <y>170</y>
        <width>80</width>
        <height>24</height>
@@ -214,19 +214,19 @@
       <string>Cancelar</string>
      </property>
     </widget>
-    <widget class="QGroupBox" name="groupBox_5">
+    <widget class="QGroupBox" name="groupBoxP2Line">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>80</y>
-       <width>180</width>
+       <width>240</width>
        <height>81</height>
       </rect>
      </property>
      <property name="title">
       <string>Posição Do Ponto 2</string>
      </property>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="labelX2Line">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -239,10 +239,10 @@
        <string>X</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="labelY2Line">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>140</x>
         <y>20</y>
         <width>49</width>
         <height>16</height>
@@ -252,22 +252,22 @@
        <string>Y</string>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox">
+     <widget class="QSpinBox" name="spinBoxX2Line">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>40</y>
-        <width>60</width>
+        <width>90</width>
         <height>22</height>
        </rect>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox_2">
+     <widget class="QSpinBox" name="spinBoxY2Line">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>140</x>
         <y>40</y>
-        <width>60</width>
+        <width>90</width>
         <height>22</height>
        </rect>
       </property>
@@ -276,7 +276,7 @@
     <widget class="QPushButton" name="okLineButton">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>70</x>
        <y>170</y>
        <width>80</width>
        <height>24</height>
@@ -294,7 +294,7 @@
     <widget class="QPushButton" name="cancelPolygonButton">
      <property name="geometry">
       <rect>
-       <x>110</x>
+       <x>170</x>
        <y>170</y>
        <width>80</width>
        <height>24</height>
@@ -307,7 +307,7 @@
     <widget class="QPushButton" name="okPolygonButton">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>70</x>
        <y>170</y>
        <width>80</width>
        <height>24</height>
@@ -317,19 +317,19 @@
       <string>OK</string>
      </property>
     </widget>
-    <widget class="QGroupBox" name="groupBox_7">
+    <widget class="QGroupBox" name="groupBoxPolyCen">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>0</y>
-       <width>180</width>
+       <width>240</width>
        <height>81</height>
       </rect>
      </property>
      <property name="title">
       <string>Posição Do Centro</string>
      </property>
-     <widget class="QLabel" name="label_12">
+     <widget class="QLabel" name="labelXPolyCen">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -342,20 +342,20 @@
        <string>X</string>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox_9">
+     <widget class="QSpinBox" name="spinBoxXPolyCen">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>40</y>
-        <width>61</width>
+        <width>90</width>
         <height>22</height>
        </rect>
       </property>
      </widget>
-     <widget class="QLabel" name="label_13">
+     <widget class="QLabel" name="labelYPolyCen">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>140</x>
         <y>20</y>
         <width>49</width>
         <height>16</height>
@@ -365,35 +365,35 @@
        <string>Y</string>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox_10">
+     <widget class="QSpinBox" name="spinBoxYPolyCen">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>140</x>
         <y>40</y>
-        <width>61</width>
+        <width>90</width>
         <height>22</height>
        </rect>
       </property>
      </widget>
     </widget>
-    <widget class="QGroupBox" name="groupBox_8">
+    <widget class="QGroupBox" name="groupBoxPolyBorder">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>80</y>
-       <width>180</width>
+       <width>240</width>
        <height>81</height>
       </rect>
      </property>
      <property name="title">
       <string>Arestas</string>
      </property>
-     <widget class="QLabel" name="label_14">
+     <widget class="QLabel" name="labelBordersQtd">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>20</y>
-        <width>71</width>
+        <width>91</width>
         <height>16</height>
        </rect>
       </property>
@@ -401,22 +401,22 @@
        <string>Quantidade</string>
       </property>
      </widget>
-     <widget class="QSpinBox" name="spinBox_11">
+     <widget class="QSpinBox" name="spinBoxBordersQtd">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>40</y>
-        <width>61</width>
+        <width>90</width>
         <height>22</height>
        </rect>
       </property>
      </widget>
-     <widget class="QLabel" name="label_15">
+     <widget class="QLabel" name="labelBordersSize">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>140</x>
         <y>20</y>
-        <width>51</width>
+        <width>91</width>
         <height>16</height>
        </rect>
       </property>
@@ -424,12 +424,12 @@
        <string>Tamanho</string>
       </property>
      </widget>
-     <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+     <widget class="QDoubleSpinBox" name="doubleSpinBoxBordersSize">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>140</x>
         <y>40</y>
-        <width>62</width>
+        <width>90</width>
         <height>22</height>
        </rect>
       </property>
@@ -441,20 +441,20 @@
  <tabstops>
   <tabstop>lineEdit</tabstop>
   <tabstop>tabWidget</tabstop>
-  <tabstop>spinBox_7</tabstop>
-  <tabstop>spinBox_8</tabstop>
+  <tabstop>posXPoint</tabstop>
+  <tabstop>posYPoint</tabstop>
   <tabstop>okPointButton</tabstop>
   <tabstop>cancelPointButton</tabstop>
-  <tabstop>spinBox_4</tabstop>
-  <tabstop>spinBox_5</tabstop>
-  <tabstop>spinBox</tabstop>
-  <tabstop>spinBox_2</tabstop>
+  <tabstop>spinBoxX1Line</tabstop>
+  <tabstop>spinBoxY1Line</tabstop>
+  <tabstop>spinBoxX2Line</tabstop>
+  <tabstop>spinBoxY2Line</tabstop>
   <tabstop>okLineButton</tabstop>
   <tabstop>canceLineButton</tabstop>
-  <tabstop>spinBox_9</tabstop>
-  <tabstop>spinBox_10</tabstop>
-  <tabstop>spinBox_11</tabstop>
-  <tabstop>doubleSpinBox_3</tabstop>
+  <tabstop>spinBoxXPolyCen</tabstop>
+  <tabstop>spinBoxYPolyCen</tabstop>
+  <tabstop>spinBoxBordersQtd</tabstop>
+  <tabstop>doubleSpinBoxBordersSize</tabstop>
   <tabstop>okPolygonButton</tabstop>
   <tabstop>cancelPolygonButton</tabstop>
  </tabstops>
