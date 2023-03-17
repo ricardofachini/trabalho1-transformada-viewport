@@ -14,16 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QGraphicsView" name="graphicsView">
-    <property name="geometry">
-     <rect>
-      <x>15</x>
-      <y>30</y>
-      <width>541</width>
-      <height>521</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
@@ -262,10 +252,22 @@
     <property name="title">
      <string>ViewPort</string>
     </property>
+    <widget class="QLabel" name="labelContainerForCanvas">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>531</width>
+       <height>511</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <zorder>groupBox_5</zorder>
    <zorder>groupBox_4</zorder>
-   <zorder>graphicsView</zorder>
    <zorder>frame</zorder>
    <zorder>groupBox_3</zorder>
   </widget>
