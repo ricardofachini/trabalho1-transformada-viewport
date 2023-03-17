@@ -1,7 +1,7 @@
 from enum import Enum
 
 class Tipo(Enum):
-    PONTO = "PONTOS"
+    PONTO = "PONTO"
     SEGMENTO_RETA = "RETA"
     POLIGONO = "POLIGONO"
 
