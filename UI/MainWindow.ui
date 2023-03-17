@@ -64,7 +64,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="images/images.qrc">
+       <iconset resource="../images/images.qrc">
         <normaloff>:/images/sinal-cima.png</normaloff>:/images/sinal-cima.png</iconset>
       </property>
      </widget>
@@ -90,7 +90,7 @@
        <string>-</string>
       </property>
       <property name="icon">
-       <iconset resource="images/images.qrc">
+       <iconset resource="../images/images.qrc">
         <normaloff>:/images/zoom-out.png</normaloff>:/images/zoom-out.png</iconset>
       </property>
      </widget>
@@ -116,7 +116,7 @@
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="images/images.qrc">
+       <iconset resource="../images/images.qrc">
         <normaloff>:/images/zoom-in.png</normaloff>:/images/zoom-in.png</iconset>
       </property>
      </widget>
@@ -152,7 +152,7 @@
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="images/images.qrc">
+       <iconset resource="../images/images.qrc">
         <normaloff>:/images/seta-esquerda.png</normaloff>:/images/seta-esquerda.png</iconset>
       </property>
      </widget>
@@ -169,7 +169,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="images/images.qrc">
+       <iconset resource="../images/images.qrc">
         <normaloff>:/images/seta-direita.png</normaloff>:/images/seta-direita.png</iconset>
       </property>
      </widget>
@@ -186,7 +186,7 @@
        <string>...</string>
       </property>
       <property name="icon">
-       <iconset resource="images/images.qrc">
+       <iconset resource="../images/images.qrc">
         <normaloff>:/images/sinal-baixo.png</normaloff>:/images/sinal-baixo.png</iconset>
       </property>
      </widget>
@@ -282,7 +282,7 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
-  <include location="images/images.qrc"/>
+  <include location="../images/images.qrc"/>
  </resources>
  <connections/>
 </ui>
