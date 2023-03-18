@@ -41,7 +41,7 @@
      <property name="title">
       <string>ViewPort</string>
      </property>
-     <widget class="QToolButton" name="toolButton_4">
+     <widget class="QToolButton" name="translateUpButton">
       <property name="geometry">
        <rect>
         <x>50</x>
@@ -49,6 +49,9 @@
         <width>26</width>
         <height>24</height>
        </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="text">
        <string>...</string>
@@ -58,7 +61,7 @@
         <normaloff>:/images/sinal-cima.png</normaloff>:/images/sinal-cima.png</iconset>
       </property>
      </widget>
-     <widget class="QToolButton" name="toolButton_2">
+     <widget class="QToolButton" name="zoomOutButton">
       <property name="geometry">
        <rect>
         <x>170</x>
@@ -84,7 +87,7 @@
         <normaloff>:/images/zoom-out.png</normaloff>:/images/zoom-out.png</iconset>
       </property>
      </widget>
-     <widget class="QToolButton" name="toolButton">
+     <widget class="QToolButton" name="zoomInButton">
       <property name="geometry">
        <rect>
         <x>130</x>
@@ -123,7 +126,7 @@
        <string>Zoom</string>
       </property>
      </widget>
-     <widget class="QToolButton" name="toolButton_3">
+     <widget class="QToolButton" name="translateLeftButton">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -131,6 +134,9 @@
         <width>26</width>
         <height>24</height>
        </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="toolTip">
        <string/>
@@ -146,7 +152,7 @@
         <normaloff>:/images/seta-esquerda.png</normaloff>:/images/seta-esquerda.png</iconset>
       </property>
      </widget>
-     <widget class="QToolButton" name="toolButton_5">
+     <widget class="QToolButton" name="translateRightButton">
       <property name="geometry">
        <rect>
         <x>80</x>
@@ -154,6 +160,9 @@
         <width>26</width>
         <height>24</height>
        </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="text">
        <string>...</string>
@@ -163,7 +172,7 @@
         <normaloff>:/images/seta-direita.png</normaloff>:/images/seta-direita.png</iconset>
       </property>
      </widget>
-     <widget class="QToolButton" name="toolButton_6">
+     <widget class="QToolButton" name="translateDownButton">
       <property name="geometry">
        <rect>
         <x>50</x>
@@ -171,6 +180,9 @@
         <width>26</width>
         <height>24</height>
        </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="text">
        <string>...</string>
