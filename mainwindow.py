@@ -4,6 +4,7 @@ from PyQt6 import uic, QtWidgets, QtGui, QtCore
 from objeto import Tipo
 import images_rcc
 from dialog import Dialog
+from windowtransformation import WindowTransformation
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -13,12 +14,14 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setup_view()
+        self.transform = WindowTransformation()
 
         # self.listOfCurrentObjects.setObjectName("listView")
         # self.listOfCurrentObjects.addItems(["One", "two"])
         # self.comboBoxOfTypes.addItems([Tipo.POLIGONO.value, Tipo.SEGMENTO_RETA.value, Tipo.PONTO.value])
 
         self.addObjectButton.clicked.connect(self.show_dialog)
+        self.zoomInButton.clicked.connect(self.zoom_in)
 
     def setup_view(self):
         uic.loadUi("UI/MainWindow.ui", self)
@@ -47,6 +50,13 @@ class MainWindow(QtWidgets.QMainWindow):
         painter.drawPoint(x, y)
         painter.end()
         self.container.setPixmap(canvas)
+
+    def zoom_in(self):
+        pontos = [(0, 3), (3, 3)]
+        novo_ponto = []
+        for i in range(2):
+            novo_ponto.append(self.transform.scale(pontos[i], 2, 3))
+        self.draw_line(novo_ponto[0][0], novo_ponto[0][1], novo_ponto[1][0], novo_ponto[1][1])
 
 
 if __name__ == "__main__":
