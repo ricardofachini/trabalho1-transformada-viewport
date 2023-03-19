@@ -14,6 +14,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setup_view()
+        self.canvas = self.container.pixmap()
         self.transform = WindowTransformation()
 
         # self.listOfCurrentObjects.setObjectName("listView")
@@ -38,21 +39,36 @@ class MainWindow(QtWidgets.QMainWindow):
         dialog.exec()
 
     def draw_line(self, x1: int, y1: int, x2: int, y2: int):
-        canvas = self.container.pixmap()
-        painter = QtGui.QPainter(canvas)
+        painter = QtGui.QPainter(self.canvas)
         painter.drawLine(x1, y1, x2, y2)
         painter.end()
-        self.container.setPixmap(canvas)
+        self.container.setPixmap(self.canvas)
 
     def draw_point(self, x, y):
-        canvas = self.container.pixmap()
-        painter = QtGui.QPainter(canvas)
+        painter = QtGui.QPainter(self.canvas)
         painter.drawPoint(x, y)
         painter.end()
-        self.container.setPixmap(canvas)
+        self.container.setPixmap(self.canvas)
 
     def zoom_in(self):
-        pass #implementar
+        from Reta import Reta
+        line = Reta("reta", [(30, 30), (180, 180)])
+        translated_points = []
+        for i in range(2):
+            center = line.calculate_center()
+            point = self.transform.translate(line.pontos[i], -center[0], -center[1])
+            translated_points.append(point)
+        for i in range(2):
+            point = self.transform.scale(translated_points[i], 2, 2)
+            translated_points[i] = point
+        for i in range(2):
+            point = self.transform.translate(translated_points[i], center[0], center[1])
+            translated_points[i] = point
+        print("pontos transladados e escalonados: ", translated_points)
+        self.draw_line(translated_points[0][0], 
+                       translated_points[0][1], 
+                       translated_points[1][0], 
+                       translated_points[1][1],)
 
 
 if __name__ == "__main__":
