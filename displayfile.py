@@ -1,4 +1,4 @@
-
+from objeto import Objeto
 
 
 class DisplayFile:

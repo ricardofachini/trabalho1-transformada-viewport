@@ -112,6 +112,9 @@
         <height>22</height>
        </rect>
       </property>
+      <property name="maximum">
+       <number>9999</number>
+      </property>
      </widget>
      <widget class="QLabel" name="labelYPoint">
       <property name="geometry">
@@ -134,6 +137,9 @@
         <width>90</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="maximum">
+       <number>9999</number>
       </property>
      </widget>
     </widget>
@@ -176,6 +182,9 @@
         <height>22</height>
        </rect>
       </property>
+      <property name="maximum">
+       <number>9999</number>
+      </property>
      </widget>
      <widget class="QLabel" name="labelY1Line">
       <property name="geometry">
@@ -198,6 +207,9 @@
         <width>90</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="maximum">
+       <number>9999</number>
       </property>
      </widget>
     </widget>
@@ -261,6 +273,9 @@
         <height>22</height>
        </rect>
       </property>
+      <property name="maximum">
+       <number>9999</number>
+      </property>
      </widget>
      <widget class="QSpinBox" name="spinBoxY2Line">
       <property name="geometry">
@@ -270,6 +285,9 @@
         <width>90</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="maximum">
+       <number>9999</number>
       </property>
      </widget>
     </widget>
@@ -351,6 +369,9 @@
         <height>22</height>
        </rect>
       </property>
+      <property name="maximum">
+       <number>9999</number>
+      </property>
      </widget>
      <widget class="QLabel" name="labelYPolyCen">
       <property name="geometry">
@@ -373,6 +394,9 @@
         <width>90</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="maximum">
+       <number>9999</number>
       </property>
      </widget>
     </widget>
@@ -410,6 +434,9 @@
         <height>22</height>
        </rect>
       </property>
+      <property name="maximum">
+       <number>9999</number>
+      </property>
      </widget>
      <widget class="QLabel" name="labelBordersSize">
       <property name="geometry">
@@ -432,6 +459,9 @@
         <width>90</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="maximum">
+       <double>9999.989999999999782</double>
       </property>
      </widget>
     </widget>
@@ -472,6 +502,38 @@
     </hint>
     <hint type="destinationlabel">
      <x>109</x>
+     <y>150</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cancelPointButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>221</x>
+     <y>266</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>139</x>
+     <y>150</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cancelPolygonButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>221</x>
+     <y>266</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>139</x>
      <y>150</y>
     </hint>
    </hints>
