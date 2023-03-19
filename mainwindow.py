@@ -24,8 +24,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.zoomInButton.clicked.connect(self.zoom_in)
 
     def setup_view(self):
-        uic.loadUi("UI/MainWindow.ui", self)
-        self.setWindowTitle("Trabalho 1.1 - Computação gráfica")
+        uic.loadUi("UI/MainWindow.ui", self) #carrega o arquivo de interface gráfica para a janela do qt
+        self.setWindowTitle("Sistema básico interativo - Computação gráfica")
 
         self.container = self.labelContainerForCanvas
         canvas = QtGui.QPixmap(531, 511)
@@ -52,11 +52,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.container.setPixmap(canvas)
 
     def zoom_in(self):
-        pontos = [(0, 3), (3, 3)]
-        novo_ponto = []
-        for i in range(2):
-            novo_ponto.append(self.transform.scale(pontos[i], 2, 3))
-        self.draw_line(novo_ponto[0][0], novo_ponto[0][1], novo_ponto[1][0], novo_ponto[1][1])
+        pass #implementar
 
 
 if __name__ == "__main__":
