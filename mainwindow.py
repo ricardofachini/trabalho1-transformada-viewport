@@ -87,33 +87,31 @@ class MainWindow(QtWidgets.QMainWindow):
         self.container.setPixmap(self.canvas)
 
     def zoom_in(self):
-        for item in self.display_file.array:
-            item.zoom_in()
-        self.render()
+        self.zoom(1.1)
     
     def zoom_out(self):
+        self.zoom(0.9)
+    
+    def zoom(self, scale):
         for item in self.display_file.array:
-            item.zoom_out()
+            item.zoom(scale)
         self.render()
     
     def translate_left(self):
-        for item in self.display_file.array:
-            item.translate_left()
-        self.render()
-        
+        self.translate(-10, 0)
+    
     def translate_right(self):
-        for item in self.display_file.array:
-            item.translate_right()
-        self.render()
+        self.translate(10, 0)
 
     def translate_up(self):
-        for item in self.display_file.array:
-            item.translate_up()
-        self.render()
+        self.translate(0, -10)
 
     def translate_down(self):
+        self.translate(0, 10)
+    
+    def translate(self, dx, dy):
         for item in self.display_file.array:
-            item.translate_down()
+            item.translate(dx, dy)
         self.render()
 
 
