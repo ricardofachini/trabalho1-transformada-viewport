@@ -24,22 +24,38 @@ class Dialog(QtWidgets.QDialog):
     
     def insert_point(self):
         nome = self.lineEdit.text()
-        x = int(self.posXPoint.text())
-        y = int(self.posYPoint.text())
-        self.inserted_type = Tipo.PONTO
-        self.close()
+        if not nome:
+            self.missing_name_popup()
+        else:
+            x = (int) (self.posXPoint.text())
+            y = (int) (self.posYPoint.text())
+            self.inserted_type = Tipo.PONTO
+            self.close()
     
     def insert_line(self):
         nome = self.lineEdit.text()
-        self.inserted_type = Tipo.SEGMENTO_RETA
+        if not nome:
+            self.missing_name_popup()
+        else:
+            self.inserted_type = Tipo.SEGMENTO_RETA
 
-        p1 = Ponto(nome, (int(self.spinBoxX1Line.text()), int(self.spinBoxY1Line.text())))
-        p2 = Ponto(nome, (int(self.spinBoxX2Line.text()), int(self.spinBoxY2Line.text())))
-        self.object = Reta(nome, (p1, p2))
-        
-        self.close()
+            p1 = Ponto(nome, ((int) (self.spinBoxX1Line.text()), (int) (self.spinBoxY1Line.text())))
+            p2 = Ponto(nome, ((int) (self.spinBoxX2Line.text()), (int) (self.spinBoxY2Line.text())))
+            self.object = Reta(nome, (p1, p2))
+            
+            self.close()
 
     def insert_polygon(self):
         nome = self.lineEdit.text()
-        self.inserted_type = Tipo.POLIGONO
-        self.close()
+        if not nome:
+            self.missing_name_popup()
+        else:
+            self.inserted_type = Tipo.POLIGONO
+            self.close()
+    
+    def missing_name_popup(self):
+        msg = QtWidgets.QMessageBox()
+        msg.setWindowTitle('Campo Nome Obrigatório')
+        msg.setText('Preencha o campo nome para referenciar o objeto criado')
+        msg.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+        msg.exec()

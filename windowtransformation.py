@@ -22,7 +22,7 @@ class WindowTransformation:
             x += current_vector[0]*transformation_matrix[0][i]
         for i in range(3):
             y += current_vector[1]*transformation_matrix[1][i]
-        return (x, y)
+        return ((int) (x), (int) (y))
 
     def rotate(self, points: list, angle) -> tuple[int, int]:
         """
