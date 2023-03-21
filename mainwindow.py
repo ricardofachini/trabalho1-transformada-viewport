@@ -36,15 +36,22 @@ class UIWindow(QtWidgets.QMainWindow):
         self.translateUpButton.clicked.connect(self.translate_up)
         self.translateDownButton.clicked.connect(self.translate_down)
 
-        reta1 = Reta('Linha1', (Ponto('', (100, 100)), Ponto('', (200, 200))))
-        reta2 = Reta('Linha2', (Ponto('', (50, 50)), Ponto('', (200, 50))))
-        self.draw_line(reta1)
-        self.display_file.array.append(reta1)
-        self.draw_line(reta2)
-        self.display_file.array.append(reta2)
+        # PARA TESTE
+        # reta1 = Reta('Linha1', (Ponto('', (100, 100)), Ponto('', (200, 200))))
+        # reta2 = Reta('Linha2', (Ponto('', (50, 50)), Ponto('', (200, 50))))
+        # poligono = WireFrame('Poligono', Ponto('', (250, 250)), 8, 200)
+        
+        # self.draw_line(reta1)
+        # self.display_file.array.append(reta1)
+        # self.listOfCurrentObjects.addItems(['Reta1'])
+        
+        # self.draw_line(reta2)
+        # self.display_file.array.append(reta2)
+        # self.listOfCurrentObjects.addItems(['Reta2'])
 
-        poligono = WireFrame('Poligono', Ponto('', (250, 250)), 8, 200)
-        self.draw_polygon(poligono)
+        # self.draw_polygon(poligono)
+        # self.display_file.array.append(poligono)
+        # self.listOfCurrentObjects.addItems(['Polígono'])
 
     def setup_view(self):
         uic.loadUi("UI/MainWindow.ui", self) #carrega o arquivo de interface gráfica para a janela do qt
@@ -79,6 +86,8 @@ class UIWindow(QtWidgets.QMainWindow):
                 self.draw_point(item)
             elif isinstance(item, Reta):
                 self.draw_line(item)
+            elif isinstance(item, WireFrame):
+                self.draw_polygon(item)
 
     def draw_point(self, point: Ponto):
         painter = QtGui.QPainter(self.canvas)

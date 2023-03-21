@@ -46,3 +46,12 @@ class WireFrame(Objeto):
         for i in range(self.n_linhas):
             point = transform.rotate(self.points[i], angle)
             self.points.append(point)
+
+    def zoom(self, scale):
+        for reta in self.retas:
+            reta.zoom(scale)
+    
+    def translate(self, dx, dy):
+        for reta in self.retas:
+            reta.translate(dx, dy)
+   
