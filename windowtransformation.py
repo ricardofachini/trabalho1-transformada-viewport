@@ -2,7 +2,10 @@ from math import sin, cos
 
 class WindowTransformation:
     def __init__(self) -> None:
-        pass
+        self.minXwp = 0
+        self.minYwp = 0
+        self.maxXwp = 1000
+        self.maxYwp = 1000
 
     def translate(self, points: tuple, dx, dy) -> tuple[int, int]:
         """

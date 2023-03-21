@@ -16,12 +16,12 @@ from Poligono import WireFrame
 
 
 
-class MainWindow(QtWidgets.QMainWindow):
+class UIWindow(QtWidgets.QMainWindow):
     """
     Janela principal do qt que possui os widgets
     """
     def __init__(self, *args, **kwargs):
-        super(MainWindow, self).__init__(*args, **kwargs)
+        super(UIWindow, self).__init__(*args, **kwargs)
         self.setup_view()
         self.transform = WindowTransformation()
         self.display_file = DisplayFile()
@@ -118,6 +118,6 @@ class MainWindow(QtWidgets.QMainWindow):
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
     
-    window = MainWindow()    
+    window = UIWindow()    
     window.show()
     sys.exit(app.exec())
