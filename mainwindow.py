@@ -100,7 +100,11 @@ class UIWindow(QtWidgets.QMainWindow):
         self.container.setPixmap(self.canvas)
     
     def draw_line(self, line: Reta):
-        painter = QtGui.QPainter(self.canvas)
+        pen = QtGui.QPen(QtGui.QColor('black'))
+        pen.setWidth(2)
+
+        painter = QtGui.QPainter(self.canvas)        
+        painter.setPen(pen)
 
         x1 = (int) (line.pontos[0].coordenadas[0])
         y1 = (int) (line.pontos[0].coordenadas[1])
