@@ -1,4 +1,4 @@
-from math import sin, cos
+from math import sin, cos, radians
 
 class WindowTransformation:
     def __init__(self) -> None:
@@ -31,14 +31,18 @@ class WindowTransformation:
         """
         Recebe uma tupla de coordenadas 2D, e retorna a tupla rotacionada
         """
-        transformation_matrix = [[cos(angle), -sin(angle), 0], 
-                                 [sin(angle), cos(angle), 0], 
-                                 [0, 0, 1]]
+        rad = radians(angle)
+        # transformation_matrix = [[cos(rad), -sin(rad), 0], 
+        #                          [sin(rad), cos(rad) , 0], 
+        #                          [0       , 0        , 1]]
         current_vector = [points[0], points[1]]
-        x = 0
-        y = 0
-        for i in range(3):
-            x += current_vector[0]*transformation_matrix[0][i]
-        for i in range(3):
-            y += current_vector[1]*transformation_matrix[1][i]
+        # x = 0
+        # y = 0
+        # for i in range(3):
+        #     x += current_vector[0]*transformation_matrix[0][i]
+        # for i in range(3):
+        #     y += current_vector[1]*transformation_matrix[1][i]
+
+        x = current_vector[0] * cos(rad) - current_vector[1] * sin(rad)
+        y = current_vector[0] * sin(rad) + current_vector[1] * cos(rad)
         return (x, y)

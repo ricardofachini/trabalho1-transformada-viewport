@@ -12,10 +12,9 @@ class Objeto:
     """
     Classe genérica para um objeto qualquer
     """
-    def __init__(self, nome: str, tipo: Tipo, pontos: tuple[int, int]) -> None:
+    def __init__(self, nome: str, tipo: Tipo) -> None:
         self.nome = nome
         self.tipo = tipo
-        self.pontos = pontos
         #self.centro = self.calculate_center()
 
     def calculate_center(self) -> tuple[int, int]:

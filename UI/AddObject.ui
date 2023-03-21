@@ -451,7 +451,7 @@
        <string>Tamanho</string>
       </property>
      </widget>
-     <widget class="QDoubleSpinBox" name="doubleSpinBoxBordersSize">
+     <widget class="QSpinBox" name="spinBoxLinesSize">
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -461,7 +461,7 @@
        </rect>
       </property>
       <property name="maximum">
-       <double>9999.989999999999782</double>
+       <number>9999</number>
       </property>
      </widget>
     </widget>
@@ -484,7 +484,7 @@
   <tabstop>spinBoxXPolyCen</tabstop>
   <tabstop>spinBoxYPolyCen</tabstop>
   <tabstop>spinBoxBordersQtd</tabstop>
-  <tabstop>doubleSpinBoxBordersSize</tabstop>
+  <tabstop>spinBoxLinesSize</tabstop>
   <tabstop>okPolygonButton</tabstop>
   <tabstop>cancelPolygonButton</tabstop>
  </tabstops>

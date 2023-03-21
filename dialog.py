@@ -30,6 +30,7 @@ class Dialog(QtWidgets.QDialog):
             x = (int) (self.posXPoint.text())
             y = (int) (self.posYPoint.text())
             self.inserted_type = Tipo.PONTO
+            self.object = Ponto(nome, (x, y))
             self.close()
     
     def insert_line(self):
@@ -51,6 +52,10 @@ class Dialog(QtWidgets.QDialog):
             self.missing_name_popup()
         else:
             self.inserted_type = Tipo.POLIGONO
+            centro = Ponto('', ((int) (self.spinBoxXPolyCen.text()), (int) (self.spinBoxYPolyCen.text())))
+            n_linhas = (int) (self.spinBoxBordersQtd.text())
+            tam_linhas = (int) (self.spinBoxLinesSize.text())
+            self.object = WireFrame(nome, centro, n_linhas, tam_linhas)
             self.close()
     
     def missing_name_popup(self):
