@@ -1,7 +1,6 @@
 from objeto import Objeto, Tipo
 from Ponto import Ponto
 
-#from window import WindowTransformation
 
 class Reta(Objeto):
     def __init__(self, nome: str, pontos: tuple[Ponto, Ponto]) -> None:
