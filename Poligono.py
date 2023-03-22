@@ -2,7 +2,7 @@ from objeto import Objeto, Tipo
 from Reta import Reta
 from Ponto import Ponto
 
-from windowtransformation import WindowTransformation
+#from window import WindowTransformation
 
 from math import sin, radians
 
@@ -40,11 +40,11 @@ class WireFrame(Objeto):
             self.retas.append(Reta('', (p1, p2)))
     
     def calculate_points(self, radius: int, angle: float):
-        transform = WindowTransformation()
+        #transform = WindowTransformation()
         self.points.append((radius / 2, radius / 2))
 
         for i in range(self.n_linhas):
-            point = transform.rotate(self.points[i], angle)
+            point = self.rotate(self.points[i], angle)
             self.points.append(point)
 
     def zoom(self, scale):

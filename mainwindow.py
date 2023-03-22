@@ -7,7 +7,7 @@ import images_rcc
 from dialog import Dialog
 from objeto import Tipo
 
-from windowtransformation import WindowTransformation
+from window import Window
 from displayfile import DisplayFile
 
 from Ponto import Ponto
@@ -15,17 +15,23 @@ from Reta import Reta
 from Poligono import WireFrame
 
 
-
 class UIWindow(QtWidgets.QMainWindow):
     """
-    Janela principal do qt que possui os widgets
+    Janela principal do qt que possui os widgets e a viewport
     """
     def __init__(self, *args, **kwargs):
         super(UIWindow, self).__init__(*args, **kwargs)
+        #coordenadas maximas e minimas da viewport
+        self.minXvp = 0
+        self.minYvp = 0
+        self.maxXvp = 531
+        self.maxYvp = 511
+
         self.setup_view()
-        self.transform = WindowTransformation()
+        self.WorldWindow = Window()
         self.display_file = DisplayFile()
 
+        #listeners dos botões da interface
         self.addObjectButton.clicked.connect(self.show_dialog)
         
         self.zoomInButton.clicked.connect(self.zoom_in)
@@ -58,7 +64,7 @@ class UIWindow(QtWidgets.QMainWindow):
         self.setWindowTitle("Sistema básico interativo - Computação gráfica")
 
         self.container = self.labelContainerForCanvas
-        self.canvas = QtGui.QPixmap(531, 511)
+        self.canvas = QtGui.QPixmap(531, 511) #cria o canvas (viewport)
         self.canvas.fill(QtCore.Qt.GlobalColor.white)
         self.container.setPixmap(self.canvas)
 
@@ -79,6 +85,13 @@ class UIWindow(QtWidgets.QMainWindow):
             if dialog.inserted_type == Tipo.POLIGONO:
                 self.draw_polygon(dialog.object)
 
+    #transformadas de viewport
+    def get_x_to_viewport(self, x_window):
+        return ((x_window - self.WorldWindow.minXwp) / (self.WorldWindow.maxXwp - self.WorldWindow.minXwp)) * (self.maxXvp - self.minXvp)
+    
+    def get_y_to_viewport(self, y_window):
+        return (1 - ((y_window - self.WorldWindow.minYwp) / (self.WorldWindow.maxYwp - self.WorldWindow.minYwp))) * (self.maxYvp - self.minYvp)
+
     def render(self):
         self.canvas.fill(QtCore.Qt.GlobalColor.white)
         for item in self.display_file.array:
@@ -93,7 +106,9 @@ class UIWindow(QtWidgets.QMainWindow):
         painter = QtGui.QPainter(self.canvas)
 
         x = point.coordenadas[0]
+        x = int(self.get_x_to_viewport(x))
         y = point.coordenadas[1]
+        y = int(self.get_y_to_viewport(y))
 
         painter.drawPoint(x, y)
         painter.end()
@@ -106,10 +121,13 @@ class UIWindow(QtWidgets.QMainWindow):
         painter = QtGui.QPainter(self.canvas)        
         painter.setPen(pen)
 
-        x1 = (int) (line.pontos[0].coordenadas[0])
-        y1 = (int) (line.pontos[0].coordenadas[1])
-        x2 = (int) (line.pontos[1].coordenadas[0])
-        y2 = (int) (line.pontos[1].coordenadas[1])
+        x1 = (int) (self.get_x_to_viewport(line.pontos[0].coordenadas[0]))
+
+        y1 = (int) (self.get_y_to_viewport(line.pontos[0].coordenadas[1]))
+
+        x2 = (int) (self.get_x_to_viewport(line.pontos[1].coordenadas[0]))
+
+        y2 = (int) (self.get_y_to_viewport(line.pontos[1].coordenadas[1]))
 
         painter.drawLine(x1, y1, x2, y2)
         painter.end()
@@ -126,25 +144,25 @@ class UIWindow(QtWidgets.QMainWindow):
         self.zoom(0.9)
     
     def zoom(self, scale):
-        for item in self.display_file.array:
-            item.zoom(scale)
+        self.WorldWindow.translate(-self.WorldWindow.centerX, -self.WorldWindow.centerY)
+        self.WorldWindow.scale(scale)
+        self.WorldWindow.translate(self.WorldWindow.centerX, self.WorldWindow.centerY)
         self.render()
     
     def translate_left(self):
-        self.translate(-10, 0)
+        self.translate(20, 0)
     
     def translate_right(self):
-        self.translate(10, 0)
+        self.translate(-20, 0)
 
     def translate_up(self):
-        self.translate(0, -10)
+        self.translate(0, -20)
 
     def translate_down(self):
-        self.translate(0, 10)
+        self.translate(0, 20)
     
     def translate(self, dx, dy):
-        for item in self.display_file.array:
-            item.translate(dx, dy)
+        self.WorldWindow.translate(dx, dy) #move a window
         self.render()
 
 

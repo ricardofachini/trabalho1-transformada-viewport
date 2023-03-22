@@ -1,13 +1,32 @@
 from math import sin, cos, radians
 
-class WindowTransformation:
+class Window:
+    """
+    Classe para a Window de coordenadas de mundo
+    """
     def __init__(self) -> None:
         self.minXwp = 0
         self.minYwp = 0
         self.maxXwp = 1000
         self.maxYwp = 1000
+        self.width = self.maxXwp - self.minXwp
+        self.height = self.maxYwp - self.minYwp
+        self.centerX = self.minXwp + (self.width / 2)
+        self.centerY = self.minYwp + (self.height / 2)
 
-    def translate(self, points: tuple, dx, dy) -> tuple[int, int]:
+    def scale(self, scale_value):
+        self.minXwp //= scale_value
+        self.minYwp //= scale_value
+        self.maxXwp //= scale_value
+        self.maxYwp //= scale_value
+
+    def translate(self, dx, dy):
+        self.minXwp += dx
+        self.maxXwp += dx
+        self.minYwp += dy
+        self.maxYwp += dy
+
+    '''def translate(self, points: tuple, dx, dy) -> tuple[int, int]:
         """
         Recebe uma tupla de coordenadas 2D, e retorna a tupla translada
         """
@@ -45,4 +64,4 @@ class WindowTransformation:
 
         x = current_vector[0] * cos(rad) - current_vector[1] * sin(rad)
         y = current_vector[0] * sin(rad) + current_vector[1] * cos(rad)
-        return (x, y)
+        return (x, y)'''
