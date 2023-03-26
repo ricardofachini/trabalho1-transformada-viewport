@@ -4,9 +4,10 @@ from Ponto import Ponto
 #from window import WindowTransformation
 
 class Reta(Objeto):
-    def __init__(self, nome: str, pontos: tuple[Ponto, Ponto]) -> None:
+    def __init__(self, nome: str, pontos: tuple[Ponto, Ponto], cor: str = "#000000") -> None:
         super().__init__(nome, Tipo.SEGMENTO_RETA)
         self.pontos = pontos
+        self.cor = cor
 
 
     def zoom(self,  scale):

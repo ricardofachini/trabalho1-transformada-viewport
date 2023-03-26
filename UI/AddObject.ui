@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>280</width>
-    <height>301</height>
+    <height>328</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,11 +42,11 @@
      <x>10</x>
      <y>60</y>
      <width>261</width>
-     <height>231</height>
+     <height>261</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tabPoint">
     <attribute name="title">
@@ -56,7 +56,7 @@
      <property name="geometry">
       <rect>
        <x>170</x>
-       <y>170</y>
+       <y>200</y>
        <width>80</width>
        <height>24</height>
       </rect>
@@ -69,7 +69,7 @@
      <property name="geometry">
       <rect>
        <x>70</x>
-       <y>170</y>
+       <y>200</y>
        <width>80</width>
        <height>24</height>
       </rect>
@@ -217,7 +217,7 @@
      <property name="geometry">
       <rect>
        <x>170</x>
-       <y>170</y>
+       <y>200</y>
        <width>80</width>
        <height>24</height>
       </rect>
@@ -295,13 +295,29 @@
      <property name="geometry">
       <rect>
        <x>70</x>
-       <y>170</y>
+       <y>200</y>
        <width>80</width>
        <height>24</height>
       </rect>
      </property>
      <property name="text">
       <string>OK</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pickColor">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>170</y>
+       <width>89</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="text">
+      <string>Escolher cor</string>
      </property>
     </widget>
    </widget>
@@ -313,7 +329,7 @@
      <property name="geometry">
       <rect>
        <x>170</x>
-       <y>170</y>
+       <y>200</y>
        <width>80</width>
        <height>24</height>
       </rect>
@@ -326,7 +342,7 @@
      <property name="geometry">
       <rect>
        <x>70</x>
-       <y>170</y>
+       <y>200</y>
        <width>80</width>
        <height>24</height>
       </rect>

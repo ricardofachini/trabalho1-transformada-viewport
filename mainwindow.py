@@ -115,7 +115,7 @@ class UIWindow(QtWidgets.QMainWindow):
         self.container.setPixmap(self.canvas)
     
     def draw_line(self, line: Reta):
-        pen = QtGui.QPen(QtGui.QColor('black'))
+        pen = QtGui.QPen(QtGui.QColor(line.cor))
         pen.setWidth(2)
 
         painter = QtGui.QPainter(self.canvas)        
