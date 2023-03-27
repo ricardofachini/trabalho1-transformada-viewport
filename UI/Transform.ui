@@ -19,7 +19,7 @@
      <x>10</x>
      <y>10</y>
      <width>381</width>
-     <height>251</height>
+     <height>281</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -81,6 +81,19 @@
       <string>Para a esquerda</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="okTranslateButton">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>210</y>
+       <width>89</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>OK</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="scaleTab">
     <attribute name="title">
@@ -107,6 +120,19 @@
      </property>
      <property name="text">
       <string>Escala</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="okScaleButton">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>210</y>
+       <width>89</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>OK</string>
      </property>
     </widget>
    </widget>
@@ -153,20 +179,20 @@
       <string>Rotacionar sobre o centro</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="okRotateButton">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>210</y>
+       <width>89</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>OK</string>
+     </property>
+    </widget>
    </widget>
-  </widget>
-  <widget class="QPushButton" name="okButton">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>270</y>
-     <width>89</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>OK</string>
-   </property>
   </widget>
  </widget>
  <resources/>

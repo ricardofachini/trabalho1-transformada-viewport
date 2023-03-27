@@ -3,6 +3,9 @@ from objeto import Objeto
 
 
 class TransformDialog(QtWidgets.QDialog):
+    """
+    Classe para o dialog que permite transformar algum objeto ja renderizado na viewport
+    """
 
     def __init__(self, objeto: Objeto, *args, **kwargs) -> None:
         super(TransformDialog, self).__init__(*args, **kwargs)
@@ -10,8 +13,18 @@ class TransformDialog(QtWidgets.QDialog):
         uic.loadUi("UI/Transform.ui", self)
         self.setWindowTitle(f"Transformar {objeto.nome}")
 
-        self.okButton.clicked.connect(self.add_transformation)
+        self.okTranslateButton.clicked.connect(self.translate_transform)
+        self.okScaleButton.clicked.connect(self.scale_transform)
+        self.okRotateButton.clicked.connect(self.rotate_transform)
 
-    def add_transformation(self):
+    def translate_transform(self):
+        self.objeto.translate("", 20, 20) #arrumar
+        self.close()
+
+    def scale_transform(self):
         self.objeto.zoom(1.2)
+        self.close()
+
+    def rotate_transform(self):
+        #self.objeto.rotate()
         self.close()
