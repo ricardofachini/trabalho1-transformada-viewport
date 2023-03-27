@@ -5,6 +5,7 @@ from PyQt6 import uic, QtWidgets, QtGui, QtCore
 import images_rcc
 
 from dialog import Dialog
+from transformdialog import TransformDialog
 from objeto import Tipo
 
 from window import Window
@@ -33,6 +34,7 @@ class UIWindow(QtWidgets.QMainWindow):
 
         #listeners dos botões da interface
         self.addObjectButton.clicked.connect(self.show_dialog)
+        self.listOfCurrentObjects.itemDoubleClicked.connect(self.select_current_item)
         
         self.zoomInButton.clicked.connect(self.zoom_in)
         self.zoomOutButton.clicked.connect(self.zoom_out)
@@ -163,6 +165,14 @@ class UIWindow(QtWidgets.QMainWindow):
     
     def translate(self, dx, dy):
         self.WorldWindow.translate(dx, dy) #move a window
+        self.render()
+
+    def select_current_item(self, selected_item):
+        print(selected_item.text())
+        selected_object = [item for item in self.display_file.array if item.nome == selected_item.text()]
+        dialog = TransformDialog(selected_object[0])
+        dialog.show()
+        dialog.exec()
         self.render()
 
 

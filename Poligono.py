@@ -48,8 +48,11 @@ class WireFrame(Objeto):
             self.points.append(point)
 
     def zoom(self, scale):
+        centro_x = self.centro.coordenadas[0]
+        centro_y = self.centro.coordenadas[1]
+        centro = (centro_x, centro_y)
         for reta in self.retas:
-            reta.zoom(scale)
+            reta.zoom(scale, centro)
     
     def translate(self, dx, dy):
         for reta in self.retas:

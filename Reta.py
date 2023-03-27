@@ -1,5 +1,6 @@
 from objeto import Objeto, Tipo
 from Ponto import Ponto
+#from decimal import *
 
 #from window import WindowTransformation
 
@@ -10,8 +11,10 @@ class Reta(Objeto):
         self.cor = cor
 
 
-    def zoom(self,  scale):
-        self.translate(-265, -255)
+    def zoom(self, scale, centro = None):
+        if centro is None:
+            centro = self.calculate_center(self.pontos)
+        self.line_translate(-centro[0], -centro[1])
 
         coordenadas1 = self.pontos[0].coordenadas
         x1, y1 = coordenadas1[0], coordenadas1[1]
@@ -21,9 +24,9 @@ class Reta(Objeto):
         x2, y2 = coordenadas2[0], coordenadas2[1]
         self.pontos[1].coordenadas = self.scale((x2, y2), scale, scale)
 
-        self.translate(265, 255)
+        self.line_translate(centro[0], centro[1])
 
-    def translate(self, dx, dy):
+    def line_translate(self, dx, dy):
         coordenadas1 = self.pontos[0].coordenadas
         x1, y1 = coordenadas1[0], coordenadas1[1]
         self.pontos[0].coordenadas = self.translate((x1, y1), dx, dy)
