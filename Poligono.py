@@ -7,7 +7,7 @@ from Ponto import Ponto
 from math import sin, radians
 
 class WireFrame(Objeto):
-    def __init__(self, nome: str, center: Ponto, n_linhas: int, tam_linhas: int, retas: list[Reta]=[]) -> None:
+    def __init__(self, nome: str, center: tuple, n_linhas: int, tam_linhas: int, retas: list[Reta]=[]) -> None:
         super().__init__(nome, Tipo.POLIGONO)
         self.nome       = nome
         self.center     = center
@@ -28,8 +28,8 @@ class WireFrame(Objeto):
 
         self.calculate_points(radius, center_single_angle)
 
-        center_x = self.center.coordenadas[0]
-        center_y = self.center.coordenadas[1]
+        center_x = self.center[0]
+        center_y = self.center[0]
         for i in range(self.n_linhas):
             x1, y1 = self.points[i]
             x2, y2 = self.points[i + 1]
@@ -47,8 +47,8 @@ class WireFrame(Objeto):
             self.points.append(point)
 
     def zoom(self, scale):
-        center_x = self.center.coordenadas[0]
-        center_y = self.center.coordenadas[1]
+        center_x = self.center[0]
+        center_y = self.center[1]
         center = (center_x, center_y)
         for reta in self.retas:
             reta.zoom(scale, center)
@@ -56,11 +56,20 @@ class WireFrame(Objeto):
     def translate(self, dx, dy):
         for reta in self.retas:
             reta.translate(dx, dy)
+        self.center = (self.center[0] + dx, self.center[1] + dy)
 
     def rotate(self, angle, center=None):
         if center is None:
             center = self.center
 
         for reta in self.retas:
-            reta.rotate(angle, center.coordenadas)
-        self.center = super().rotate(self.center, angle)
+            reta.rotate(angle, center)
+        
+        self.calculate_center()
+    
+    def calculate_center(self):
+        pontos = []
+        for reta in self.retas:
+            for ponto in reta.pontos:
+                pontos.append(ponto)
+        self.center = super().calculate_center(pontos)

@@ -54,7 +54,7 @@ class Dialog(QtWidgets.QDialog):
             self.missing_name_popup()
         else:
             self.inserted_type = Tipo.POLIGONO
-            center = Ponto('', ((int) (self.spinBoxXPolyCen.text()), (int) (self.spinBoxYPolyCen.text())))
+            center = ((int) (self.spinBoxXPolyCen.text()), (int) (self.spinBoxYPolyCen.text()))
             n_linhas = (int) (self.spinBoxBordersQtd.text())
             tam_linhas = (int) (self.spinBoxLinesSize.text())
             self.object = WireFrame(nome, center, n_linhas, tam_linhas)

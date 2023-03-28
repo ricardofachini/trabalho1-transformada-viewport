@@ -65,7 +65,7 @@ class UIWindow(QtWidgets.QMainWindow):
         # PARA TESTE
         reta1 = Reta('Linha1', (Ponto('', (100, 100)), Ponto('', (200, 200))))
         reta2 = Reta('Linha2', (Ponto('', (50, 50)), Ponto('', (200, 50))))
-        poligono = WireFrame('Poligono', Ponto('', (250, 250)), 8, 200)
+        poligono = WireFrame('Poligono', (250, 250), 8, 200)
         
         self.draw_line(reta1)
         self.display_file.array.append(reta1)
@@ -266,18 +266,14 @@ class UIWindow(QtWidgets.QMainWindow):
             center = (self.WorldWindow.centerX, self.WorldWindow.centerY)
         elif self.radioOther.isChecked():
             center = ((int) (self.spinBoxCenX.text()), (int) (self.spinBoxCenY.text()))
-        else:
-            self.selected_object.center
         
+
         self.selected_object.rotate(angle, center)
         self.render()
 
     def select_current_item(self, selected_item):
         self.selected_index = self.listOfCurrentObjects.row(selected_item)
         self.selected_object = self.display_file.array[self.selected_index]
-        # dialog = TransformDialog(selected_object)
-        # dialog.show()
-        # dialog.exec()
         self.render()
 
 

@@ -41,15 +41,3 @@ class Reta(Objeto):
             ponto.coordenadas = super().rotate(ponto.coordenadas, angle)
         self.center = super().rotate(self.center, angle)
         self.translate(cx, cy)
-    
-    # def calculate_center(self):
-    #     x1, y1 = self.pontos[0].coordenadas
-    #     x2, y2 = self.pontos[1].coordenadas
-
-    #     x_min = min(x1, x2)
-    #     y_min = min(y1, y2)
-
-    #     dx = abs(x1 - x2) / 2
-    #     dy = abs(y1 - y2) / 2
-
-    #     self.center = (x_min + dx, y_min + dy)
