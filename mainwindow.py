@@ -17,7 +17,7 @@ from Reta import Reta
 from Poligono import WireFrame
 
 
-SELECTED_OBJ_COLOR = 'red'
+#SELECTED_OBJ_COLOR = 'red'
 
 
 class UIWindow(QtWidgets.QMainWindow):
@@ -126,10 +126,11 @@ class UIWindow(QtWidgets.QMainWindow):
                 self.draw_polygon(item)
 
     def draw_point(self, point: Ponto):
-        if point == self.selected_object:
-            pen = QtGui.QPen(QtGui.QColor(SELECTED_OBJ_COLOR))
-        else:
-            pen = QtGui.QPen()
+        #if point == self.selected_object:
+        #    pen = QtGui.QPen(QtGui.QColor(SELECTED_OBJ_COLOR))
+        #else:
+        #    pen = QtGui.QPen()
+        pen = QtGui.QPen()
         pen.setWidth(2)
 
         painter = QtGui.QPainter(self.canvas)        
@@ -145,10 +146,11 @@ class UIWindow(QtWidgets.QMainWindow):
         self.container.setPixmap(self.canvas)
     
     def draw_line(self, line: Reta, status=False):
-        if status or (line == self.selected_object):
-            pen = QtGui.QPen(QtGui.QColor(SELECTED_OBJ_COLOR))
-        else:
-            pen = QtGui.QPen()
+        #if status or (line == self.selected_object):
+        #    pen = QtGui.QPen(QtGui.QColor(SELECTED_OBJ_COLOR))
+        #else:
+        #    pen = QtGui.QPen()
+        pen = QtGui.QPen(QtGui.QColor(line.cor))
         pen.setWidth(2)
 
         painter = QtGui.QPainter(self.canvas)        
@@ -274,6 +276,11 @@ class UIWindow(QtWidgets.QMainWindow):
     def select_current_item(self, selected_item):
         self.selected_index = self.listOfCurrentObjects.row(selected_item)
         self.selected_object = self.display_file.array[self.selected_index]
+        if self.selected_object is None:
+            self.selectedObjectCurrentText.setText("Window")
+        else:
+            self.selectedObjectCurrentText.setText(self.selected_object.nome)
+        self.selectedObjectCurrentText.setStyleSheet("font-weight: bold")
         self.render()
 
 

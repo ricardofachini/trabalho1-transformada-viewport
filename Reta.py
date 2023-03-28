@@ -2,8 +2,8 @@ from objeto import Objeto, Tipo
 from Ponto import Ponto
 
 class Reta(Objeto):
-    def __init__(self, nome: str, pontos: tuple[Ponto, Ponto]) -> None:
-        super().__init__(nome, Tipo.SEGMENTO_RETA)
+    def __init__(self, nome: str, pontos: tuple[Ponto, Ponto], cor: str = "#000000") -> None:
+        super().__init__(nome, Tipo.SEGMENTO_RETA, cor)
         self.pontos = pontos
         self.center = super().calculate_center(self.pontos)
 

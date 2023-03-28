@@ -14,9 +14,10 @@ class Objeto:
     """
     Classe genérica para um objeto qualquer
     """
-    def __init__(self, nome: str, tipo: Tipo) -> None:
+    def __init__(self, nome: str, tipo: Tipo, cor: str = "#000000") -> None:
         self.nome = nome
         self.tipo = tipo
+        self.cor = cor
 
     def rotate(self, coordenadas: tuple, angle) -> tuple[int, int]:
         """
