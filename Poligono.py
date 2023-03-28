@@ -56,5 +56,5 @@ class WireFrame(Objeto):
     
     def translate(self, dx, dy):
         for reta in self.retas:
-            reta.translate(dx, dy)
+            reta.line_translate(dx, dy)
    
