@@ -7,13 +7,13 @@ from Ponto import Ponto
 from math import sin, radians
 
 class WireFrame(Objeto):
-    def __init__(self, nome: str, center: tuple, n_linhas: int, tam_linhas: int, retas: list[Reta]=[]) -> None:
+    def __init__(self, nome: str, center: tuple, n_linhas: int, tam_linhas: int) -> None:
         super().__init__(nome, Tipo.POLIGONO)
         self.nome       = nome
         self.center     = center
         self.n_linhas   = n_linhas
         self.tam_linhas = tam_linhas
-        self.retas      = retas
+        self.retas      = []
         self.points     = []
         self.calculate_lines()
     
