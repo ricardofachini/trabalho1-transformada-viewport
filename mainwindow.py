@@ -55,6 +55,10 @@ class UIWindow(QtWidgets.QMainWindow):
         self.translateUpButton.clicked.connect(self.translate_up)
         self.translateDownButton.clicked.connect(self.translate_down)
 
+        self.radioOther.toggled.connect(self.show_center_options)
+        self.radioObject.toggled.connect(self.not_show_center_options)
+        self.radioWindow.toggled.connect(self.not_show_center_options)
+
         self.rotateLeftButton.clicked.connect(self.rotate_left)
         self.rotateRightButton.clicked.connect(self.rotate_right)
 
@@ -83,6 +87,9 @@ class UIWindow(QtWidgets.QMainWindow):
         self.canvas = QtGui.QPixmap(531, 511) #cria o canvas (viewport)
         self.canvas.fill(QtCore.Qt.GlobalColor.white)
         self.container.setPixmap(self.canvas)
+
+        self.not_show_center_options()
+        self.radioObject.setChecked(True)
 
     def show_dialog(self):
         dialog = Dialog()
@@ -230,15 +237,39 @@ class UIWindow(QtWidgets.QMainWindow):
     def translate_window(self, dx, dy):
         self.WorldWindow.translate(dx, dy) #move a window
 
+    def show_center_options(self):
+        self.labelCenX.setVisible(True)
+        self.labelCenY.setVisible(True)
+
+        self.spinBoxCenX.setVisible(True)
+        self.spinBoxCenY.setVisible(True)
+    
+    def not_show_center_options(self):
+        self.labelCenX.setVisible(False)
+        self.labelCenY.setVisible(False)
+
+        self.spinBoxCenX.setVisible(False)
+        self.spinBoxCenY.setVisible(False)
+
     def rotate_left(self):
-        self.rotate(12)
+        if (self.selected_object is not None) and (self.selected_object.tipo != Tipo.PONTO):
+            self.rotate(12)
     
     def rotate_right(self):
-        self.rotate(-12)
+        if (self.selected_object is not None) and (self.selected_object.tipo != Tipo.PONTO):
+            self.rotate(-12)
     
     def rotate(self, angle):
-        if self.selected_object.tipo != Tipo.PONTO:
-            self.selected_object.rotate(angle)
+        center = None
+        
+        if self.radioWindow.isChecked():
+            center = (self.WorldWindow.centerX, self.WorldWindow.centerY)
+        elif self.radioOther.isChecked():
+            center = ((int) (self.spinBoxCenX.text()), (int) (self.spinBoxCenY.text()))
+        else:
+            self.selected_object.center
+        
+        self.selected_object.rotate(angle, center)
         self.render()
 
     def select_current_item(self, selected_item):

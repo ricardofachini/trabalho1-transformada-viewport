@@ -57,6 +57,10 @@ class WireFrame(Objeto):
         for reta in self.retas:
             reta.translate(dx, dy)
 
-    def rotate(self, angle):
+    def rotate(self, angle, center=None):
+        if center is None:
+            center = self.center
+
         for reta in self.retas:
-            reta.rotate(angle, self.center.coordenadas)
+            reta.rotate(angle, center.coordenadas)
+        self.center = super().rotate(self.center, angle)

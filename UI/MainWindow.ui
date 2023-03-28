@@ -264,13 +264,13 @@
       <string>Adicionar Objeto</string>
      </property>
     </widget>
-    <widget class="QGroupBox" name="groupBox_2">
+    <widget class="QGroupBox" name="groupRotation">
      <property name="geometry">
       <rect>
        <x>20</x>
        <y>340</y>
-       <width>110</width>
-       <height>70</height>
+       <width>210</width>
+       <height>150</height>
       </rect>
      </property>
      <property name="title">
@@ -279,9 +279,9 @@
      <widget class="QToolButton" name="rotateRightButton">
       <property name="geometry">
        <rect>
-        <x>60</x>
-        <y>30</y>
-        <width>31</width>
+        <x>50</x>
+        <y>120</y>
+        <width>40</width>
         <height>21</height>
        </rect>
       </property>
@@ -305,9 +305,9 @@
      <widget class="QToolButton" name="rotateLeftButton">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>30</y>
-        <width>31</width>
+        <x>10</x>
+        <y>120</y>
+        <width>40</width>
         <height>21</height>
        </rect>
       </property>
@@ -326,6 +326,110 @@
       <property name="icon">
        <iconset resource="../images/images.qrc">
         <normaloff>:/images/rotate-left.png</normaloff>:/images/rotate-left.png</iconset>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="groupRotationCen">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>20</y>
+        <width>100</width>
+        <height>120</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Centro</string>
+      </property>
+      <widget class="QRadioButton" name="radioObject">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>89</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Objeto</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radioWindow">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>60</y>
+         <width>89</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Window</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radioOther">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>90</y>
+         <width>89</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Outro</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QSpinBox" name="spinBoxCenX">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>70</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <number>9999</number>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBoxCenY">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>70</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <number>9999</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelCenX">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>10</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>x</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelCenY">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>10</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>y</string>
       </property>
      </widget>
     </widget>

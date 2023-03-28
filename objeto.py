@@ -59,7 +59,7 @@ class Objeto:
             y += current_vector[i]*transformation_matrix[i][1]
         return ((int) (x), (int) (y))
     
-    def translate(self, points: tuple, dx, dy) -> tuple[int, int]:
+    def translate(self, points: tuple, dx: int, dy: int) -> tuple[int, int]:
         """
         Recebe uma tupla de coordenadas 2D, e retorna a tupla translada
         """
