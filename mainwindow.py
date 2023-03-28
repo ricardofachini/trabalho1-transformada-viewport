@@ -55,6 +55,9 @@ class UIWindow(QtWidgets.QMainWindow):
         self.translateUpButton.clicked.connect(self.translate_up)
         self.translateDownButton.clicked.connect(self.translate_down)
 
+        self.rotateLeftButton.clicked.connect(self.rotate_left)
+        self.rotateRightButton.clicked.connect(self.rotate_right)
+
         # PARA TESTE
         reta1 = Reta('Linha1', (Ponto('', (100, 100)), Ponto('', (200, 200))))
         reta2 = Reta('Linha2', (Ponto('', (50, 50)), Ponto('', (200, 50))))
@@ -185,7 +188,7 @@ class UIWindow(QtWidgets.QMainWindow):
             self.translate_window(20, 0)
         else:
             if self.selected_object.tipo == Tipo.SEGMENTO_RETA:
-                self.display_file.array[self.selected_index].line_translate(-20, 0)
+                self.display_file.array[self.selected_index].translate(-20, 0)
             else:
                 self.display_file.array[self.selected_index].translate(-20, 0)
         
@@ -196,7 +199,7 @@ class UIWindow(QtWidgets.QMainWindow):
             self.translate_window(-20, 0)
         else:
             if self.selected_object.tipo == Tipo.SEGMENTO_RETA:
-                self.display_file.array[self.selected_index].line_translate(20, 0)
+                self.display_file.array[self.selected_index].translate(20, 0)
             else:
                 self.display_file.array[self.selected_index].translate(20, 0)
         
@@ -207,7 +210,7 @@ class UIWindow(QtWidgets.QMainWindow):
             self.translate_window(0, -20)
         else:
             if self.selected_object.tipo == Tipo.SEGMENTO_RETA:
-                self.display_file.array[self.selected_index].line_translate(0, 20)
+                self.display_file.array[self.selected_index].translate(0, 20)
             else:
                 self.display_file.array[self.selected_index].translate(0, 20)
         
@@ -218,7 +221,7 @@ class UIWindow(QtWidgets.QMainWindow):
             self.translate_window(0, 20)
         else:
             if self.selected_object.tipo == Tipo.SEGMENTO_RETA:
-                self.display_file.array[self.selected_index].line_translate(0, -20)
+                self.display_file.array[self.selected_index].translate(0, -20)
             else:
                 self.display_file.array[self.selected_index].translate(0, -20)
         
@@ -226,6 +229,17 @@ class UIWindow(QtWidgets.QMainWindow):
     
     def translate_window(self, dx, dy):
         self.WorldWindow.translate(dx, dy) #move a window
+
+    def rotate_left(self):
+        self.rotate(12)
+    
+    def rotate_right(self):
+        self.rotate(-12)
+    
+    def rotate(self, angle):
+        if self.selected_object.tipo != Tipo.PONTO:
+            self.selected_object.rotate(angle)
+        self.render()
 
     def select_current_item(self, selected_item):
         self.selected_index = self.listOfCurrentObjects.row(selected_item)

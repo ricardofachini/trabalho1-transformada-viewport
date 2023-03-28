@@ -6,5 +6,7 @@
     <file>sinal-baixo.png</file>
     <file>zoom-out.png</file>
     <file>zoom-in.png</file>
+    <file>rotate-left.png</file>
+    <file>rotate-right.png</file>
   </qresource>
 </RCC>

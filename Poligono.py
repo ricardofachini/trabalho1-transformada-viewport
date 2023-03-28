@@ -7,10 +7,10 @@ from Ponto import Ponto
 from math import sin, radians
 
 class WireFrame(Objeto):
-    def __init__(self, nome: str, centro: Ponto, n_linhas: int, tam_linhas: int, retas: list[Reta]=[]) -> None:
+    def __init__(self, nome: str, center: Ponto, n_linhas: int, tam_linhas: int, retas: list[Reta]=[]) -> None:
         super().__init__(nome, Tipo.POLIGONO)
         self.nome       = nome
-        self.centro     = centro
+        self.center     = center
         self.n_linhas   = n_linhas
         self.tam_linhas = tam_linhas
         self.retas      = retas
@@ -28,33 +28,35 @@ class WireFrame(Objeto):
 
         self.calculate_points(radius, center_single_angle)
 
-        centro_x = self.centro.coordenadas[0]
-        centro_y = self.centro.coordenadas[1]
+        center_x = self.center.coordenadas[0]
+        center_y = self.center.coordenadas[1]
         for i in range(self.n_linhas):
             x1, y1 = self.points[i]
             x2, y2 = self.points[i + 1]
             
-            p1 = Ponto('', (x1 + centro_x, y1 + centro_y))
-            p2 = Ponto('', (x2 + centro_x, y2 + centro_y))
+            p1 = Ponto('', (x1 + center_x, y1 + center_y))
+            p2 = Ponto('', (x2 + center_x, y2 + center_y))
 
             self.retas.append(Reta('', (p1, p2)))
     
     def calculate_points(self, radius: int, angle: float):
-        #transform = WindowTransformation()
         self.points.append((radius / 2, radius / 2))
 
         for i in range(self.n_linhas):
-            point = self.rotate(self.points[i], angle)
+            point = super().rotate(self.points[i], angle)
             self.points.append(point)
 
     def zoom(self, scale):
-        centro_x = self.centro.coordenadas[0]
-        centro_y = self.centro.coordenadas[1]
-        centro = (centro_x, centro_y)
+        center_x = self.center.coordenadas[0]
+        center_y = self.center.coordenadas[1]
+        center = (center_x, center_y)
         for reta in self.retas:
-            reta.zoom(scale, centro)
+            reta.zoom(scale, center)
     
     def translate(self, dx, dy):
         for reta in self.retas:
-            reta.line_translate(dx, dy)
-   
+            reta.translate(dx, dy)
+
+    def rotate(self, angle):
+        for reta in self.retas:
+            reta.rotate(angle, self.center.coordenadas)

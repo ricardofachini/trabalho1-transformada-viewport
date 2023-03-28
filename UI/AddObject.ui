@@ -361,7 +361,7 @@
       </rect>
      </property>
      <property name="title">
-      <string>Posição Do Centro</string>
+      <string>Posição Do center</string>
      </property>
      <widget class="QLabel" name="labelXPolyCen">
       <property name="geometry">

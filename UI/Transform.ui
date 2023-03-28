@@ -176,7 +176,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Rotacionar sobre o centro</string>
+      <string>Rotacionar sobre o center</string>
      </property>
     </widget>
     <widget class="QPushButton" name="okRotateButton">
