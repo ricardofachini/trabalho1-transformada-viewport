@@ -5,7 +5,6 @@ from PyQt6 import uic, QtWidgets, QtGui, QtCore
 import images_rcc
 
 from dialog import Dialog
-# from transformdialog import TransformDialog
 from objeto import Tipo
 from objeto import Objeto
 
@@ -15,9 +14,6 @@ from displayfile import DisplayFile
 from Ponto import Ponto
 from Reta import Reta
 from Poligono import WireFrame
-
-
-#SELECTED_OBJ_COLOR = 'red'
 
 
 class UIWindow(QtWidgets.QMainWindow):
@@ -61,23 +57,6 @@ class UIWindow(QtWidgets.QMainWindow):
 
         self.rotateLeftButton.clicked.connect(self.rotate_left)
         self.rotateRightButton.clicked.connect(self.rotate_right)
-
-        # PARA TESTE
-        reta1 = Reta('Linha1', (Ponto('', (100, 100)), Ponto('', (200, 200))))
-        reta2 = Reta('Linha2', (Ponto('', (50, 50)), Ponto('', (200, 50))))
-        poligono = WireFrame('Poligono', (250, 250), 8, 200)
-        
-        self.draw_line(reta1)
-        self.display_file.array.append(reta1)
-        self.listOfCurrentObjects.addItems(['Reta1'])
-        
-        self.draw_line(reta2)
-        self.display_file.array.append(reta2)
-        self.listOfCurrentObjects.addItems(['Reta2'])
-
-        self.draw_polygon(poligono)
-        self.display_file.array.append(poligono)
-        self.listOfCurrentObjects.addItems(['Polígono'])
 
     def setup_view(self):
         uic.loadUi("UI/MainWindow.ui", self) #carrega o arquivo de interface gráfica para a janela do qt
@@ -126,10 +105,6 @@ class UIWindow(QtWidgets.QMainWindow):
                 self.draw_polygon(item)
 
     def draw_point(self, point: Ponto):
-        #if point == self.selected_object:
-        #    pen = QtGui.QPen(QtGui.QColor(SELECTED_OBJ_COLOR))
-        #else:
-        #    pen = QtGui.QPen()
         pen = QtGui.QPen(QtGui.QColor(point.cor))
         pen.setWidth(2)
 
@@ -145,11 +120,7 @@ class UIWindow(QtWidgets.QMainWindow):
         painter.end()
         self.container.setPixmap(self.canvas)
     
-    def draw_line(self, line: Reta, status=False):
-        #if status or (line == self.selected_object):
-        #    pen = QtGui.QPen(QtGui.QColor(SELECTED_OBJ_COLOR))
-        #else:
-        #    pen = QtGui.QPen()
+    def draw_line(self, line: Reta):
         pen = QtGui.QPen(QtGui.QColor(line.cor))
         pen.setWidth(2)
 
@@ -167,9 +138,8 @@ class UIWindow(QtWidgets.QMainWindow):
         self.container.setPixmap(self.canvas)
     
     def draw_polygon(self, polygon: WireFrame):
-        status = (polygon == self.selected_object)
         for line in polygon.retas:
-            self.draw_line(line, status)
+            self.draw_line(line)
 
     def zoom_in(self):
         if self.selected_object is None:
