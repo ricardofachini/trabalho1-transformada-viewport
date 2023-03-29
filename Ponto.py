@@ -6,3 +6,6 @@ class Ponto(Objeto):
             raise Exception('Para criar um ponto são necessárias duas, e apenas duas, coordenadas.')
         super().__init__(nome, Tipo.PONTO)
         self.coordenadas = coordenadas
+
+    def translate(self, dx: int, dy: int) -> tuple[int, int]:
+        self.coordenadas = super().translate(self.coordenadas, dx, dy)
