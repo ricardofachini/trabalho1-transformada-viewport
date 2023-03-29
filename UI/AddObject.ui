@@ -40,9 +40,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>60</y>
+     <y>90</y>
      <width>261</width>
-     <height>261</height>
+     <height>231</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -56,7 +56,7 @@
      <property name="geometry">
       <rect>
        <x>170</x>
-       <y>200</y>
+       <y>170</y>
        <width>80</width>
        <height>24</height>
       </rect>
@@ -69,7 +69,7 @@
      <property name="geometry">
       <rect>
        <x>70</x>
-       <y>200</y>
+       <y>170</y>
        <width>80</width>
        <height>24</height>
       </rect>
@@ -217,7 +217,7 @@
      <property name="geometry">
       <rect>
        <x>170</x>
-       <y>200</y>
+       <y>170</y>
        <width>80</width>
        <height>24</height>
       </rect>
@@ -295,29 +295,13 @@
      <property name="geometry">
       <rect>
        <x>70</x>
-       <y>200</y>
+       <y>170</y>
        <width>80</width>
        <height>24</height>
       </rect>
      </property>
      <property name="text">
       <string>OK</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pickColor">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>170</y>
-       <width>89</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="text">
-      <string>Escolher cor</string>
      </property>
     </widget>
    </widget>
@@ -329,7 +313,7 @@
      <property name="geometry">
       <rect>
        <x>170</x>
-       <y>200</y>
+       <y>170</y>
        <width>80</width>
        <height>24</height>
       </rect>
@@ -342,7 +326,7 @@
      <property name="geometry">
       <rect>
        <x>70</x>
-       <y>200</y>
+       <y>170</y>
        <width>80</width>
        <height>24</height>
       </rect>
@@ -482,6 +466,19 @@
      </widget>
     </widget>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="pickColor">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>60</y>
+     <width>121</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Escolher Cor</string>
+   </property>
   </widget>
  </widget>
  <tabstops>

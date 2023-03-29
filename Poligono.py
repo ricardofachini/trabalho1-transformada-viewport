@@ -7,8 +7,8 @@ from Ponto import Ponto
 from math import sin, radians
 
 class WireFrame(Objeto):
-    def __init__(self, nome: str, center: tuple, n_linhas: int, tam_linhas: int) -> None:
-        super().__init__(nome, Tipo.POLIGONO)
+    def __init__(self, nome: str, center: tuple, n_linhas: int, tam_linhas: int, cor: str = "#000000") -> None:
+        super().__init__(nome, Tipo.POLIGONO, cor)
         self.nome       = nome
         self.center     = center
         self.n_linhas   = n_linhas
@@ -37,7 +37,7 @@ class WireFrame(Objeto):
             p1 = Ponto('', (x1 + center_x, y1 + center_y))
             p2 = Ponto('', (x2 + center_x, y2 + center_y))
 
-            self.retas.append(Reta('', (p1, p2)))
+            self.retas.append(Reta('', (p1, p2), self.cor))
     
     def calculate_points(self, radius: int, angle: float):
         self.points.append((radius / 2, radius / 2))

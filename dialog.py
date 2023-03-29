@@ -15,7 +15,7 @@ class Dialog(QtWidgets.QDialog):
         super(Dialog, self).__init__(*args, **kwargs)
         uic.loadUi("UI/AddObject.ui", self)
         self.setWindowTitle("Adicionar objeto")
-        self.line_color = "#000000"
+        self.color = "#000000"
 
         self.inserted_type = None
 
@@ -33,6 +33,7 @@ class Dialog(QtWidgets.QDialog):
             y = (int) (self.posYPoint.text())
             self.inserted_type = Tipo.PONTO
             self.object = Ponto(nome, (x, y))
+            self.object.cor = self.color
             self.close()
     
     def insert_line(self):
@@ -44,7 +45,7 @@ class Dialog(QtWidgets.QDialog):
 
             p1 = Ponto(nome, ((int) (self.spinBoxX1Line.text()), (int) (self.spinBoxY1Line.text())))
             p2 = Ponto(nome, ((int) (self.spinBoxX2Line.text()), (int) (self.spinBoxY2Line.text())))
-            self.object = Reta(nome, (p1, p2), self.line_color)
+            self.object = Reta(nome, (p1, p2), self.color)
             
             self.close()
 
@@ -57,7 +58,7 @@ class Dialog(QtWidgets.QDialog):
             center = ((int) (self.spinBoxXPolyCen.text()), (int) (self.spinBoxYPolyCen.text()))
             n_linhas = (int) (self.spinBoxBordersQtd.text())
             tam_linhas = (int) (self.spinBoxLinesSize.text())
-            self.object = WireFrame(nome, center, n_linhas, tam_linhas)
+            self.object = WireFrame(nome, center, n_linhas, tam_linhas, self.color)
             self.close()
     
     def missing_name_popup(self):
@@ -73,4 +74,4 @@ class Dialog(QtWidgets.QDialog):
         color_dialog.exec()
 
         selected_color = color_dialog.selectedColor()
-        self.line_color = selected_color.name()
+        self.color = selected_color.name()

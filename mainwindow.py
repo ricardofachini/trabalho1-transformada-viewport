@@ -130,7 +130,7 @@ class UIWindow(QtWidgets.QMainWindow):
         #    pen = QtGui.QPen(QtGui.QColor(SELECTED_OBJ_COLOR))
         #else:
         #    pen = QtGui.QPen()
-        pen = QtGui.QPen()
+        pen = QtGui.QPen(QtGui.QColor(point.cor))
         pen.setWidth(2)
 
         painter = QtGui.QPainter(self.canvas)        
