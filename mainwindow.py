@@ -254,11 +254,11 @@ class UIWindow(QtWidgets.QMainWindow):
         self.spinBoxCenY.setVisible(False)
 
     def rotate_left(self):
-        if (self.selected_object is not None) and (self.selected_object.tipo != Tipo.PONTO):
+        if (self.selected_object is not None): #and (self.selected_object.tipo != Tipo.PONTO):
             self.rotate(12)
     
     def rotate_right(self):
-        if (self.selected_object is not None) and (self.selected_object.tipo != Tipo.PONTO):
+        if (self.selected_object is not None): #and (self.selected_object.tipo != Tipo.PONTO):
             self.rotate(-12)
     
     def rotate(self, angle):

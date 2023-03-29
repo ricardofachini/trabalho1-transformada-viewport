@@ -9,3 +9,9 @@ class Ponto(Objeto):
 
     def translate(self, dx: int, dy: int) -> tuple[int, int]:
         self.coordenadas = super().translate(self.coordenadas, dx, dy)
+    
+    def rotate(self, angle, center) -> tuple[int, int]:
+        cx, cy = center
+        self.translate(-cx, -cy)
+        self.coordenadas = super().rotate(self.coordenadas, angle)
+        self.translate(cx, cy)

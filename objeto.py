@@ -47,7 +47,7 @@ class Objeto:
         """
         Recebe uma tupla de coordenadas 2D, e retorna a tupla translada
         """
-        return(points[0] + dx, points[1] + dy)
+        return(int(points[0] + dx), int(points[1] + dy))
 
     def calculate_center(self, points) -> tuple[int, int]:
         """
