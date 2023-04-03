@@ -98,7 +98,6 @@ class UIWindow(QtWidgets.QMainWindow):
             if item is not None:
                 self.obj_descriptor.transform_to_wavefront(item)
         self.obj_descriptor.export_file(file_path)
-        #dialog.exec()
 
     def create_menu_bar(self):
         menu = self.menuBar()
