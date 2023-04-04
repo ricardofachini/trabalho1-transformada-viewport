@@ -2,19 +2,22 @@
 import sys
 from PyQt6 import uic, QtWidgets, QtGui, QtCore
 
+from src.constants import ROTATION_ANGLE, TRANSLATION_STEP
+
 import images_rcc
 
 from dialog import Dialog
-from objeto import Tipo
-from objeto import Objeto
+from src.objeto import Tipo
+# from src.objeto import Objeto
 
-from window import Window
-from displayfile import DisplayFile
-from objdescriptor import ObjDescriptor
+from src.window import Window
+from src.objdescriptor import ObjDescriptor
 
-from Ponto import Ponto
-from Reta import Reta
-from Poligono import WireFrame
+from src.Ponto import Ponto
+from src.Reta import Reta
+from src.Poligono import WireFrame
+
+from src.objeto import RotateSide
 
 
 class UIWindow(QtWidgets.QMainWindow):
@@ -31,13 +34,13 @@ class UIWindow(QtWidgets.QMainWindow):
 
         self.setup_view()
         self.WorldWindow = Window()
-        self.display_file = DisplayFile()
+        self.display_file = []
         self.obj_descriptor = ObjDescriptor()
         
         self.selected_object = None
         self.selected_index = int
 
-        self.display_file.array.append(None)
+        self.display_file.append(None)
         self.listOfCurrentObjects.addItems(['<None>'])
 
 
@@ -64,7 +67,7 @@ class UIWindow(QtWidgets.QMainWindow):
         reta1 = Reta("teste-reta1", (Ponto("", (100, 200)), Ponto("", (200, 100))), "#938412")
         self.draw_line(reta1)
         self.listOfCurrentObjects.addItems([reta1.nome])
-        self.display_file.array.append(reta1)
+        self.display_file.append(reta1)
 
     def setup_view(self):
         uic.loadUi("UI/MainWindow.ui", self) #carrega o arquivo de interface gráfica para a janela do qt
@@ -94,7 +97,7 @@ class UIWindow(QtWidgets.QMainWindow):
     def on_export_file_click(self):
         file_path = QtWidgets.QFileDialog.getSaveFileName(self, 'Exportar arquivo', "./", "Wavefront .obj (*.obj)" )
 
-        for item in self.display_file.array:
+        for item in self.display_file:
             if item is not None:
                 self.obj_descriptor.transform_to_wavefront(item)
         self.obj_descriptor.export_file(file_path)
@@ -114,7 +117,7 @@ class UIWindow(QtWidgets.QMainWindow):
         if dialog.inserted_type:
             name = dialog.lineEdit.text()
             self.listOfCurrentObjects.addItems([name])
-            self.display_file.array.append(dialog.object)
+            self.display_file.append(dialog.object)
             
             if dialog.inserted_type == Tipo.PONTO:
                 self.draw_point(dialog.object)
@@ -132,7 +135,7 @@ class UIWindow(QtWidgets.QMainWindow):
 
     def render(self):
         self.canvas.fill(QtCore.Qt.GlobalColor.white)
-        for item in self.display_file.array:
+        for item in self.display_file:
             if isinstance(item, Ponto):
                 self.draw_point(item)
             elif isinstance(item, Reta):
@@ -181,7 +184,7 @@ class UIWindow(QtWidgets.QMainWindow):
         if self.selected_object is None:
             self.zoom_window(1.1)
         else:
-            self.display_file.array[self.selected_index].zoom(1.1)
+            self.display_file[self.selected_index].zoom(1.1)
     
         self.render()
 
@@ -189,7 +192,7 @@ class UIWindow(QtWidgets.QMainWindow):
         if self.selected_object is None:
             self.zoom_window(0.9)
         else:
-            self.display_file.array[self.selected_index].zoom(0.9)
+            self.display_file[self.selected_index].zoom(0.9)
         
         self.render()
 
@@ -200,45 +203,45 @@ class UIWindow(QtWidgets.QMainWindow):
 
     def translate_left(self):
         if self.selected_object is None:
-            self.translate_window(20, 0)
+            self.translate_window(TRANSLATION_STEP, 0)
         else:
             if self.selected_object.tipo == Tipo.SEGMENTO_RETA:
-                self.display_file.array[self.selected_index].translate(-20, 0)
+                self.display_file[self.selected_index].translate(-TRANSLATION_STEP, 0)
             else:
-                self.display_file.array[self.selected_index].translate(-20, 0)
+                self.display_file[self.selected_index].translate(-TRANSLATION_STEP, 0)
         
         self.render()
 
     def translate_right(self):
         if self.selected_object is None:
-            self.translate_window(-20, 0)
+            self.translate_window(-TRANSLATION_STEP, 0)
         else:
             if self.selected_object.tipo == Tipo.SEGMENTO_RETA:
-                self.display_file.array[self.selected_index].translate(20, 0)
+                self.display_file[self.selected_index].translate(TRANSLATION_STEP, 0)
             else:
-                self.display_file.array[self.selected_index].translate(20, 0)
+                self.display_file[self.selected_index].translate(TRANSLATION_STEP, 0)
         
         self.render()
 
     def translate_up(self):
         if self.selected_object is None:
-            self.translate_window(0, -20)
+            self.translate_window(0, -TRANSLATION_STEP)
         else:
             if self.selected_object.tipo == Tipo.SEGMENTO_RETA:
-                self.display_file.array[self.selected_index].translate(0, 20)
+                self.display_file[self.selected_index].translate(0, TRANSLATION_STEP)
             else:
-                self.display_file.array[self.selected_index].translate(0, 20)
+                self.display_file[self.selected_index].translate(0, TRANSLATION_STEP)
         
         self.render()
 
     def translate_down(self):
         if self.selected_object is None:
-            self.translate_window(0, 20)
+            self.translate_window(0, TRANSLATION_STEP)
         else:
             if self.selected_object.tipo == Tipo.SEGMENTO_RETA:
-                self.display_file.array[self.selected_index].translate(0, -20)
+                self.display_file[self.selected_index].translate(0, -TRANSLATION_STEP)
             else:
-                self.display_file.array[self.selected_index].translate(0, -20)
+                self.display_file[self.selected_index].translate(0, -TRANSLATION_STEP)
         
         self.render()
 
@@ -260,14 +263,14 @@ class UIWindow(QtWidgets.QMainWindow):
         self.spinBoxCenY.setVisible(False)
 
     def rotate_left(self):
-        if (self.selected_object is not None): #and (self.selected_object.tipo != Tipo.PONTO):
-            self.rotate(12)
+        if (self.selected_object is not None):
+            self.rotate(RotateSide.LEFT)
 
     def rotate_right(self):
-        if (self.selected_object is not None): #and (self.selected_object.tipo != Tipo.PONTO):
-            self.rotate(-12)
+        if (self.selected_object is not None):
+            self.rotate(RotateSide.RIGHT)
 
-    def rotate(self, angle):
+    def rotate(self, rotation_side):
         center = None
         
         if self.radioWindow.isChecked():
@@ -276,12 +279,12 @@ class UIWindow(QtWidgets.QMainWindow):
             center = ((int) (self.spinBoxCenX.text()), (int) (self.spinBoxCenY.text()))
         
 
-        self.selected_object.rotate(angle, center)
+        self.selected_object.rotate(rotation_side, center)
         self.render()
 
     def select_current_item(self, selected_item):
         self.selected_index = self.listOfCurrentObjects.row(selected_item)
-        self.selected_object = self.display_file.array[self.selected_index]
+        self.selected_object = self.display_file[self.selected_index]
         if self.selected_object is None:
             self.selectedObjectCurrentText.setText("Window")
         else:

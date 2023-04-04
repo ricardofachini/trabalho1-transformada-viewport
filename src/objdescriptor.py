@@ -1,4 +1,4 @@
-from objeto import Objeto
+from src.objeto import Objeto
 
 VERTICE_PREFIX = "v "
 OBJECT_PREFIX = "o "

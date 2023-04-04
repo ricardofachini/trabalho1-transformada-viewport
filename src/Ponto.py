@@ -1,4 +1,4 @@
-from objeto import Objeto, Tipo
+from src.objeto import Objeto, Tipo
 
 class Ponto(Objeto):
     def __init__(self, nome: str, coordenadas: tuple[int, int]) -> None:

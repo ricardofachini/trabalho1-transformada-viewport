@@ -1,6 +1,8 @@
 from enum import Enum
+import numpy as np
 from math import sin, cos, radians
 
+from src.constants import ROTATION_LEFT, ROTATION_RIGHT
 
 class Tipo(Enum):
     """
@@ -9,6 +11,12 @@ class Tipo(Enum):
     PONTO = "PONTO"
     SEGMENTO_RETA = "RETA"
     POLIGONO = "POLIGONO"
+
+
+class RotateSide(Enum):
+    LEFT  = 0
+    RIGHT = 1
+
 
 class Objeto:
     """
@@ -19,15 +27,18 @@ class Objeto:
         self.tipo = tipo
         self.cor = cor
 
-    def rotate(self, coordenadas: tuple, angle) -> tuple[int, int]:
+    def rotate(self, coordenadas, center, rotation_side) -> tuple[int, int]:
         """
         Recebe uma tupla de coordenadas 2D, e retorna a tupla rotacionada
         """
-        rad = radians(angle)
+        rot_matrix = ROTATION_LEFT if rotation_side == RotateSide.LEFT else ROTATION_RIGHT
         
-        x = coordenadas[0] * cos(rad) - coordenadas[1] * sin(rad)
-        y = coordenadas[0] * sin(rad) + coordenadas[1] * cos(rad)
-        return (x, y)
+        result_matrix = np.array([coordenadas[0], coordenadas[1], 1])
+        result_matrix = result_matrix @ np.array([[1, 0, 0], [0, 1, 0], [-center[0], -center[1], 1]])
+        result_matrix = result_matrix @ rot_matrix
+        result_matrix = result_matrix @ np.array([[1, 0, 0], [0, 1, 0], [center[0], center[1], 1]])
+
+        return (result_matrix[0], result_matrix[1])
     
     def scale(self, points: tuple, sx, sy) -> tuple[int, int]:
         """
@@ -43,11 +54,19 @@ class Objeto:
             y += current_vector[i]*transformation_matrix[i][1]
         return ((int) (x), (int) (y))
     
-    def translate(self, points: tuple, dx: int, dy: int) -> tuple[int, int]:
+    def translate(self, coordenadas: tuple, dx: int, dy: int) -> tuple[int, int]:
         """
         Recebe uma tupla de coordenadas 2D, e retorna a tupla translada
         """
-        return(int(points[0] + dx), int(points[1] + dy))
+        coordenadas = (coordenadas[0], coordenadas[1], 1)
+        translation_matrix = [[1, 0, 0], [0, 1, 0], [dx, dy, 1]]
+
+        x = y = 0
+        for i in range(3):
+            x += coordenadas[i] * translation_matrix[i][0]
+            y += coordenadas[i] * translation_matrix[i][1]            
+        
+        return (x, y)
 
     def calculate_center(self, points) -> tuple[int, int]:
         """

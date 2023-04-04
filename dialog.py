@@ -1,10 +1,10 @@
 import sys
 from PyQt6 import uic, QtWidgets
-from objeto import Tipo
+from src.objeto import Tipo
 
-from Ponto import Ponto
-from Reta import Reta
-from Poligono import WireFrame
+from src.Ponto import Ponto
+from src.Reta import Reta
+from src.Poligono import WireFrame
 
 
 class Dialog(QtWidgets.QDialog):

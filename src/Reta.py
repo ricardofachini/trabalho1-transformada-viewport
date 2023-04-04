@@ -1,5 +1,7 @@
-from objeto import Objeto, Tipo
-from Ponto import Ponto
+from src.objeto import Objeto, Tipo
+from src.Ponto import Ponto
+
+from src.objeto import RotateSide
 
 class Reta(Objeto):
     def __init__(self, nome: str, pontos: tuple[Ponto, Ponto], cor: str = "#000000") -> None:
@@ -33,11 +35,11 @@ class Reta(Objeto):
         cx, cy = self.center
         self.center = super().translate((cx, cy), dx, dy)
 
-    def rotate(self, angle, center=None):
+    def rotate(self, rotation_side, center=None):
         cx, cy = self.center if center is None else center
         
-        self.translate(-cx, -cy)
+        # self.translate(-cx, -cy)
         for ponto in self.pontos:
-            ponto.coordenadas = super().rotate(ponto.coordenadas, angle)
-        self.center = super().rotate(self.center, angle)
-        self.translate(cx, cy)
+            ponto.coordenadas = super().rotate(ponto.coordenadas, (cx, cy), rotation_side)
+        self.center = super().rotate(self.center, (cx, cy), rotation_side)
+        # self.translate(cx, cy)

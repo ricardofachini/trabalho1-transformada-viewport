@@ -1,6 +1,6 @@
-from objeto import Objeto, Tipo
-from Reta import Reta
-from Ponto import Ponto
+from src.objeto import Objeto, Tipo
+from src.Reta import Reta
+from src.Ponto import Ponto
 
 #from window import WindowTransformation
 
@@ -58,12 +58,12 @@ class WireFrame(Objeto):
             reta.translate(dx, dy)
         self.center = (self.center[0] + dx, self.center[1] + dy)
 
-    def rotate(self, angle, center=None):
+    def rotate(self, rotation_side, center=None):
         if center is None:
             center = self.center
 
         for reta in self.retas:
-            reta.rotate(angle, center)
+            reta.rotate(rotation_side, center)
         
         self.calculate_center()
     
