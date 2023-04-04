@@ -1,8 +1,6 @@
-from src.objeto import Objeto, Tipo
+from src.objeto import Objeto, Tipo, RotateSide
 from src.Reta import Reta
 from src.Ponto import Ponto
-
-#from window import WindowTransformation
 
 from math import sin, radians
 
@@ -16,6 +14,7 @@ class WireFrame(Objeto):
         self.retas      = []
         self.points     = []
         self.calculate_lines()
+        self.calculate_center()
     
     def calculate_lines(self):
         total_angle  = (self.n_linhas - 2) * 180
@@ -43,7 +42,7 @@ class WireFrame(Objeto):
         self.points.append((radius / 2, radius / 2))
 
         for i in range(self.n_linhas):
-            point = super().rotate(self.points[i], angle)
+            point = super().rotate(self.points[i], self.center, RotateSide.RIGHT, angle)
             self.points.append(point)
 
     def zoom(self, scale):

@@ -27,46 +27,51 @@ class Objeto:
         self.tipo = tipo
         self.cor = cor
 
-    def rotate(self, coordenadas, center, rotation_side) -> tuple[int, int]:
+    def rotate(self, coordenadas, center, rotation_side, angle=None) -> tuple[int, int]:
         """
         Recebe uma tupla de coordenadas 2D, e retorna a tupla rotacionada
         """
-        rot_matrix = ROTATION_LEFT if rotation_side == RotateSide.LEFT else ROTATION_RIGHT
+        if angle is not None:
+            rad = radians(angle)
+            rot_matrix = np.array([[cos(rad), -sin(rad), 0], [sin(rad), cos(rad), 0], [0, 0, 1]])
+        else:
+            rot_matrix = ROTATION_LEFT if rotation_side == RotateSide.LEFT else ROTATION_RIGHT
         
-        result_matrix = np.array([coordenadas[0], coordenadas[1], 1])
-        result_matrix = result_matrix @ np.array([[1, 0, 0], [0, 1, 0], [-center[0], -center[1], 1]])
-        result_matrix = result_matrix @ rot_matrix
-        result_matrix = result_matrix @ np.array([[1, 0, 0], [0, 1, 0], [center[0], center[1], 1]])
+        to_window_center = np.array([[1, 0, 0], [0, 1, 0], [-center[0], -center[1], 1]])
+        to_own_center    = np.array([[1, 0, 0], [0, 1, 0], [center[0], center[1], 1]])  
+        
+        current_vector = np.array([coordenadas[0], coordenadas[1], 1])
+
+        result_matrix  = current_vector @ (to_window_center @ rot_matrix @ to_own_center)
 
         return (result_matrix[0], result_matrix[1])
     
-    def scale(self, points: tuple, sx, sy) -> tuple[int, int]:
+    def scale(self, points: tuple, scale, center) -> tuple[int, int]:
         """
         Recebe uma tupla de coordenadas 2D, e retorna a tupla escalonada
         """
-        transformation_matrix = [[sx, 0, 0], [0, sy, 0], [0, 0, 1]]
-        current_vector = [points[0], points[1], 1]
-        x = 0
-        y = 0
-        for i in range(3):
-            x += current_vector[i]*transformation_matrix[i][0]
-        for i in range(3):
-            y += current_vector[i]*transformation_matrix[i][1]
-        return ((int) (x), (int) (y))
+        sx = sy = scale
+        transformation_matrix = np.array([[sx, 0, 0], [0, sy, 0], [0, 0, 1]])
+        
+        to_window_center      = np.array([[1, 0, 0], [0, 1, 0], [-center[0], -center[1], 1]])
+        to_own_center         = np.array([[1, 0, 0], [0, 1, 0], [center[0], center[1], 1]])
+        
+        current_vector        = np.array([points[0], points[1], 1])
+        
+        result_matrix         = current_vector @ (to_window_center @ transformation_matrix @ to_own_center)
+        
+        return (result_matrix[0], result_matrix[1])
     
     def translate(self, coordenadas: tuple, dx: int, dy: int) -> tuple[int, int]:
         """
         Recebe uma tupla de coordenadas 2D, e retorna a tupla translada
         """
-        coordenadas = (coordenadas[0], coordenadas[1], 1)
-        translation_matrix = [[1, 0, 0], [0, 1, 0], [dx, dy, 1]]
+        coordenadas        = np.array([coordenadas[0], coordenadas[1], 1])
+        translation_matrix = np.array([[1, 0, 0], [0, 1, 0], [dx, dy, 1]])
 
-        x = y = 0
-        for i in range(3):
-            x += coordenadas[i] * translation_matrix[i][0]
-            y += coordenadas[i] * translation_matrix[i][1]            
+        result_matrix = coordenadas @ translation_matrix          
         
-        return (x, y)
+        return (result_matrix[0], result_matrix[1])
 
     def calculate_center(self, points) -> tuple[int, int]:
         """

@@ -2,13 +2,12 @@
 import sys
 from PyQt6 import uic, QtWidgets, QtGui, QtCore
 
-from src.constants import ROTATION_ANGLE, TRANSLATION_STEP
+from src.constants import TRANSLATION_STEP, ZOOM_IN_SCALE, ZOOM_OUT_SCALE
 
 import images_rcc
 
 from dialog import Dialog
 from src.objeto import Tipo
-# from src.objeto import Objeto
 
 from src.window import Window
 from src.objdescriptor import ObjDescriptor
@@ -68,6 +67,23 @@ class UIWindow(QtWidgets.QMainWindow):
         self.draw_line(reta1)
         self.listOfCurrentObjects.addItems([reta1.nome])
         self.display_file.append(reta1)
+
+        # PARA TESTE
+        reta1 = Reta('Reta1', (Ponto('', (100, 100)), Ponto('', (200, 200))))
+        reta2 = Reta('Reta2', (Ponto('', (50, 50)), Ponto('', (200, 50))))
+        poligono = WireFrame('Poligono', (250, 250), 8, 200)
+        
+        self.draw_line(reta1)
+        self.display_file.append(reta1)
+        self.listOfCurrentObjects.addItems(['Reta1'])
+        
+        self.draw_line(reta2)
+        self.display_file.append(reta2)
+        self.listOfCurrentObjects.addItems(['Reta2'])
+
+        self.draw_polygon(poligono)
+        self.display_file.append(poligono)
+        self.listOfCurrentObjects.addItems(['Polígono'])
 
     def setup_view(self):
         uic.loadUi("UI/MainWindow.ui", self) #carrega o arquivo de interface gráfica para a janela do qt
@@ -182,17 +198,17 @@ class UIWindow(QtWidgets.QMainWindow):
 
     def zoom_in(self):
         if self.selected_object is None:
-            self.zoom_window(1.1)
+            self.zoom_window(ZOOM_IN_SCALE)
         else:
-            self.display_file[self.selected_index].zoom(1.1)
+            self.display_file[self.selected_index].zoom(ZOOM_IN_SCALE)
     
         self.render()
 
     def zoom_out(self):
         if self.selected_object is None:
-            self.zoom_window(0.9)
+            self.zoom_window(ZOOM_OUT_SCALE)
         else:
-            self.display_file[self.selected_index].zoom(0.9)
+            self.display_file[self.selected_index].zoom(ZOOM_OUT_SCALE)
         
         self.render()
 

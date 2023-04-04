@@ -43,8 +43,8 @@ class Dialog(QtWidgets.QDialog):
         else:
             self.inserted_type = Tipo.SEGMENTO_RETA
 
-            p1 = Ponto(nome, ((int) (self.spinBoxX1Line.text()), (int) (self.spinBoxY1Line.text())))
-            p2 = Ponto(nome, ((int) (self.spinBoxX2Line.text()), (int) (self.spinBoxY2Line.text())))
+            p1 = Ponto('', ((int) (self.spinBoxX1Line.text()), (int) (self.spinBoxY1Line.text())))
+            p2 = Ponto('', ((int) (self.spinBoxX2Line.text()), (int) (self.spinBoxY2Line.text())))
             self.object = Reta(nome, (p1, p2), self.color)
             
             self.close()
