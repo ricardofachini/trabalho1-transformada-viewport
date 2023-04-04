@@ -89,3 +89,6 @@ class Objeto:
         cx = cx/n
         cy = cy/n
         return (int(cx), int(cy))
+
+    def align_center(self, base_center: tuple):
+        self.translate(base_center[0], base_center[1])

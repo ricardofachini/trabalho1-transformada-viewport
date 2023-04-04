@@ -25,25 +25,27 @@ class UIWindow(QtWidgets.QMainWindow):
     """
     def __init__(self, *args, **kwargs):
         super(UIWindow, self).__init__(*args, **kwargs)
-        #coordenadas maximas e minimas da viewport
-        self.minXvp = 0
-        self.minYvp = 0
-        self.maxXvp = 531
-        self.maxYvp = 511
-
         self.setup_view()
-        self.WorldWindow = Window()
-        self.display_file = []
+
+        # coordenadas maximas e minimas da viewport
+        self.minXvp    = 0
+        self.minYvp    = 0
+        self.maxXvp    = (int) (self.labelContainerForCanvas.width())
+        self.maxYvp    = (int) (self.labelContainerForCanvas.height())
+        self.vp_width  = self.maxXvp - self.minXvp
+        self.vp_height = self.maxYvp - self.minYvp
+
+        self.window         = Window()
+        self.display_file   = []
         self.obj_descriptor = ObjDescriptor()
         
         self.selected_object = None
-        self.selected_index = int
+        self.selected_index  = 0
 
         self.display_file.append(None)
         self.listOfCurrentObjects.addItems(['<None>'])
 
-
-        #listeners dos botões da interface
+        # listeners dos botões da interface
         self.addObjectButton.clicked.connect(self.show_dialog)
         self.listOfCurrentObjects.itemDoubleClicked.connect(self.select_current_item)
         
@@ -62,28 +64,25 @@ class UIWindow(QtWidgets.QMainWindow):
         self.rotateLeftButton.clicked.connect(self.rotate_left)
         self.rotateRightButton.clicked.connect(self.rotate_right)
 
-        #teste
-        reta1 = Reta("teste-reta1", (Ponto("", (100, 200)), Ponto("", (200, 100))), "#938412")
-        self.draw_line(reta1)
-        self.listOfCurrentObjects.addItems([reta1.nome])
-        self.display_file.append(reta1)
+        # teste
+        # reta1 = Reta("teste-reta1", (Ponto("", (100, 200)), Ponto("", (200, 100))), "#938412")
+        # self.draw_line(reta1)
+        # self.listOfCurrentObjects.addItems([reta1.nome])
+        # self.display_file.append(reta1)
 
         # PARA TESTE
-        reta1 = Reta('Reta1', (Ponto('', (100, 100)), Ponto('', (200, 200))))
-        reta2 = Reta('Reta2', (Ponto('', (50, 50)), Ponto('', (200, 50))))
-        poligono = WireFrame('Poligono', (250, 250), 8, 200)
-        
-        self.draw_line(reta1)
-        self.display_file.append(reta1)
-        self.listOfCurrentObjects.addItems(['Reta1'])
-        
-        self.draw_line(reta2)
-        self.display_file.append(reta2)
-        self.listOfCurrentObjects.addItems(['Reta2'])
+        poligono200 = WireFrame('Poligono200', (0, 0), 8, 200)
+        poligono300 = WireFrame('Poligono300', (0, 0), 8, 300)
+        poligono200.align_center(self.window.center)
+        poligono300.align_center(self.window.center)
 
-        self.draw_polygon(poligono)
-        self.display_file.append(poligono)
-        self.listOfCurrentObjects.addItems(['Polígono'])
+        self.draw_polygon(poligono200)
+        self.display_file.append(poligono200)
+        self.listOfCurrentObjects.addItems(['Polígono200'])
+
+        self.draw_polygon(poligono300)
+        self.display_file.append(poligono300)
+        self.listOfCurrentObjects.addItems(['Polígono300'])
 
     def setup_view(self):
         uic.loadUi("UI/MainWindow.ui", self) #carrega o arquivo de interface gráfica para a janela do qt
@@ -134,6 +133,8 @@ class UIWindow(QtWidgets.QMainWindow):
             name = dialog.lineEdit.text()
             self.listOfCurrentObjects.addItems([name])
             self.display_file.append(dialog.object)
+
+            dialog.object.align_center(self.window.center)
             
             if dialog.inserted_type == Tipo.PONTO:
                 self.draw_point(dialog.object)
@@ -141,13 +142,6 @@ class UIWindow(QtWidgets.QMainWindow):
                 self.draw_line(dialog.object)
             if dialog.inserted_type == Tipo.POLIGONO:
                 self.draw_polygon(dialog.object)
-
-    #transformadas de viewport
-    def get_x_to_viewport(self, x_window):
-        return ((x_window - self.WorldWindow.minXwp) / (self.WorldWindow.maxXwp - self.WorldWindow.minXwp)) * (self.maxXvp - self.minXvp)
-
-    def get_y_to_viewport(self, y_window):
-        return (1 - ((y_window - self.WorldWindow.minYwp) / (self.WorldWindow.maxYwp - self.WorldWindow.minYwp))) * (self.maxYvp - self.minYvp)
 
     def render(self):
         self.canvas.fill(QtCore.Qt.GlobalColor.white)
@@ -166,10 +160,8 @@ class UIWindow(QtWidgets.QMainWindow):
         painter = QtGui.QPainter(self.canvas)        
         painter.setPen(pen)
 
-        x = point.coordenadas[0]
-        x = int(self.get_x_to_viewport(x))
-        y = point.coordenadas[1]
-        y = int(self.get_y_to_viewport(y))
+        x = int(self.window.get_x_to_viewport(point.coordenadas[0], self.vp_width))
+        y = int(self.window.get_y_to_viewport(point.coordenadas[1], self.vp_height))
 
         painter.drawPoint(x, y)
         painter.end()
@@ -182,11 +174,11 @@ class UIWindow(QtWidgets.QMainWindow):
         painter = QtGui.QPainter(self.canvas)        
         painter.setPen(pen)
 
-        x1 = (int) (self.get_x_to_viewport(line.pontos[0].coordenadas[0]))
-        y1 = (int) (self.get_y_to_viewport(line.pontos[0].coordenadas[1]))
+        x1 = (int) (self.window.get_x_to_viewport(line.pontos[0].coordenadas[0], self.vp_width))
+        y1 = (int) (self.window.get_y_to_viewport(line.pontos[0].coordenadas[1], self.vp_height))
 
-        x2 = (int) (self.get_x_to_viewport(line.pontos[1].coordenadas[0]))
-        y2 = (int) (self.get_y_to_viewport(line.pontos[1].coordenadas[1]))
+        x2 = (int) (self.window.get_x_to_viewport(line.pontos[1].coordenadas[0], self.vp_width))
+        y2 = (int) (self.window.get_y_to_viewport(line.pontos[1].coordenadas[1], self.vp_height))
 
         painter.drawLine(x1, y1, x2, y2)
         painter.end()
@@ -213,9 +205,9 @@ class UIWindow(QtWidgets.QMainWindow):
         self.render()
 
     def zoom_window(self, scale):
-        self.WorldWindow.translate(-self.WorldWindow.centerX, -self.WorldWindow.centerY)
-        self.WorldWindow.scale(scale)
-        self.WorldWindow.translate(self.WorldWindow.centerX, self.WorldWindow.centerY)
+        self.window.translate(-self.window.centerX, -self.window.centerY)
+        self.window.scale(scale)
+        self.window.translate(self.window.centerX, self.window.centerY)
 
     def translate_left(self):
         if self.selected_object is None:
@@ -262,7 +254,7 @@ class UIWindow(QtWidgets.QMainWindow):
         self.render()
 
     def translate_window(self, dx, dy):
-        self.WorldWindow.translate(dx, dy) #move a window
+        self.window.translate(dx, dy) #move a window
 
     def show_center_options(self):
         self.labelCenX.setVisible(True)
@@ -281,22 +273,32 @@ class UIWindow(QtWidgets.QMainWindow):
     def rotate_left(self):
         if (self.selected_object is not None):
             self.rotate(RotateSide.LEFT)
+        else:
+            self.rotate_window(RotateSide.LEFT)
+        
+        self.render()
 
     def rotate_right(self):
         if (self.selected_object is not None):
             self.rotate(RotateSide.RIGHT)
+        else:
+            self.rotate_window(RotateSide.RIGHT)
+        
+        self.render()
 
     def rotate(self, rotation_side):
         center = None
         
         if self.radioWindow.isChecked():
-            center = (self.WorldWindow.centerX, self.WorldWindow.centerY)
+            center = (self.window.centerX, self.window.centerY)
         elif self.radioOther.isChecked():
             center = ((int) (self.spinBoxCenX.text()), (int) (self.spinBoxCenY.text()))
         
 
         self.selected_object.rotate(rotation_side, center)
-        self.render()
+
+    def rotate_window(self, rotation_side):
+        self.window.rotate(rotation_side)
 
     def select_current_item(self, selected_item):
         self.selected_index = self.listOfCurrentObjects.row(selected_item)
