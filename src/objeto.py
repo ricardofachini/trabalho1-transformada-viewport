@@ -27,22 +27,14 @@ class Objeto:
         self.tipo = tipo
         self.cor = cor
 
-    def rotate(self, coordenadas, center, rotation_side, angle=None) -> tuple[int, int]:
+    def rotate(self, coordenadas, center, rotation_side, rot_matrix=None, angle=None) -> tuple[int, int]:
         """
         Recebe uma tupla de coordenadas 2D, e retorna a tupla rotacionada
-        """
-        if angle is not None:
-            rad = radians(angle)
-            rot_matrix = np.array([[cos(rad), -sin(rad), 0], [sin(rad), cos(rad), 0], [0, 0, 1]])
-        else:
-            rot_matrix = ROTATION_LEFT if rotation_side == RotateSide.LEFT else ROTATION_RIGHT
-        
-        to_window_center = np.array([[1, 0, 0], [0, 1, 0], [-center[0], -center[1], 1]])
-        to_own_center    = np.array([[1, 0, 0], [0, 1, 0], [center[0], center[1], 1]])  
-        
+        """  
         current_vector = np.array([coordenadas[0], coordenadas[1], 1])
-
-        result_matrix  = current_vector @ (to_window_center @ rot_matrix @ to_own_center)
+        rot_matrix = self.get_rot_matrix(center, rotation_side, rot_matrix, angle)
+        
+        result_matrix  = current_vector @ rot_matrix
 
         return (result_matrix[0], result_matrix[1])
     
@@ -92,3 +84,18 @@ class Objeto:
 
     def align_center(self, base_center: tuple):
         self.translate(base_center[0], base_center[1])
+
+    def get_rot_matrix(self, center, rotation_side, rot_matrix, angle):
+        if rot_matrix is not None:
+            return rot_matrix
+        
+        if angle is not None:
+            rad = radians(angle)
+            rot_matrix = np.array([[cos(rad), -sin(rad), 0], [sin(rad), cos(rad), 0], [0, 0, 1]])
+        else:
+            rot_matrix = ROTATION_LEFT if rotation_side == RotateSide.LEFT else ROTATION_RIGHT
+        
+        to_window_center = np.array([[1, 0, 0], [0, 1, 0], [-center[0], -center[1], 1]])
+        to_own_center    = np.array([[1, 0, 0], [0, 1, 0], [center[0], center[1], 1]])
+
+        return to_window_center @ rot_matrix @ to_own_center

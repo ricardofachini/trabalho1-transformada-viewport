@@ -1,8 +1,9 @@
 # This Python file uses the following encoding: utf-8
 import sys
+import numpy as np
 from PyQt6 import uic, QtWidgets, QtGui, QtCore
 
-from src.constants import TRANSLATION_STEP, ZOOM_IN_SCALE, ZOOM_OUT_SCALE
+from src.constants import TRANSLATION_STEP, ZOOM_IN_SCALE, ZOOM_OUT_SCALE, ROTATION_LEFT, ROTATION_RIGHT
 
 import images_rcc
 
@@ -298,7 +299,18 @@ class UIWindow(QtWidgets.QMainWindow):
         self.selected_object.rotate(rotation_side, center)
 
     def rotate_window(self, rotation_side):
-        self.window.rotate(rotation_side)
+        # self.window.rotate(rotation_side)
+        rot_matrix = ROTATION_LEFT if rotation_side == RotateSide.LEFT else ROTATION_RIGHT
+        
+        center_x, center_y = self.window.center
+        to_window_center = np.array([[1, 0, 0], [0, 1, 0], [-center_x, -center_y, 1]])
+        to_own_center    = np.array([[1, 0, 0], [0, 1, 0], [center_x, center_y, 1]])
+
+        rot_matrix = to_window_center @ rot_matrix @ to_own_center
+        
+        for item in self.display_file:
+            if item is not None:
+                item.rotate(rotation_side, rot_matrix, self.window.center)
 
     def select_current_item(self, selected_item):
         self.selected_index = self.listOfCurrentObjects.row(selected_item)

@@ -50,12 +50,12 @@ class WireFrame(Objeto):
             reta.translate(dx, dy)
         self.center = (self.center[0] + dx, self.center[1] + dy)
 
-    def rotate(self, rotation_side, center=None):
+    def rotate(self, rotation_side, rot_matrix=None, center=None):
         if center is None:
             center = self.center
 
         for reta in self.retas:
-            reta.rotate(rotation_side, center)
+            reta.rotate(rotation_side, rot_matrix, center)
         
         self.calculate_center()
     

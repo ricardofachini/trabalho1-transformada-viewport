@@ -24,10 +24,10 @@ class Reta(Objeto):
         cx, cy = self.center
         self.center = super().translate((cx, cy), dx, dy)
 
-    def rotate(self, rotation_side, center=None):
+    def rotate(self, rotation_side, rot_matrix=None, center=None):
         cx, cy = self.center if center is None else center
         
         for ponto in self.pontos:
-            ponto.coordenadas = super().rotate(ponto.coordenadas, (cx, cy), rotation_side)
+            ponto.coordenadas = super().rotate(ponto.coordenadas, (cx, cy), rotation_side, rot_matrix)
         
         self.center = super().rotate(self.center, (cx, cy), rotation_side)
