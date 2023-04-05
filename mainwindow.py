@@ -110,9 +110,14 @@ class UIWindow(QtWidgets.QMainWindow):
         file = QtWidgets.QFileDialog.getOpenFileName(self, 'Abrir arquivo', './', "Wavefront .obj (*.obj)")
         objects = self.obj_descriptor.import_file(path=file)
         for item in objects:
-            self.display_file.append(item)
-            self.draw_line(item)
-            self.listOfCurrentObjects.addItems([item.nome])
+            if item.tipo is Tipo.SEGMENTO_RETA:
+                self.display_file.append(item)
+                self.draw_line(item)
+                self.listOfCurrentObjects.addItems([item.nome])
+            elif item.tipo is Tipo.PONTO:
+                self.display_file.append(item)
+                self.draw_point(item)
+                self.listOfCurrentObjects.addItems([item.nome])
 
     def on_export_file_click(self):
         file_path = QtWidgets.QFileDialog.getSaveFileName(self, 'Exportar arquivo', "./", "Wavefront .obj (*.obj)" )
