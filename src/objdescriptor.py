@@ -1,4 +1,7 @@
-from src.objeto import Tipo
+from src.objeto import Tipo, Objeto
+from src.Poligono import WireFrame
+from src.Reta import Reta
+from src.Ponto import Ponto
 
 VERTICE_PREFIX = "v "
 POINT_PREFIX = "p "
@@ -15,6 +18,55 @@ class ObjDescriptor:
     """
     def __init__(self) -> None:
         self.wavefront_string: str = ""
+
+    def import_file(self, path: str) -> list[Objeto]:
+        """
+        Importa um arquivo Wavefront (*.obj) e converte seus objetos em objetos no display_file
+        @params:
+            path: (str) -> caminho e nome do arquivo a ser lido
+        """
+        vertices_list = []
+        objects_list = []
+        current_object_name = ""
+        with open(path[0], "r") as file:
+            for line in file:
+                if line[0] == "v":
+                    points = line.split(" ")
+                    vertice = (float (points[1]), float(points[2]))
+                    vertices_list.append(vertice)
+                elif line[0] == "o":
+                    name = line.strip().split(" ")
+                    current_object_name = name[1]
+                elif line[0] == "l":
+                    indices_de_vertices = line.strip().split(" ")
+                    if len(indices_de_vertices) > 3: #se true, é um poligono
+                        #poligono = WireFrame(current_object_name, (0, 0), len(indexes)-1, 0)
+                        #objects_list.append(poligono)
+                        pass
+                    else:
+                        reta = Reta(
+                                current_object_name,
+                                (
+                                    Ponto("", (
+                                        vertices_list[int(indices_de_vertices[1])][0],
+                                        vertices_list[(int) (indices_de_vertices[1])][1])),
+                                    Ponto("", (
+                                        vertices_list[(int) (indices_de_vertices[2])][0],
+                                        vertices_list[(int) (indices_de_vertices[2])][1]))
+                                )
+                            )
+                        objects_list.append(reta)
+                elif line[0] == "p":
+                    indice_coordenada = line.strip().split(" ")
+                    ponto = Ponto(
+                                current_object_name,
+                                (
+                                    vertices_list[(int) (indice_coordenada[1])][0],
+                                    vertices_list[(int) (indice_coordenada[1])][1]
+                                )
+                            )
+                    objects_list.append(ponto)
+        return objects_list
 
     def export_file(self, path: str):
         """
