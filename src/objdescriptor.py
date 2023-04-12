@@ -41,7 +41,7 @@ class ObjDescriptor:
                     case "l":
                         indices_de_vertices = line.strip().split(" ")
                         if len(indices_de_vertices) > 3: #se true, é um poligono
-                            poligono = WireFrame(current_object_name, (0, 0), len(indices_de_vertices)-2, 0, vertices_list[-(len(indices_de_vertices)-1):])
+                            poligono = WireFrame(current_object_name, (0, 0), len(indices_de_vertices)-2, 0, pontos=vertices_list[-(len(indices_de_vertices)-1):])
                             objects_list.append(poligono)
                         else:
                             reta = Reta(
