@@ -1,7 +1,0 @@
-mtllib e.mtl
-
-o reta1
-v 600.0 700.0 0.0
-v 700.0 600.0 0.0
-l -2 -1 
-usemtl red

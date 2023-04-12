@@ -100,9 +100,10 @@ class ObjDescriptor:
                 string += f"{-(contagem - i)} "
 
         elif item.tipo is Tipo.POLIGONO:
-            for vertice in item.points:
-                coordenadas = tuple(float(number) for number in vertice)
-                string += VERTICE_PREFIX + str(coordenadas).replace("(", "") + " 0.0" + LINE_BREAK
+            for retas in item.retas:
+                for vertice in retas.pontos:
+                    coordenadas = tuple(float(number) for number in vertice.coordenadas)
+                    string += VERTICE_PREFIX + str(coordenadas).replace("(", "") + " 0.0" + LINE_BREAK
             contagem = len(item.points)
             string += LINE_PREFIX
             for i in range(contagem):

@@ -72,7 +72,7 @@ class UIWindow(QtWidgets.QMainWindow):
         # self.display_file.append(reta1)
 
         # PARA TESTE
-        '''poligono200 = WireFrame('Poligono200', (0, 0), 8, 200)
+        poligono200 = WireFrame('Poligono200', (0, 0), 8, 200)
         poligono300 = WireFrame('Poligono300', (0, 0), 8, 300)
         poligono200.align_center(self.window.center)
         poligono300.align_center(self.window.center)
@@ -83,7 +83,7 @@ class UIWindow(QtWidgets.QMainWindow):
 
         self.draw_polygon(poligono300)
         self.display_file.append(poligono300)
-        self.listOfCurrentObjects.addItems(['Polígono300'])'''
+        self.listOfCurrentObjects.addItems(['Polígono300'])
 
     def setup_view(self):
         uic.loadUi("UI/MainWindow.ui", self) #carrega o arquivo de interface gráfica para a janela do qt
