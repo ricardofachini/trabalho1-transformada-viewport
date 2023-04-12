@@ -72,7 +72,7 @@ class UIWindow(QtWidgets.QMainWindow):
         # self.display_file.append(reta1)
 
         # PARA TESTE
-        poligono200 = WireFrame('Poligono200', (0, 0), 8, 200)
+        '''poligono200 = WireFrame('Poligono200', (0, 0), 8, 200)
         poligono300 = WireFrame('Poligono300', (0, 0), 8, 300)
         poligono200.align_center(self.window.center)
         poligono300.align_center(self.window.center)
@@ -83,7 +83,7 @@ class UIWindow(QtWidgets.QMainWindow):
 
         self.draw_polygon(poligono300)
         self.display_file.append(poligono300)
-        self.listOfCurrentObjects.addItems(['Polígono300'])
+        self.listOfCurrentObjects.addItems(['Polígono300'])'''
 
     def setup_view(self):
         uic.loadUi("UI/MainWindow.ui", self) #carrega o arquivo de interface gráfica para a janela do qt
@@ -107,25 +107,26 @@ class UIWindow(QtWidgets.QMainWindow):
         self.export_action.triggered.connect(self.on_export_file_click)
 
     def on_open_file_click(self):
-        file = QtWidgets.QFileDialog.getOpenFileName(self, 'Abrir arquivo', './', "Wavefront .obj (*.obj)")
-        objects = self.obj_descriptor.import_file(path=file)
+        file_path, _ = QtWidgets.QFileDialog.getOpenFileName(self, 'Abrir arquivo', './', "Wavefront .obj (*.obj)")
+        objects = self.obj_descriptor.import_file(file_path)
         for item in objects:
-            if item.tipo is Tipo.SEGMENTO_RETA:
-                self.display_file.append(item)
-                self.draw_line(item)
-                self.listOfCurrentObjects.addItems([item.nome])
-            elif item.tipo is Tipo.PONTO:
-                self.display_file.append(item)
-                self.draw_point(item)
-                self.listOfCurrentObjects.addItems([item.nome])
+            self.display_file.append(item)
+            self.listOfCurrentObjects.addItems([item.nome])
+            match item.tipo:
+                case Tipo.SEGMENTO_RETA:
+                    self.draw_line(item)
+                case Tipo.PONTO:
+                    self.draw_point(item)
+                case Tipo.POLIGONO:
+                    self.draw_polygon(item)
 
     def on_export_file_click(self):
-        file_path = QtWidgets.QFileDialog.getSaveFileName(self, 'Exportar arquivo', "./", "Wavefront .obj (*.obj)" )
-
+        file_path, _ = QtWidgets.QFileDialog.getSaveFileName(self, 'Exportar arquivo', "./", "Wavefront .obj (*.obj)" )
+        file_name = QtCore.QFileInfo(file_path).fileName()
         for item in self.display_file:
             if item is not None:
                 self.obj_descriptor.transform_to_wavefront(item)
-        self.obj_descriptor.export_file(file_path)
+        self.obj_descriptor.export_file(file_path, file_name)
 
     def create_menu_bar(self):
         menu = self.menuBar()

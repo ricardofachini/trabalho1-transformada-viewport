@@ -28,22 +28,21 @@ class ObjDescriptor:
         vertices_list = []
         objects_list = []
         current_object_name = ""
-        with open(path[0], "r") as file:
+        with open(path, "r") as file:
             for line in file:
                 match line[0]:
                     case "v":
                         points = line.split(" ")
                         vertice = (float (points[1]), float(points[2]))
                         vertices_list.append(vertice)
-                    case"o":
+                    case "o":
                         name = line.strip().split(" ")
                         current_object_name = name[1]
                     case "l":
                         indices_de_vertices = line.strip().split(" ")
                         if len(indices_de_vertices) > 3: #se true, é um poligono
-                            #poligono = WireFrame(current_object_name, (0, 0), len(indexes)-1, 0)
-                            #objects_list.append(poligono)
-                            pass
+                            poligono = WireFrame(current_object_name, (0, 0), len(indices_de_vertices)-2, 0, vertices_list[-(len(indices_de_vertices)-1):])
+                            objects_list.append(poligono)
                         else:
                             reta = Reta(
                                     current_object_name,
@@ -69,13 +68,14 @@ class ObjDescriptor:
                         objects_list.append(ponto)
         return objects_list
 
-    def export_file(self, path: str):
+    def export_file(self, path: str, name: str):
         """
         Exporta um arquivo Wavefront OBJ com a extensão .obj de todos os objetos
         """
-        path = path[0].replace(".obj", "")
+        path = path.replace(".obj", "")
+        name = name.replace(".obj", "")
         with open(f"{path}.obj", 'w+') as file:
-            string = f"mtllib {path[-1]}.mtl\n\n"
+            string = f"mtllib {name}.mtl\n\n"
             string += self.wavefront_string
             file.write(string)
         self.wavefront_string = ""
@@ -100,10 +100,15 @@ class ObjDescriptor:
                 string += f"{-(contagem - i)} "
 
         elif item.tipo is Tipo.POLIGONO:
+            coordenada_anterior = None
             for retas in item.retas:
                 for vertice in retas.pontos:
                     coordenadas = tuple(float(number) for number in vertice.coordenadas)
-                    string += VERTICE_PREFIX + str(coordenadas).replace("(", "") + " 0.0" + LINE_BREAK
+
+                    if (str(coordenadas).replace("(", "")) != coordenada_anterior:
+                        string += VERTICE_PREFIX + str(coordenadas).replace("(", "") + " 0.0" + LINE_BREAK
+                        coordenada_anterior = str(coordenadas).replace("(", "")
+
             contagem = len(item.points)
             string += LINE_PREFIX
             for i in range(contagem):

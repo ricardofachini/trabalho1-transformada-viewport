@@ -5,21 +5,24 @@ from src.Ponto import Ponto
 from math import sin, cos, pi, radians
 
 class WireFrame(Objeto):
-    def __init__(self, nome: str, center: tuple, n_linhas: int, tam_linhas: int, cor: str = "#000000") -> None:
+    def __init__(self, nome: str, center: tuple, n_linhas: int, tam_linhas: int, pontos=None, cor: str = "#000000") -> None:
         super().__init__(nome, Tipo.POLIGONO, cor)
         self.nome       = nome
         self.center     = center
         self.n_linhas   = n_linhas
         self.tam_linhas = tam_linhas
         self.retas      = []
-        self.points     = []
+        if pontos is None:
+            pontos = []
+        self.points     = pontos
         
         self.calculate_lines()
     
     def calculate_lines(self):
         # Calcula o raio do polígono
         radius = self.tam_linhas / (2 * sin(radians(360 / self.n_linhas)))
-        self.calculate_points(radius)
+        if len(self.points) == 0:
+            self.calculate_points(radius)
 
         for i in range(self.n_linhas):
             x1, y1 = self.points[i]
