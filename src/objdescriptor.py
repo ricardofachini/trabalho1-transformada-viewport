@@ -114,13 +114,11 @@ class ObjDescriptor:
             for i in range(contagem):
                 string += f"{-(contagem - i)} "
 
-        elif item is Tipo.PONTO:
+        elif item.tipo is Tipo.PONTO:
             coordenadas = tuple(float(number) for number in item.coordenadas)
             string += VERTICE_PREFIX + str(coordenadas).replace("(", "") + " 0.0" + LINE_BREAK
-            contagem = len(item.coordenadas)
             string += POINT_PREFIX
-            for i in range(contagem):
-                string += f"{-(contagem - i)} "
+            string += "-1"
 
         string += "\nusemtl red"
         string=string.replace(")", "")
