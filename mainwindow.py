@@ -65,25 +65,6 @@ class UIWindow(QtWidgets.QMainWindow):
         self.rotateLeftButton.clicked.connect(self.rotate_left)
         self.rotateRightButton.clicked.connect(self.rotate_right)
 
-        # teste
-        # reta1 = Reta("teste-reta1", (Ponto("", (100, 200)), Ponto("", (200, 100))), "#938412")
-        # self.draw_line(reta1)
-        # self.listOfCurrentObjects.addItems([reta1.nome])
-        # self.display_file.append(reta1)
-
-        # PARA TESTE
-        '''poligono200 = WireFrame('Poligono200', (0, 0), 8, 200)
-        poligono300 = WireFrame('Poligono300', (0, 0), 8, 300)
-        poligono200.align_center(self.window.center)
-        poligono300.align_center(self.window.center)
-
-        self.draw_polygon(poligono200)
-        self.display_file.append(poligono200)
-        self.listOfCurrentObjects.addItems(['Polígono200'])
-
-        self.draw_polygon(poligono300)
-        self.display_file.append(poligono300)
-        self.listOfCurrentObjects.addItems(['Polígono300'])'''
 
     def setup_view(self):
         uic.loadUi("UI/MainWindow.ui", self) #carrega o arquivo de interface gráfica para a janela do qt
