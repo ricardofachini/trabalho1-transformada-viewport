@@ -1,6 +1,6 @@
 from src.objeto import Objeto, Tipo, RotateSide
 from src.Reta import Reta
-from src.Ponto import Ponto
+from src.Vertice import Vertice
 
 from math import sin, cos, pi, radians
 
@@ -15,7 +15,7 @@ class WireFrame(Objeto):
         if pontos is None:
             pontos = []
         self.points     = pontos
-        
+
         self.calculate_lines()
     
     def calculate_lines(self):
@@ -28,8 +28,8 @@ class WireFrame(Objeto):
             x1, y1 = self.points[i]
             x2, y2 = self.points[i + 1]
             
-            p1 = Ponto('', (x1, y1))
-            p2 = Ponto('', (x2, y2))
+            p1 = Vertice(x1, y1)
+            p2 = Vertice(x2, y2)
 
             self.retas.append(Reta('', (p1, p2), self.cor))
     
@@ -53,12 +53,12 @@ class WireFrame(Objeto):
             reta.translate(dx, dy)
         self.center = (self.center[0] + dx, self.center[1] + dy)
 
-    def rotate(self, rotation_side, rot_matrix=None, center=None):
+    def rotate(self, rotation_side, center=None, rot_matrix=None):
         if center is None:
             center = self.center
 
         for reta in self.retas:
-            reta.rotate(rotation_side, rot_matrix, center)
+            reta.rotate(rotation_side, center, rot_matrix)
         
         self.calculate_center()
     

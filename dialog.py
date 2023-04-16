@@ -1,7 +1,7 @@
 import sys
 from PyQt6 import uic, QtWidgets
 from src.objeto import Tipo
-
+from src.Vertice import Vertice
 from src.Ponto import Ponto
 from src.Reta import Reta
 from src.Poligono import WireFrame
@@ -32,7 +32,7 @@ class Dialog(QtWidgets.QDialog):
             x = (int) (self.posXPoint.text())
             y = (int) (self.posYPoint.text())
             self.inserted_type = Tipo.PONTO
-            self.object = Ponto(nome, (x, y))
+            self.object = Ponto(nome, Vertice(x, y))
             self.object.cor = self.color
             self.close()
     
@@ -43,8 +43,8 @@ class Dialog(QtWidgets.QDialog):
         else:
             self.inserted_type = Tipo.SEGMENTO_RETA
 
-            p1 = Ponto(nome, ((int) (self.spinBoxX1Line.text()), (int) (self.spinBoxY1Line.text())))
-            p2 = Ponto(nome, ((int) (self.spinBoxX2Line.text()), (int) (self.spinBoxY2Line.text())))
+            p1 = Vertice((int) (self.spinBoxX1Line.text()), (int) (self.spinBoxY1Line.text()))
+            p2 = Vertice((int) (self.spinBoxX2Line.text()), (int) (self.spinBoxY2Line.text()))
             self.object = Reta(nome, (p1, p2), self.color)
             
             self.close()

@@ -4,6 +4,7 @@ from math import sin, cos, radians
 
 from src.constants import ROTATION_LEFT, ROTATION_RIGHT
 
+
 class Tipo(Enum):
     """
     os tipos de objetos que o sistema suporta
@@ -34,7 +35,7 @@ class Objeto:
         current_vector = np.array([coordenadas[0], coordenadas[1], 1])
         rot_matrix = self.get_rot_matrix(center, rotation_side, rot_matrix, angle)
         
-        result_matrix  = current_vector @ rot_matrix
+        result_matrix = current_vector @ rot_matrix
 
         return (result_matrix[0], result_matrix[1])
     
@@ -75,9 +76,9 @@ class Objeto:
         cx = 0
         cy = 0
         for i in range(n):
-            cx += points[i].coordenadas[0]
+            cx += points[i].world_coordinates[0]
         for i in range(n):
-            cy += points[i].coordenadas[1]
+            cy += points[i].world_coordinates[1]
         cx = cx/n
         cy = cy/n
         return (int(cx), int(cy))

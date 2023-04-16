@@ -2,6 +2,7 @@ from src.objeto import Tipo, Objeto
 from src.Poligono import WireFrame
 from src.Reta import Reta
 from src.Ponto import Ponto
+from src.Vertice import Vertice
 
 VERTICE_PREFIX = "v "
 POINT_PREFIX = "p "
@@ -33,7 +34,7 @@ class ObjDescriptor:
                 match line[0]:
                     case "v":
                         points = line.split(" ")
-                        vertice = (float (points[1]), float(points[2]))
+                        vertice = (float(points[1]), float(points[2]))
                         vertices_list.append(vertice)
                     case "o":
                         name = line.strip().split(" ")
@@ -41,18 +42,19 @@ class ObjDescriptor:
                     case "l":
                         indices_de_vertices = line.strip().split(" ")
                         if len(indices_de_vertices) > 3: #se true, é um poligono
-                            poligono = WireFrame(current_object_name, (0, 0), len(indices_de_vertices)-2, 0, pontos=vertices_list[-(len(indices_de_vertices)-1):])
+                            poligono = WireFrame(current_object_name, (0, 0), len(indices_de_vertices)-2, 0,
+                                                 pontos=vertices_list[-(len(indices_de_vertices)-1):])
                             objects_list.append(poligono)
                         else:
                             reta = Reta(
                                     current_object_name,
                                     (
-                                        Ponto("", (
+                                        Vertice(
                                             vertices_list[int(indices_de_vertices[1])][0],
-                                            vertices_list[(int) (indices_de_vertices[1])][1])),
-                                        Ponto("", (
-                                            vertices_list[(int) (indices_de_vertices[2])][0],
-                                            vertices_list[(int) (indices_de_vertices[2])][1]))
+                                            vertices_list[int(indices_de_vertices[1])][1]),
+                                        Vertice(
+                                            vertices_list[int(indices_de_vertices[2])][0],
+                                            vertices_list[int(indices_de_vertices[2])][1])
                                     )
                                 )
                             objects_list.append(reta)
@@ -60,9 +62,9 @@ class ObjDescriptor:
                         indice_coordenada = line.strip().split(" ")
                         ponto = Ponto(
                                     current_object_name,
-                                    (
-                                        vertices_list[(int) (indice_coordenada[1])][0],
-                                        vertices_list[(int) (indice_coordenada[1])][1]
+                                    Vertice(
+                                        vertices_list[int(indice_coordenada[1])][0],
+                                        vertices_list[int(indice_coordenada[1])][1]
                                     )
                                 )
                         objects_list.append(ponto)
@@ -92,7 +94,7 @@ class ObjDescriptor:
             Caso o objeto seja uma reta
             '''
             for vertice in item.pontos:
-                coordenadas = tuple(float(number) for number in vertice.coordenadas)
+                coordenadas = tuple(float(number) for number in vertice.world_coordinates)
                 string += VERTICE_PREFIX + str(coordenadas).replace("(", "") + " 0.0" + LINE_BREAK
             contagem = len(item.pontos)
             string += LINE_PREFIX
@@ -103,7 +105,7 @@ class ObjDescriptor:
             coordenada_anterior = None
             for retas in item.retas:
                 for vertice in retas.pontos:
-                    coordenadas = tuple(float(number) for number in vertice.coordenadas)
+                    coordenadas = tuple(float(number) for number in vertice.world_coordinates)
 
                     if (str(coordenadas).replace("(", "")) != coordenada_anterior:
                         string += VERTICE_PREFIX + str(coordenadas).replace("(", "") + " 0.0" + LINE_BREAK
@@ -115,14 +117,14 @@ class ObjDescriptor:
                 string += f"{-(contagem - i)} "
 
         elif item.tipo is Tipo.PONTO:
-            coordenadas = tuple(float(number) for number in item.coordenadas)
+            coordenadas = tuple(float(number) for number in item.coordenadas.world_coordinates)
             string += VERTICE_PREFIX + str(coordenadas).replace("(", "") + " 0.0" + LINE_BREAK
             string += POINT_PREFIX
             string += "-1"
 
         string += "\nusemtl red"
-        string=string.replace(")", "")
-        string=string.replace(",", "")
+        string = string.replace(")", "")
+        string = string.replace(",", "")
         string += LINE_BREAK
 
         self.wavefront_string += string
