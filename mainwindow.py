@@ -113,13 +113,13 @@ class UIWindow(QtWidgets.QMainWindow):
         for item in objects:
             self.display_file.append(item)
             self.listOfCurrentObjects.addItems([item.nome])
-            match item.tipo:
-                case Tipo.SEGMENTO_RETA:
-                    self.draw_line(item)
-                case Tipo.PONTO:
-                    self.draw_point(item)
-                case Tipo.POLIGONO:
-                    self.draw_polygon(item)
+            
+            if item.tipo == Tipo.SEGMENTO_RETA:
+                self.draw_line(item)
+            elif item.tipo == Tipo.PONTO:
+                self.draw_point(item)
+            elif item.tipo == Tipo.POLIGONO:
+                self.draw_polygon(item)
 
     def on_export_file_click(self):
         file_path, _ = QtWidgets.QFileDialog.getSaveFileName(self, 'Exportar arquivo', "./", "Wavefront .obj (*.obj)")
@@ -217,9 +217,7 @@ class UIWindow(QtWidgets.QMainWindow):
         self.render()
 
     def zoom_window(self, scale):
-        self.window.translate(-self.window.centerX, -self.window.centerY)
         self.window.scale(scale)
-        self.window.translate(self.window.centerX, self.window.centerY)
 
     def translate_left(self):
         if self.selected_object is None:
@@ -309,8 +307,8 @@ class UIWindow(QtWidgets.QMainWindow):
         self.selected_object.rotate(rotation_side, center)
 
     def rotate_window(self, rotation_side):
-        self.window.rotate(rotation_side)
-        '''rot_matrix = ROTATION_LEFT if rotation_side == RotateSide.LEFT else ROTATION_RIGHT
+        # self.window.rotate(rotation_side)
+        rot_matrix = ROTATION_LEFT if rotation_side == RotateSide.LEFT else ROTATION_RIGHT
         
         center_x, center_y = self.window.center
         to_window_center = np.array([[1, 0, 0], [0, 1, 0], [-center_x, -center_y, 1]])
@@ -320,7 +318,7 @@ class UIWindow(QtWidgets.QMainWindow):
         
         for item in self.display_file:
             if item is not None:
-                item.rotate(rotation_side, rot_matrix, self.window.center)'''
+                item.rotate(rotation_side, self.window.center, rot_matrix)
 
     def select_current_item(self, selected_item):
         self.selected_index = self.listOfCurrentObjects.row(selected_item)

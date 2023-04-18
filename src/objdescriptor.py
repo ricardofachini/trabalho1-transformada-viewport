@@ -31,43 +31,42 @@ class ObjDescriptor:
         current_object_name = ""
         with open(path, "r") as file:
             for line in file:
-                match line[0]:
-                    case "v":
-                        points = line.split(" ")
-                        vertice = (float(points[1]), float(points[2]))
-                        vertices_list.append(vertice)
-                    case "o":
-                        name = line.strip().split(" ")
-                        current_object_name = name[1]
-                    case "l":
-                        indices_de_vertices = line.strip().split(" ")
-                        if len(indices_de_vertices) > 3: #se true, é um poligono
-                            poligono = WireFrame(current_object_name, (0, 0), len(indices_de_vertices)-2, 0,
-                                                 pontos=vertices_list[-(len(indices_de_vertices)-1):])
-                            objects_list.append(poligono)
-                        else:
-                            reta = Reta(
-                                    current_object_name,
-                                    (
-                                        Vertice(
-                                            vertices_list[int(indices_de_vertices[1])][0],
-                                            vertices_list[int(indices_de_vertices[1])][1]),
-                                        Vertice(
-                                            vertices_list[int(indices_de_vertices[2])][0],
-                                            vertices_list[int(indices_de_vertices[2])][1])
-                                    )
-                                )
-                            objects_list.append(reta)
-                    case "p":
-                        indice_coordenada = line.strip().split(" ")
-                        ponto = Ponto(
-                                    current_object_name,
+                if line[0] == "v":
+                    points = line.split(" ")
+                    vertice = (float(points[1]), float(points[2]))
+                    vertices_list.append(vertice)
+                elif line[0] == "o":
+                    name = line.strip().split(" ")
+                    current_object_name = name[1]
+                elif line[0] == "l":
+                    indices_de_vertices = line.strip().split(" ")
+                    if len(indices_de_vertices) > 3: #se true, é um poligono
+                        poligono = WireFrame(current_object_name, (0, 0), len(indices_de_vertices)-2, 0,
+                                                pontos=vertices_list[-(len(indices_de_vertices)-1):])
+                        objects_list.append(poligono)
+                    else:
+                        reta = Reta(
+                                current_object_name,
+                                (
                                     Vertice(
-                                        vertices_list[int(indice_coordenada[1])][0],
-                                        vertices_list[int(indice_coordenada[1])][1]
-                                    )
+                                        vertices_list[int(indices_de_vertices[1])][0],
+                                        vertices_list[int(indices_de_vertices[1])][1]),
+                                    Vertice(
+                                        vertices_list[int(indices_de_vertices[2])][0],
+                                        vertices_list[int(indices_de_vertices[2])][1])
                                 )
-                        objects_list.append(ponto)
+                            )
+                        objects_list.append(reta)
+                elif line[0] == "p":
+                    indice_coordenada = line.strip().split(" ")
+                    ponto = Ponto(
+                                current_object_name,
+                                Vertice(
+                                    vertices_list[int(indice_coordenada[1])][0],
+                                    vertices_list[int(indice_coordenada[1])][1]
+                                )
+                            )
+                    objects_list.append(ponto)
         return objects_list
 
     def export_file(self, path: str, name: str):
