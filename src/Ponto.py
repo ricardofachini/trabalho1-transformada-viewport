@@ -17,3 +17,6 @@ class Ponto(Objeto):
         self.translate(-cx, -cy)
         self.coordenadas.world_coordinates = super().rotate(self.coordenadas.world_coordinates, angle)
         self.translate(cx, cy)
+    
+    def should_draw(self, xmin, xmax, ymin, ymax, xw, yw):
+        return ((xw > xmin) and (xw < xmax)) and ((yw > ymin) and (yw < ymax))

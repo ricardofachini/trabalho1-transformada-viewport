@@ -64,6 +64,9 @@ class UIWindow(QtWidgets.QMainWindow):
         self.rotateLeftButton.clicked.connect(self.rotate_left)
         self.rotateRightButton.clicked.connect(self.rotate_right)
 
+        # Border Size
+        self.bd_sz = 20
+
         self.draw_border()
 
         # PARA TESTE
@@ -170,9 +173,6 @@ class UIWindow(QtWidgets.QMainWindow):
         self.draw_border()
 
     def draw_border(self):
-        # Border Size
-        bd_sz = 20
-
         pen = QtGui.QPen(QtGui.QColor('black'))
         pen.setWidth(2)
 
@@ -180,10 +180,10 @@ class UIWindow(QtWidgets.QMainWindow):
         painter.setPen(pen)
 
         # Vertical Left (vl) / Horizontal Up (hu) / Vertical Right (vr) / Horizontal Down (hd)
-        vlx1, vly1, vlx2, vly2 = bd_sz, bd_sz, bd_sz, (self.vp_height - bd_sz)
-        hux1, huy1, hux2, huy2 = bd_sz, bd_sz, (self.vp_width - bd_sz), bd_sz
-        vrx1, vry1, vrx2, vry2 = (self.vp_width - bd_sz), bd_sz, (self.vp_width - bd_sz), (self.vp_height - bd_sz)
-        hdx1, hdy1, hdx2, hdy2 = (self.vp_width - bd_sz), (self.vp_height - bd_sz), bd_sz, (self.vp_height - bd_sz)
+        vlx1, vly1, vlx2, vly2 = self.bd_sz, self.bd_sz, self.bd_sz, (self.vp_height - self.bd_sz)
+        hux1, huy1, hux2, huy2 = self.bd_sz, self.bd_sz, (self.vp_width - self.bd_sz), self.bd_sz
+        vrx1, vry1, vrx2, vry2 = (self.vp_width - self.bd_sz), self.bd_sz, (self.vp_width - self.bd_sz), (self.vp_height - self.bd_sz)
+        hdx1, hdy1, hdx2, hdy2 = (self.vp_width - self.bd_sz), (self.vp_height - self.bd_sz), self.bd_sz, (self.vp_height - self.bd_sz)
 
         painter.drawLine(vlx1, vly1, vlx2, vly2)
         painter.drawLine(hux1, huy1, hux2, huy2)
@@ -193,14 +193,18 @@ class UIWindow(QtWidgets.QMainWindow):
         self.container.setPixmap(self.canvas)
 
     def draw_point(self, point: Ponto):
+        x = int(self.window.get_x_to_viewport(point.coordenadas.world_coordinates[0], self.vp_width))
+        y = int(self.window.get_y_to_viewport(point.coordenadas.world_coordinates[1], self.vp_height))
+
+        bd = self.bd_sz
+        if not point.should_draw(self.minXvp + bd, self.maxXvp - bd, self.minYvp + bd, self.maxYvp - bd, x, y):
+            return
+
         pen = QtGui.QPen(QtGui.QColor(point.cor))
         pen.setWidth(2)
 
         painter = QtGui.QPainter(self.canvas)
         painter.setPen(pen)
-
-        x = int(self.window.get_x_to_viewport(point.coordenadas.world_coordinates[0], self.vp_width))
-        y = int(self.window.get_y_to_viewport(point.coordenadas.world_coordinates[1], self.vp_height))
 
         painter.drawPoint(x, y)
         painter.end()
