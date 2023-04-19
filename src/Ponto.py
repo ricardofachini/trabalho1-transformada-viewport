@@ -1,5 +1,8 @@
 from src.objeto import Objeto, Tipo
 from src.Vertice import Vertice
+from src.constants import BORDER_SIZE
+
+from PyQt6 import QtGui
 
 
 class Ponto(Objeto):
@@ -20,3 +23,21 @@ class Ponto(Objeto):
     
     def should_draw(self, xmin, xmax, ymin, ymax, xw, yw):
         return ((xw > xmin) and (xw < xmax)) and ((yw > ymin) and (yw < ymax))
+
+    def draw(self, canvas, container, world_coords, coords):
+        bd = BORDER_SIZE
+        x, y = coords
+        minXvp, maxXvp, minYvp, maxYvp = world_coords
+        
+        if not self.should_draw(minXvp + bd, maxXvp - bd, minYvp + bd, maxYvp - bd, x, y):
+            return
+
+        pen = QtGui.QPen(QtGui.QColor(self.cor))
+        pen.setWidth(2)
+
+        painter = QtGui.QPainter(canvas)
+        painter.setPen(pen)
+
+        painter.drawPoint(x, y)
+        painter.end()
+        container.setPixmap(canvas)

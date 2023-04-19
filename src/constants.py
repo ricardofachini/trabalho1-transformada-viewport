@@ -1,6 +1,8 @@
 import numpy as np
 from math import sin, cos, radians
 
+BORDER_SIZE = 20
+
 ROTATION_ANGLE   = 12
 TRANSLATION_STEP = 20
 ZOOM_IN_SCALE    = 1.1

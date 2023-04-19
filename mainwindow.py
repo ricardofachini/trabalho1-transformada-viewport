@@ -3,7 +3,7 @@ import sys
 import numpy as np
 from PyQt6 import uic, QtWidgets, QtGui, QtCore
 
-from src.constants import TRANSLATION_STEP, ZOOM_IN_SCALE, ZOOM_OUT_SCALE, ROTATION_LEFT, ROTATION_RIGHT
+from src.constants import TRANSLATION_STEP, ZOOM_IN_SCALE, ZOOM_OUT_SCALE, ROTATION_LEFT, ROTATION_RIGHT, BORDER_SIZE
 
 import images_rcc
 
@@ -64,9 +64,6 @@ class UIWindow(QtWidgets.QMainWindow):
         self.rotateLeftButton.clicked.connect(self.rotate_left)
         self.rotateRightButton.clicked.connect(self.rotate_right)
 
-        # Border Size
-        self.bd_sz = 20
-
         self.draw_border()
 
         # PARA TESTE
@@ -77,17 +74,18 @@ class UIWindow(QtWidgets.QMainWindow):
              )
         )
         reta.align_center(self.window.center)
-        self.draw_line(reta)
+        reta.draw(self.canvas, self.container, self.get_vp_coords(reta.pontos[0].world_coordinates), 
+                  self.get_vp_coords(reta.pontos[1].world_coordinates))
         self.display_file.append(reta)
         self.listOfCurrentObjects.addItems([reta.nome])
         poligono200 = WireFrame('Poligono200', (0, 0), 8, 200)
         poligono300 = WireFrame('Poligono300', (0, 0), 8, 300)
         poligono200.align_center(self.window.center)
         poligono300.align_center(self.window.center)
-        self.draw_polygon(poligono200)
+        poligono200.draw(self.canvas, self.container, self.get_vp_coords)
         self.display_file.append(poligono200)
         self.listOfCurrentObjects.addItems(['Polígono200'])
-        self.draw_polygon(poligono300)
+        poligono300.draw(self.canvas, self.container, self.get_vp_coords)
         self.display_file.append(poligono300)
         self.listOfCurrentObjects.addItems(['Polígono300'])
 
@@ -154,21 +152,32 @@ class UIWindow(QtWidgets.QMainWindow):
             dialog.object.align_center(self.window.center)
 
             if dialog.inserted_type == Tipo.PONTO:
-                self.draw_point(dialog.object)
+                item = dialog.object
+                x, y = self.get_vp_coords(item.coordenadas.world_coordinates)                
+                item.draw(self.canvas, self.container, (self.minXvp, self.maxXvp, self.minYvp, self.maxYvp), (x, y))
             if dialog.inserted_type == Tipo.SEGMENTO_RETA:
-                self.draw_line(dialog.object)
+                item = dialog.object
+                x1, y1 = self.get_vp_coords(item.pontos[0].world_coordinates)
+                x2, y2 = self.get_vp_coords(item.pontos[1].world_coordinates)
+
+                item.draw(self.canvas, self.container, (x1, y1), (x2, y2))
             if dialog.inserted_type == Tipo.POLIGONO:
-                self.draw_polygon(dialog.object)
+                dialog.object.draw(self.canvas, self.container, self.get_vp_coords)
 
     def render(self):
         self.canvas.fill(QtCore.Qt.GlobalColor.white)
+
+
         for item in self.display_file:
             if isinstance(item, Ponto):
-                self.draw_point(item)
+                x, y = self.get_vp_coords(item.coordenadas.world_coordinates)                
+                item.draw(self.canvas, self.container, (self.minXvp, self.maxXvp, self.minYvp, self.maxYvp), (x, y))
             elif isinstance(item, Reta):
-                self.draw_line(item)
+                x1, y1 = self.get_vp_coords(item.pontos[0].world_coordinates)
+                x2, y2 = self.get_vp_coords(item.pontos[1].world_coordinates)
+                item.draw(self.canvas, self.container, (x1, y1), (x2, y2))
             elif isinstance(item, WireFrame):
-                self.draw_polygon(item)
+                item.draw(self.canvas, self.container, self.get_vp_coords)
         
         self.draw_border()
 
@@ -178,12 +187,13 @@ class UIWindow(QtWidgets.QMainWindow):
 
         painter = QtGui.QPainter(self.canvas)
         painter.setPen(pen)
-
+        
         # Vertical Left (vl) / Horizontal Up (hu) / Vertical Right (vr) / Horizontal Down (hd)
-        vlx1, vly1, vlx2, vly2 = self.bd_sz, self.bd_sz, self.bd_sz, (self.vp_height - self.bd_sz)
-        hux1, huy1, hux2, huy2 = self.bd_sz, self.bd_sz, (self.vp_width - self.bd_sz), self.bd_sz
-        vrx1, vry1, vrx2, vry2 = (self.vp_width - self.bd_sz), self.bd_sz, (self.vp_width - self.bd_sz), (self.vp_height - self.bd_sz)
-        hdx1, hdy1, hdx2, hdy2 = (self.vp_width - self.bd_sz), (self.vp_height - self.bd_sz), self.bd_sz, (self.vp_height - self.bd_sz)
+        bd = BORDER_SIZE
+        vlx1, vly1, vlx2, vly2 = bd, bd, bd, (self.vp_height - bd)
+        hux1, huy1, hux2, huy2 = bd, bd, (self.vp_width - bd), bd
+        vrx1, vry1, vrx2, vry2 = (self.vp_width - bd), bd, (self.vp_width - bd), (self.vp_height - bd)
+        hdx1, hdy1, hdx2, hdy2 = (self.vp_width - bd), (self.vp_height - bd), bd, (self.vp_height - bd)
 
         painter.drawLine(vlx1, vly1, vlx2, vly2)
         painter.drawLine(hux1, huy1, hux2, huy2)
@@ -192,44 +202,11 @@ class UIWindow(QtWidgets.QMainWindow):
         painter.end()
         self.container.setPixmap(self.canvas)
 
-    def draw_point(self, point: Ponto):
-        x = int(self.window.get_x_to_viewport(point.coordenadas.world_coordinates[0], self.vp_width))
-        y = int(self.window.get_y_to_viewport(point.coordenadas.world_coordinates[1], self.vp_height))
+    def get_vp_coords(self, coords):
+        x = (int)(self.window.get_x_to_viewport(coords[0], self.vp_width))
+        y = (int)(self.window.get_y_to_viewport(coords[1], self.vp_height))
 
-        bd = self.bd_sz
-        if not point.should_draw(self.minXvp + bd, self.maxXvp - bd, self.minYvp + bd, self.maxYvp - bd, x, y):
-            return
-
-        pen = QtGui.QPen(QtGui.QColor(point.cor))
-        pen.setWidth(2)
-
-        painter = QtGui.QPainter(self.canvas)
-        painter.setPen(pen)
-
-        painter.drawPoint(x, y)
-        painter.end()
-        self.container.setPixmap(self.canvas)
-
-    def draw_line(self, line: Reta):
-        pen = QtGui.QPen(QtGui.QColor(line.cor))
-        pen.setWidth(2)
-
-        painter = QtGui.QPainter(self.canvas)
-        painter.setPen(pen)
-
-        x1 = (int)(self.window.get_x_to_viewport(line.pontos[0].world_coordinates[0], self.vp_width))
-        y1 = (int)(self.window.get_y_to_viewport(line.pontos[0].world_coordinates[1], self.vp_height))
-
-        x2 = (int)(self.window.get_x_to_viewport(line.pontos[1].world_coordinates[0], self.vp_width))
-        y2 = (int)(self.window.get_y_to_viewport(line.pontos[1].world_coordinates[1], self.vp_height))
-
-        painter.drawLine(x1, y1, x2, y2)
-        painter.end()
-        self.container.setPixmap(self.canvas)
-
-    def draw_polygon(self, polygon: WireFrame):
-        for line in polygon.retas:
-            self.draw_line(line)
+        return (x, y)
 
     def zoom_in(self):
         if self.selected_object is None:
