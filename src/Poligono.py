@@ -69,8 +69,8 @@ class WireFrame(Objeto):
                 pontos.append(ponto)
         self.center = super().calculate_center(pontos)
 
-    def draw(self, canvas, container, get_vp_coords):
+    def draw(self, canvas, container, get_vp_coords, world_coords):
         for line in self.retas:
             x1, y1 = get_vp_coords(line.pontos[0].world_coordinates)
             x2, y2 = get_vp_coords(line.pontos[1].world_coordinates)
-            line.draw(canvas, container, (x1, y1), (x2, y2))
+            line.draw(canvas, container, (x1, y1), (x2, y2), world_coords)

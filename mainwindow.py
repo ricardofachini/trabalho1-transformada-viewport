@@ -67,25 +67,27 @@ class UIWindow(QtWidgets.QMainWindow):
         self.draw_border()
 
         # PARA TESTE
+        bd = BORDER_SIZE
+        world_coords = (self.minXvp + bd, self.maxXvp - bd, self.minYvp + bd, self.maxYvp - bd)
         reta = Reta(
             "reta1",
-            (Vertice(100, 200),
-             Vertice(200, 100)
+            (Vertice(-330, 0),
+             Vertice(-300, 200)
              )
         )
         reta.align_center(self.window.center)
         reta.draw(self.canvas, self.container, self.get_vp_coords(reta.pontos[0].world_coordinates), 
-                  self.get_vp_coords(reta.pontos[1].world_coordinates))
+                  self.get_vp_coords(reta.pontos[1].world_coordinates), world_coords)
         self.display_file.append(reta)
         self.listOfCurrentObjects.addItems([reta.nome])
         poligono200 = WireFrame('Poligono200', (0, 0), 8, 200)
         poligono300 = WireFrame('Poligono300', (0, 0), 8, 300)
         poligono200.align_center(self.window.center)
         poligono300.align_center(self.window.center)
-        poligono200.draw(self.canvas, self.container, self.get_vp_coords)
+        poligono200.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
         self.display_file.append(poligono200)
         self.listOfCurrentObjects.addItems(['Polígono200'])
-        poligono300.draw(self.canvas, self.container, self.get_vp_coords)
+        poligono300.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
         self.display_file.append(poligono300)
         self.listOfCurrentObjects.addItems(['Polígono300'])
 
@@ -167,7 +169,8 @@ class UIWindow(QtWidgets.QMainWindow):
     def render(self):
         self.canvas.fill(QtCore.Qt.GlobalColor.white)
 
-
+        bd = BORDER_SIZE
+        world_coords = (self.minXvp + bd, self.maxXvp - bd, self.minYvp + bd, self.maxYvp - bd)
         for item in self.display_file:
             if isinstance(item, Ponto):
                 x, y = self.get_vp_coords(item.coordenadas.world_coordinates)                
@@ -175,9 +178,9 @@ class UIWindow(QtWidgets.QMainWindow):
             elif isinstance(item, Reta):
                 x1, y1 = self.get_vp_coords(item.pontos[0].world_coordinates)
                 x2, y2 = self.get_vp_coords(item.pontos[1].world_coordinates)
-                item.draw(self.canvas, self.container, (x1, y1), (x2, y2))
+                item.draw(self.canvas, self.container, (x1, y1), (x2, y2), world_coords)
             elif isinstance(item, WireFrame):
-                item.draw(self.canvas, self.container, self.get_vp_coords)
+                item.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
         
         self.draw_border()
 
