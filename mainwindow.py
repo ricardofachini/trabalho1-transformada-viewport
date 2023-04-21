@@ -318,8 +318,8 @@ class UIWindow(QtWidgets.QMainWindow):
         self.selected_object.rotate(rotation_side, center)
 
     def rotate_window(self, rotation_side):
-        # self.window.rotate(rotation_side)
-        rot_matrix = ROTATION_LEFT if rotation_side == RotateSide.LEFT else ROTATION_RIGHT
+        self.window.rotate(rotation_side)
+        '''rot_matrix = ROTATION_LEFT if rotation_side == RotateSide.LEFT else ROTATION_RIGHT
         
         center_x, center_y = self.window.center
         to_window_center = np.array([[1, 0, 0], [0, 1, 0], [-center_x, -center_y, 1]])
@@ -329,7 +329,7 @@ class UIWindow(QtWidgets.QMainWindow):
         
         for item in self.display_file:
             if item is not None:
-                item.rotate(rotation_side, self.window.center, rot_matrix)
+                item.rotate(rotation_side, self.window.center, rot_matrix)'''
 
     def select_current_item(self, selected_item):
         self.selected_index = self.listOfCurrentObjects.row(selected_item)
