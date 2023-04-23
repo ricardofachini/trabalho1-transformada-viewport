@@ -3,7 +3,7 @@ import sys
 import numpy as np
 from PyQt6 import uic, QtWidgets, QtGui, QtCore
 
-from src.constants import TRANSLATION_STEP, ZOOM_IN_SCALE, ZOOM_OUT_SCALE, ROTATION_LEFT, ROTATION_RIGHT, BORDER_SIZE
+from src.constants import TRANSLATION_STEP, ZOOM_IN_SCALE, ZOOM_OUT_SCALE, ROTATION_LEFT, ROTATION_RIGHT, BORDER_SIZE, ROTATION_ANGLE
 
 import images_rcc
 
@@ -38,6 +38,7 @@ class UIWindow(QtWidgets.QMainWindow):
         self.window = Window()
         self.display_file = []
         self.obj_descriptor = ObjDescriptor()
+        self.gen_cpp_coordinates()
 
         self.selected_object = None
         self.selected_index = 0
@@ -76,8 +77,8 @@ class UIWindow(QtWidgets.QMainWindow):
              )
         )
         reta.align_center(self.window.center)
-        reta.draw(self.canvas, self.container, self.get_vp_coords(reta.pontos[0].world_coordinates), 
-                  self.get_vp_coords(reta.pontos[1].world_coordinates), world_coords)
+        reta.draw(self.canvas, self.container, self.get_vp_coords(reta.pontos[0].cpp_coordinates),
+                  self.get_vp_coords(reta.pontos[1].cpp_coordinates), world_coords)
         self.display_file.append(reta)
         self.listOfCurrentObjects.addItems([reta.nome])
         poligono200 = WireFrame('Poligono200', (0, 0), 8, 200)
@@ -155,12 +156,12 @@ class UIWindow(QtWidgets.QMainWindow):
 
             if dialog.inserted_type == Tipo.PONTO:
                 item = dialog.object
-                x, y = self.get_vp_coords(item.coordenadas.world_coordinates)                
+                x, y = self.get_vp_coords(item.coordenadas.cpp_coordinates)
                 item.draw(self.canvas, self.container, (self.minXvp, self.maxXvp, self.minYvp, self.maxYvp), (x, y))
             if dialog.inserted_type == Tipo.SEGMENTO_RETA:
                 item = dialog.object
-                x1, y1 = self.get_vp_coords(item.pontos[0].world_coordinates)
-                x2, y2 = self.get_vp_coords(item.pontos[1].world_coordinates)
+                x1, y1 = self.get_vp_coords(item.pontos[0].cpp_coordinates)
+                x2, y2 = self.get_vp_coords(item.pontos[1].cpp_coordinates)
 
                 item.draw(self.canvas, self.container, (x1, y1), (x2, y2))
             if dialog.inserted_type == Tipo.POLIGONO:
@@ -173,11 +174,11 @@ class UIWindow(QtWidgets.QMainWindow):
         world_coords = (self.minXvp + bd, self.maxXvp - bd, self.minYvp + bd, self.maxYvp - bd)
         for item in self.display_file:
             if isinstance(item, Ponto):
-                x, y = self.get_vp_coords(item.coordenadas.world_coordinates)                
+                x, y = self.get_vp_coords(item.coordenadas.cpp_coordinates)
                 item.draw(self.canvas, self.container, (self.minXvp, self.maxXvp, self.minYvp, self.maxYvp), (x, y))
             elif isinstance(item, Reta):
-                x1, y1 = self.get_vp_coords(item.pontos[0].world_coordinates)
-                x2, y2 = self.get_vp_coords(item.pontos[1].world_coordinates)
+                x1, y1 = self.get_vp_coords(item.pontos[0].cpp_coordinates)
+                x2, y2 = self.get_vp_coords(item.pontos[1].cpp_coordinates)
                 item.draw(self.canvas, self.container, (x1, y1), (x2, y2), world_coords)
             elif isinstance(item, WireFrame):
                 item.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
@@ -229,6 +230,7 @@ class UIWindow(QtWidgets.QMainWindow):
 
     def zoom_window(self, scale):
         self.window.scale(scale)
+        self.gen_cpp_coordinates()
 
     def translate_left(self):
         if self.selected_object is None:
@@ -275,7 +277,8 @@ class UIWindow(QtWidgets.QMainWindow):
         self.render()
 
     def translate_window(self, dx, dy):
-        self.window.translate(dx, dy)  # move a window
+        self.window.cpp_translate(dx, dy)  # move a window
+        self.gen_cpp_coordinates()
 
     def show_center_options(self):
         self.labelCenX.setVisible(True)
@@ -295,7 +298,7 @@ class UIWindow(QtWidgets.QMainWindow):
         if (self.selected_object is not None):
             self.rotate(RotateSide.LEFT)
         else:
-            self.rotate_window(RotateSide.LEFT)
+            self.rotate_window(RotateSide.RIGHT)
 
         self.render()
 
@@ -303,7 +306,7 @@ class UIWindow(QtWidgets.QMainWindow):
         if (self.selected_object is not None):
             self.rotate(RotateSide.RIGHT)
         else:
-            self.rotate_window(RotateSide.RIGHT)
+            self.rotate_window(RotateSide.LEFT)
 
         self.render()
 
@@ -319,17 +322,31 @@ class UIWindow(QtWidgets.QMainWindow):
 
     def rotate_window(self, rotation_side):
         self.window.rotate(rotation_side)
-        '''rot_matrix = ROTATION_LEFT if rotation_side == RotateSide.LEFT else ROTATION_RIGHT
-        
-        center_x, center_y = self.window.center
-        to_window_center = np.array([[1, 0, 0], [0, 1, 0], [-center_x, -center_y, 1]])
-        to_own_center    = np.array([[1, 0, 0], [0, 1, 0], [center_x, center_y, 1]])
+        self.gen_cpp_coordinates(rotation_side)
 
-        rot_matrix = to_window_center @ rot_matrix @ to_own_center
-        
-        for item in self.display_file:
-            if item is not None:
-                item.rotate(rotation_side, self.window.center, rot_matrix)'''
+    def gen_cpp_coordinates(self, rotation_side=None):
+        self.window.translate(-self.window.centerX, -self.window.centerY)
+        view_up_angle = self.window.get_view_up_and_y_axis_angle()  # retorna o angulo entre o vetor V(up) e o eixo y
+
+        if view_up_angle != 0:  # se o angulo não é 0, a window está rotacionada em relação ao mundo
+            if rotation_side == RotateSide.LEFT:  # mundo rotaciona para o outro lado
+                rotation_side = RotateSide.RIGHT  # faz o swap da direção de rotação
+            else:
+                rotation_side = RotateSide.LEFT
+
+            rot_matrix = ROTATION_LEFT if rotation_side == RotateSide.LEFT else ROTATION_RIGHT
+
+            center_x, center_y = self.window.center
+            to_window_center = np.array([[1, 0, 0], [0, 1, 0], [-center_x, -center_y, 1]])
+            to_own_center = np.array([[1, 0, 0], [0, 1, 0], [center_x, center_y, 1]])
+
+            rot_matrix = to_window_center @ rot_matrix @ to_own_center
+
+            # rotaciona o mundo e a window de forma a alinhar os eixos verticais
+            for item in self.display_file:
+                if item is not None:
+                    item.rotate(rotation_side, self.window.center, rot_matrix)
+            self.window.rotate(rotation_side)
 
     def select_current_item(self, selected_item):
         self.selected_index = self.listOfCurrentObjects.row(selected_item)

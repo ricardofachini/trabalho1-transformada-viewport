@@ -47,7 +47,7 @@ class WireFrame(Objeto):
         center = (center_x, center_y)
         for reta in self.retas:
             reta.zoom(scale, center)
-    
+
     def translate(self, dx, dy):
         for reta in self.retas:
             reta.translate(dx, dy)
@@ -61,7 +61,7 @@ class WireFrame(Objeto):
             reta.rotate(rotation_side, center, rot_matrix)
         
         self.calculate_center()
-    
+
     def calculate_center(self):
         pontos = []
         for reta in self.retas:
@@ -71,6 +71,6 @@ class WireFrame(Objeto):
 
     def draw(self, canvas, container, get_vp_coords, world_coords):
         for line in self.retas:
-            x1, y1 = get_vp_coords(line.pontos[0].world_coordinates)
-            x2, y2 = get_vp_coords(line.pontos[1].world_coordinates)
+            x1, y1 = get_vp_coords(line.pontos[0].cpp_coordinates)
+            x2, y2 = get_vp_coords(line.pontos[1].cpp_coordinates)
             line.draw(canvas, container, (x1, y1), (x2, y2), world_coords)

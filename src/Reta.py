@@ -13,16 +13,22 @@ class Reta(Objeto):
         # Nesse caso não tem necessidade de calcular o centro.
         self.center = super().calculate_center(self.pontos)
 
+    def copy_world_to_cpp_coordinates(self):
+        self.pontos[0].cpp_coordinates = self.pontos[0].world_coordinates
+        self.pontos[1].cpp_coordinates = self.pontos[1].world_coordinates
+
     def zoom(self, scale, center=None):
         if center is None:
             center = self.center
 
         self.pontos[0].world_coordinates = self.scale(self.pontos[0].world_coordinates, scale, center)
         self.pontos[1].world_coordinates = self.scale(self.pontos[1].world_coordinates, scale, center)
+        self.copy_world_to_cpp_coordinates()
 
     def translate(self, dx, dy):
         self.pontos[0].world_coordinates = super().translate(self.pontos[0].world_coordinates, dx, dy)
         self.pontos[1].world_coordinates = super().translate(self.pontos[1].world_coordinates, dx, dy)
+        self.copy_world_to_cpp_coordinates()
 
         cx, cy = self.center
         self.center = super().translate((cx, cy), dx, dy)
@@ -33,6 +39,7 @@ class Reta(Objeto):
         for ponto in self.pontos:
             ponto.world_coordinates = super().rotate(ponto.world_coordinates, (cx, cy), rotation_side, rot_matrix)
 
+        self.copy_world_to_cpp_coordinates()
         self.center = super().rotate(self.center, (cx, cy), rotation_side)
 
     def draw(self, canvas, container, p1_coords, p2_coords, world_coords):

@@ -12,13 +12,18 @@ class Ponto(Objeto):
         super().__init__(nome, Tipo.PONTO)
         self.coordenadas = coordenadas
 
+    def copy_world_to_cpp_coordinates(self):
+        self.coordenadas.cpp_coordinates = self.coordenadas.world_coordinates
+
     def translate(self, dx: int, dy: int) -> tuple[int, int]:
         self.coordenadas.world_coordinates = super().translate(self.coordenadas.world_coordinates, dx, dy)
+        self.copy_world_to_cpp_coordinates()
     
     def rotate(self, angle, center) -> tuple[int, int]:
         cx, cy = center
         self.translate(-cx, -cy)
         self.coordenadas.world_coordinates = super().rotate(self.coordenadas.world_coordinates, angle)
+        self.copy_world_to_cpp_coordinates()
         self.translate(cx, cy)
     
     def should_draw(self, xmin, xmax, ymin, ymax, xw, yw):
