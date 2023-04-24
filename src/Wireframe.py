@@ -4,8 +4,11 @@ from src.Vertice import Vertice
 
 from math import sin, cos, pi, radians
 
+
 class WireFrame(Objeto):
-    def __init__(self, nome: str, center: tuple, n_linhas: int, tam_linhas: int, cor: str = "#000000", pontos=None) -> None:
+    def __init__(
+            self, nome: str, center: tuple, n_linhas: int, tam_linhas: int, cor: str = "#000000", pontos=None
+    ) -> None:
         super().__init__(nome, Tipo.POLIGONO, cor)
         self.nome       = nome
         self.center     = center

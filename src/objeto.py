@@ -12,6 +12,7 @@ class Tipo(Enum):
     PONTO = "PONTO"
     SEGMENTO_RETA = "RETA"
     POLIGONO = "POLIGONO"
+    CURVA = "CURVA"
 
 
 class RotateSide(Enum):

@@ -4,7 +4,8 @@ from src.objeto import Tipo
 from src.Vertice import Vertice
 from src.Ponto import Ponto
 from src.Reta import Reta
-from src.Poligono import WireFrame
+from src.Wireframe import WireFrame
+from src.Curva2D import Curva2D
 
 
 class Dialog(QtWidgets.QDialog):
@@ -22,6 +23,7 @@ class Dialog(QtWidgets.QDialog):
         self.okPointButton.clicked.connect(self.insert_point)
         self.okLineButton.clicked.connect(self.insert_line)
         self.okPolygonButton.clicked.connect(self.insert_polygon)
+        self.okCurveButton.clicked.connect(self.insert_curve)
         self.pickColor.clicked.connect(self.choose_color_dialog)
     
     def insert_point(self):
@@ -60,7 +62,19 @@ class Dialog(QtWidgets.QDialog):
             tam_linhas = (int) (self.spinBoxLinesSize.text())
             self.object = WireFrame(nome, center, n_linhas, tam_linhas, self.color)
             self.close()
-    
+
+    def insert_curve(self):
+        nome = self.lineEdit.text()
+        if not nome:
+            self.missing_name_popup()
+        else:
+            self.inserted_type = Tipo.CURVA
+            points = self.curvePointsTextEdit.toPlainText().strip()
+            points = points.split("), ")
+            points = [tuple(float(x) for x in tupl.replace("(", "").replace(')', '').split(", ")) for tupl in points]
+            self.object = Curva2D(nome, [points[0], points[1], points[2], points[3]])
+            self.close()
+
     def missing_name_popup(self):
         msg = QtWidgets.QMessageBox()
         msg.setWindowTitle('Campo Nome Obrigatório')

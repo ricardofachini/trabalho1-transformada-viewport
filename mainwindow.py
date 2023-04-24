@@ -15,7 +15,8 @@ from src.objdescriptor import ObjDescriptor
 
 from src.Ponto import Ponto
 from src.Reta import Reta
-from src.Poligono import WireFrame
+from src.Wireframe import WireFrame
+from src.Curva2D import Curva2D
 from src.Vertice import Vertice
 
 
@@ -81,6 +82,10 @@ class UIWindow(QtWidgets.QMainWindow):
                   self.get_vp_coords(reta.pontos[1].cpp_coordinates), world_coords)
         self.display_file.append(reta)
         self.listOfCurrentObjects.addItems([reta.nome])
+        curva = Curva2D("curva1", [(0, 0), (10, 30), (30, 20), (40, 50)])
+        curva.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
+        self.display_file.append(curva)
+        self.listOfCurrentObjects.addItems([curva.nome])
         poligono200 = WireFrame('Poligono200', (0, 0), 8, 200)
         poligono300 = WireFrame('Poligono300', (0, 0), 8, 300)
         poligono200.align_center(self.window.center)
@@ -153,6 +158,8 @@ class UIWindow(QtWidgets.QMainWindow):
             self.display_file.append(dialog.object)
 
             dialog.object.align_center(self.window.center)
+            bd = BORDER_SIZE
+            world_coords = (self.minXvp + bd, self.maxXvp - bd, self.minYvp + bd, self.maxYvp - bd)
 
             if dialog.inserted_type == Tipo.PONTO:
                 item = dialog.object
@@ -165,7 +172,9 @@ class UIWindow(QtWidgets.QMainWindow):
 
                 item.draw(self.canvas, self.container, (x1, y1), (x2, y2))
             if dialog.inserted_type == Tipo.POLIGONO:
-                dialog.object.draw(self.canvas, self.container, self.get_vp_coords)
+                dialog.object.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
+            if dialog.inserted_type == Tipo.CURVA:
+                dialog.object.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
 
     def render(self):
         self.canvas.fill(QtCore.Qt.GlobalColor.white)
@@ -182,7 +191,9 @@ class UIWindow(QtWidgets.QMainWindow):
                 item.draw(self.canvas, self.container, (x1, y1), (x2, y2), world_coords)
             elif isinstance(item, WireFrame):
                 item.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
-        
+            elif isinstance(item, Curva2D):
+                item.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
+
         self.draw_border()
 
     def draw_border(self):

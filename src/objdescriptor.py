@@ -1,5 +1,5 @@
 from src.objeto import Tipo, Objeto
-from src.Poligono import WireFrame
+from src.Wireframe import WireFrame
 from src.Reta import Reta
 from src.Ponto import Ponto
 from src.Vertice import Vertice

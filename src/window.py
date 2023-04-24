@@ -62,7 +62,7 @@ class Window:
 
         self.center = (self.centerX, self.centerY)
 
-    def get_view_up_and_y_axis_angle(self):
+    def get_view_up_and_y_axis_angle(self) -> float:
         """
         Retorna o valor do angulo entre o view up vector e o eixo x, em radianos.
         """
@@ -91,7 +91,7 @@ class Window:
         self.cpp_w4 = [result_matrix[0], result_matrix[1]]
 
     # transformadas de viewport
-    def get_x_to_viewport(self, x_scn, vp_width):
+    def get_x_to_viewport(self, x_scn, vp_width) -> float:
         """Retorna o x de uma coordenada transformado ao sistema
         de coordenadas da Viewport
         @params: 
@@ -100,7 +100,7 @@ class Window:
         """
         return ((x_scn - self.cpp_w1[0]) / (self.cpp_w4[0] - self.cpp_w1[0])) * vp_width
 
-    def get_y_to_viewport(self, y_scn, vp_height):
+    def get_y_to_viewport(self, y_scn, vp_height) -> float:
         """Retorna o x de uma coordenada transformado ao sistema
         de coordenadas da Viewport
         @params: 
