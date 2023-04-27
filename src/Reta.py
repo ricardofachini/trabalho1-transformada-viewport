@@ -86,7 +86,7 @@ class Reta(Objeto):
                 y1 = miny
             elif y1 > maxy:
                 y1 = maxy
-            return x1, y1
+            return x1, y1, x2, y2
 
         m = dy / dx
 
