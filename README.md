@@ -2,11 +2,10 @@
 
 ## Instalar dependências
 
-	$ pip install PyQt6
+	$ pip install -r requirements.txt
 
-	$ pip install PySide6
 #### Requisitos:
-Python 3.10+
+Python 3.6+ a 3.9.16
 
 ### Para rodar, execute o arquivo mainwindow.py
 	$ python mainwindow.py
