@@ -1,25 +1,34 @@
+import numpy as np
+
 from src.objeto import Objeto, Tipo
 from src.Wireframe import WireFrame
+from src.constants import C_MATRIX, M_BS
 
 
 class Curva2D(Objeto):
 
-    def __init__(self, nome: str, pontos_iniciais, pontos: [] = None):
+    def __init__(self, nome: str, pontos_iniciais, pontos: list = []):
         super().__init__(nome, Tipo.CURVA)
         self.pontos_iniciais = pontos_iniciais  # lista de tuplas
 
-        if pontos is None:
-            pontos = self.cubic_bezier_curve()
+        if len(pontos) == 0:
+            if (len(pontos_iniciais) - 2) > 3:
+                pontos = self.bspline()
+            else:
+                pontos = self.cubic_bezier_curve()
         self.pontos = pontos
         self.poligono = WireFrame(nome, (0, 0), len(self.pontos)-1, 0, pontos=self.pontos)
 
-    def bezier_blending_function(self, t: float) -> list:
+    def bezier_blending_function(self, t: float) -> np.array:
         """
         Retorna o resultado da multiplicação da matriz Mb pelo vetor T: [t³ t² t 1],
         expresso em um vetor de quatro valores
         t: int = Valor do passo de iteração
         """
-        return [-t**3 + 3*(t**2) - 3*t + 1, 3*(t**3) - 6*(t**2) + 3*t, -3*(t**3) + 3*(t**2), t**3]
+        t2 = t * t
+        t3 = t2 * t
+        t_matrix = np.array([1, t, t2, t3])
+        return t_matrix @ C_MATRIX
 
     def cubic_bezier_curve(self, k=50):
         """
@@ -31,17 +40,58 @@ class Curva2D(Objeto):
         p1 = self.pontos_iniciais[1]
         p2 = self.pontos_iniciais[2]
         p3 = self.pontos_iniciais[3]
-        t = 1/k
+        t = step = 1/k
         pontos = []
-        for i in range(k):
-            blend_func = self.bezier_blending_function(t)  # calcula a função de aproximação para cada passo k
-            # calcula o x do ponto
-            x = p0[0] * blend_func[0] + p1[0] * blend_func[1] + p2[0] * blend_func[2] + p3[0] * blend_func[3]
-            # calcula o y do ponto
-            y = p0[1] * blend_func[0] + p1[1] * blend_func[1] + p2[1] * blend_func[2] + p3[1] * blend_func[3]
-            ponto_atual = (x, y)
+        for _ in range(k):
+            ponto_atual = self.bezier_blending_function(t) @ np.array([p0, p1, p2, p3])
             pontos.append(ponto_atual)
-            t += 1/k
+            t += step
+        return pontos
+
+    def bspline(self, d=0.1):
+        d2 = d * d
+        d3 = d2 * d
+        E = np.array([[   0,    0, 0, 1],
+                      [  d3,   d2, d, 0],
+                      [6*d3, 2*d2, 0, 0],
+                      [6*d3,    0, 0, 0]])
+
+        Gx = np.array([])
+        Gy = Gx
+
+        for ponto in self.pontos_iniciais:
+            Gx = np.append(Gx, ponto[0])
+            Gy = np.append(Gy, ponto[1])
+        
+        Cx = M_BS @ Gx
+        Cy = M_BS @ Gy
+
+        Fx = E @ Cx
+        Fy = E @ Cy
+
+        return self.forward_differences(1/d, Fx, Fy)
+    
+    def forward_differences(self, n, Fx, Fy):
+        pontos = []
+
+        i = 0
+        x_velho, dx, d2x, d3x = Fx
+        y_velho, dy, d2y, d3y = Fy
+        while i < n:
+            i += 1
+            
+            x = x_velho + dx
+            dx = dx + d2x
+            d2x = d2x + d3x
+
+            y = y_velho + dy
+            dy = dy + d2y
+            d2y = d2y + d3y
+
+            x_velho, y_velho = x, y
+
+            pontos.append((x, y))
+        
         return pontos
 
     def zoom(self, scale):

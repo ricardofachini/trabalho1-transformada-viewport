@@ -1,4 +1,3 @@
-import sys
 from PyQt6 import uic, QtWidgets
 from src.objeto import Tipo
 from src.Vertice import Vertice
@@ -70,8 +69,8 @@ class Dialog(QtWidgets.QDialog):
         else:
             self.inserted_type = Tipo.CURVA
             points = self.curvePointsTextEdit.toPlainText().strip()
-            points = points.split("), ")
-            points = [tuple(float(x) for x in tupl.replace("(", "").replace(')', '').split(", ")) for tupl in points]
+            points = points.split("),")
+            points = [tuple(float(x.strip()) for x in tupl.replace("(", "").replace(")", "").split(",")) for tupl in points]
             self.object = Curva2D(nome, [points[0], points[1], points[2], points[3]])
             self.close()
 

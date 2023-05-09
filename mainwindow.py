@@ -71,31 +71,40 @@ class UIWindow(QtWidgets.QMainWindow):
         # PARA TESTE
         bd = BORDER_SIZE
         world_coords = (self.minXvp + bd, self.maxXvp - bd, self.minYvp + bd, self.maxYvp - bd)
-        reta = Reta(
-            "reta1",
-            (Vertice(-330, 0),
-             Vertice(-300, 200)
-             )
-        )
-        reta.align_center(self.window.center)
-        reta.draw(self.canvas, self.container, self.get_vp_coords(reta.pontos[0].cpp_coordinates),
-                  self.get_vp_coords(reta.pontos[1].cpp_coordinates), world_coords)
-        self.display_file.append(reta)
-        self.listOfCurrentObjects.addItems([reta.nome])
-        curva = Curva2D("curva1", [(0, 0), (10, 30), (30, 20), (40, 50)])
+        # reta = Reta(
+        #     "reta1",
+        #     (Vertice(-330, 0),
+        #      Vertice(-300, 200)
+        #      )
+        # )
+        # reta.align_center(self.window.center)
+        # reta.draw(self.canvas, self.container, self.get_vp_coords(reta.pontos[0].cpp_coordinates),
+        #           self.get_vp_coords(reta.pontos[1].cpp_coordinates), world_coords)
+        # self.display_file.append(reta)
+        # self.listOfCurrentObjects.addItems([reta.nome])
+        
+        # semi-circulo 1
+        curva = Curva2D("curva1", [(-200, 0), (-200, 200), (200, 200), (200, 0)])
         curva.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
         self.display_file.append(curva)
         self.listOfCurrentObjects.addItems([curva.nome])
-        poligono200 = WireFrame('Poligono200', (0, 0), 8, 200)
-        poligono300 = WireFrame('Poligono300', (0, 0), 8, 300)
-        poligono200.align_center(self.window.center)
-        poligono300.align_center(self.window.center)
-        poligono200.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
-        self.display_file.append(poligono200)
-        self.listOfCurrentObjects.addItems(['Polígono200'])
-        poligono300.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
-        self.display_file.append(poligono300)
-        self.listOfCurrentObjects.addItems(['Polígono300'])
+
+        # semi-circulo 2
+        curva = Curva2D("curva2", [(200, 0), (200, -200), (-200, -200), (-200, 0)])
+        curva.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
+        self.display_file.append(curva)
+        self.listOfCurrentObjects.addItems([curva.nome])
+        
+        # poligono200 = WireFrame('Poligono200', (0, 0), 8, 200)
+        # poligono300 = WireFrame('Poligono300', (0, 0), 8, 300)
+        # poligono200.align_center(self.window.center)
+        # poligono300.align_center(self.window.center)
+        # poligono200.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
+        # self.display_file.append(poligono200)
+        # self.listOfCurrentObjects.addItems(['Polígono200'])
+        # poligono300.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
+        # self.display_file.append(poligono300)
+        # self.listOfCurrentObjects.addItems(['Polígono300'])
 
     def setup_view(self):
         uic.loadUi("UI/MainWindow.ui", self)  # carrega o arquivo de interface gráfica para a janela do qt

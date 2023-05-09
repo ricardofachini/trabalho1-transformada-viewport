@@ -13,3 +13,14 @@ ROTATION_RIGHT = np.array([[cos(rad), -sin(rad), 0], [sin(rad), cos(rad), 0], [0
 
 rad = -rad
 ROTATION_LEFT  = np.array([[cos(rad), -sin(rad), 0], [sin(rad), cos(rad), 0], [0, 0, 1]])
+
+# Characteristic Matrix (Bezier)
+C_MATRIX = np.array([[ 1,  0,  0, 0],
+                     [-3,  3,  0, 0],
+                     [ 3, -6,  3, 0],
+                     [-1,  3, -3, 1]])
+
+M_BS = np.array([[-1/6, 1/2, -1/2, 1/6],
+                 [ 1/2,  -1,  1/2, 0],
+                 [-1/2,   0,  1/2, 0],
+                 [ 1/6, 2/3,  1/6, 0]])
