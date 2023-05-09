@@ -112,6 +112,9 @@
         <height>22</height>
        </rect>
       </property>
+      <property name="minimum">
+       <number>-9999</number>
+      </property>
       <property name="maximum">
        <number>9999</number>
       </property>
@@ -137,6 +140,9 @@
         <width>90</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="minimum">
+       <number>-9999</number>
       </property>
       <property name="maximum">
        <number>9999</number>
@@ -182,6 +188,9 @@
         <height>22</height>
        </rect>
       </property>
+      <property name="minimum">
+       <number>-9999</number>
+      </property>
       <property name="maximum">
        <number>9999</number>
       </property>
@@ -207,6 +216,9 @@
         <width>90</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="minimum">
+       <number>-9999</number>
       </property>
       <property name="maximum">
        <number>9999</number>
@@ -273,6 +285,9 @@
         <height>22</height>
        </rect>
       </property>
+      <property name="minimum">
+       <number>-9999</number>
+      </property>
       <property name="maximum">
        <number>9999</number>
       </property>
@@ -285,6 +300,9 @@
         <width>90</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="minimum">
+       <number>-9999</number>
       </property>
       <property name="maximum">
        <number>9999</number>
@@ -369,6 +387,9 @@
         <height>22</height>
        </rect>
       </property>
+      <property name="minimum">
+       <number>-9999</number>
+      </property>
       <property name="maximum">
        <number>9999</number>
       </property>
@@ -394,6 +415,9 @@
         <width>90</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="minimum">
+       <number>-9999</number>
       </property>
       <property name="maximum">
        <number>9999</number>
@@ -434,6 +458,9 @@
         <height>22</height>
        </rect>
       </property>
+      <property name="minimum">
+       <number>-9999</number>
+      </property>
       <property name="maximum">
        <number>9999</number>
       </property>
@@ -459,6 +486,9 @@
         <width>90</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="minimum">
+       <number>-9999</number>
       </property>
       <property name="maximum">
        <number>9999</number>
