@@ -83,17 +83,17 @@ class UIWindow(QtWidgets.QMainWindow):
         # self.display_file.append(reta)
         # self.listOfCurrentObjects.addItems([reta.nome])
         
-        # semi-circulo 1
-        curva = Curva2D("curva1", [(-200, 0), (-200, 200), (200, 200), (200, 0)])
-        curva.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
-        self.display_file.append(curva)
-        self.listOfCurrentObjects.addItems([curva.nome])
+        # # semi-circulo 1
+        # curva = Curva2D("curva1", [(-200, 0), (-200, 200), (200, 200), (200, 0)])
+        # curva.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
+        # self.display_file.append(curva)
+        # self.listOfCurrentObjects.addItems([curva.nome])
 
-        # semi-circulo 2
-        curva = Curva2D("curva2", [(200, 0), (200, -200), (-200, -200), (-200, 0)])
-        curva.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
-        self.display_file.append(curva)
-        self.listOfCurrentObjects.addItems([curva.nome])
+        # # semi-circulo 2
+        # curva = Curva2D("curva2", [(200, 0), (200, -200), (-200, -200), (-200, 0)])
+        # curva.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
+        # self.display_file.append(curva)
+        # self.listOfCurrentObjects.addItems([curva.nome])
         
         # poligono200 = WireFrame('Poligono200', (0, 0), 8, 200)
         # poligono300 = WireFrame('Poligono300', (0, 0), 8, 300)
@@ -179,7 +179,7 @@ class UIWindow(QtWidgets.QMainWindow):
                 x1, y1 = self.get_vp_coords(item.pontos[0].cpp_coordinates)
                 x2, y2 = self.get_vp_coords(item.pontos[1].cpp_coordinates)
 
-                item.draw(self.canvas, self.container, (x1, y1), (x2, y2))
+                item.draw(self.canvas, self.container, (x1, y1), (x2, y2), world_coords=world_coords)
             if dialog.inserted_type == Tipo.POLIGONO:
                 dialog.object.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
             if dialog.inserted_type == Tipo.CURVA:

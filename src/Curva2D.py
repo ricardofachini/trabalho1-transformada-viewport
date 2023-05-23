@@ -11,13 +11,48 @@ class Curva2D(Objeto):
         super().__init__(nome, Tipo.CURVA)
         self.pontos_iniciais = pontos_iniciais  # lista de tuplas
 
+        # Coordenadas da letra M
+        # (-120, 0), (-100, 50), (-80, 100), (-60, 150), (-40, 100), (-20, 50), (0, 0), 
+        # (20, 50), (40, 100), (60, 150), (80, 100), (100, 50), (120, 0)
+
         if len(pontos) == 0:
-            if (len(pontos_iniciais) - 2) > 3:
-                pontos = self.bspline()
+            if len(pontos_iniciais) > 4:
+                segments = self.get_segments(pontos_iniciais)
+                for i in range(len(segments)):
+                    # print(f'{segment = }')
+                    result = self.bspline(segments[i])
+                    if i > 0:
+                        prev = pontos[-1]
+                        curr = result[0]
+                        print(f'{prev = }, {curr = }')
+                        diff_x, diff_y = curr[0] - prev[0], curr[1] - prev[1]
+                        result = list(map(lambda x: (x[0] - diff_x, x[1] - diff_y), result))
+                    
+                    # print(f'{result = }')
+                    pontos += result
             else:
                 pontos = self.cubic_bezier_curve()
         self.pontos = pontos
+        # print(f'{pontos = }')
         self.poligono = WireFrame(nome, (0, 0), len(self.pontos)-1, 0, pontos=self.pontos)
+
+    def get_segments(self, points):
+        segments = []
+        aux = []
+        n = 0
+        size = len(points)
+        for i in range(size + (size // 4)):
+            if (i % 4) == 0 and (i > 0):
+                segments.append(aux)
+                aux = []
+                n += 1
+
+            aux.append(points[i - n])
+
+        if aux:
+            segments.append(aux)
+        
+        return segments
 
     def bezier_blending_function(self, t: float) -> np.array:
         """
@@ -48,7 +83,7 @@ class Curva2D(Objeto):
             t += step
         return pontos
 
-    def bspline(self, d=0.1):
+    def bspline(self, pontos, d=0.005):
         d2 = d * d
         d3 = d2 * d
         E = np.array([[   0,    0, 0, 1],
@@ -57,9 +92,9 @@ class Curva2D(Objeto):
                       [6*d3,    0, 0, 0]])
 
         Gx = np.array([])
-        Gy = Gx
+        Gy = np.array([])
 
-        for ponto in self.pontos_iniciais:
+        for ponto in pontos:
             Gx = np.append(Gx, ponto[0])
             Gy = np.append(Gy, ponto[1])
         
@@ -69,7 +104,7 @@ class Curva2D(Objeto):
         Fx = E @ Cx
         Fy = E @ Cy
 
-        return self.forward_differences(1/d, Fx, Fy)
+        return self.forward_differences(int(1/d), Fx, Fy)
     
     def forward_differences(self, n, Fx, Fy):
         pontos = []
@@ -90,7 +125,7 @@ class Curva2D(Objeto):
 
             x_velho, y_velho = x, y
 
-            pontos.append((x, y))
+            pontos.append((int(x), int(y)))
         
         return pontos
 

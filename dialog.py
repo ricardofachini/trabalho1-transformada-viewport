@@ -71,7 +71,7 @@ class Dialog(QtWidgets.QDialog):
             points = self.curvePointsTextEdit.toPlainText().strip()
             points = points.split("),")
             points = [tuple(float(x.strip()) for x in tupl.replace("(", "").replace(")", "").split(",")) for tupl in points]
-            self.object = Curva2D(nome, [points[0], points[1], points[2], points[3]])
+            self.object = Curva2D(nome, pontos_iniciais=points)
             self.close()
 
     def missing_name_popup(self):
