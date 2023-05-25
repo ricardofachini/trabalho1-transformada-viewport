@@ -83,7 +83,7 @@ class Curva2D(Objeto):
             t += step
         return pontos
 
-    def bspline(self, pontos, d=0.005):
+    def bspline(self, pontos, d=0.1):
         d2 = d * d
         d3 = d2 * d
         E = np.array([[   0,    0, 0, 1],
