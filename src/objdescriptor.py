@@ -1,5 +1,5 @@
 from src.objeto import Tipo, Objeto
-from src.Wireframe import WireFrame
+from src.Polygon import Polygon
 from src.Reta import Reta
 from src.Ponto import Ponto
 from src.Vertice import Vertice
@@ -41,7 +41,7 @@ class ObjDescriptor:
                 elif line[0] == "l":
                     indices_de_vertices = line.strip().split(" ")
                     if len(indices_de_vertices) > 3: #se true, é um poligono
-                        poligono = WireFrame(current_object_name, (0, 0), len(indices_de_vertices)-2, 0,
+                        poligono = Polygon(current_object_name, (0, 0), len(indices_de_vertices)-2, 0,
                                                 pontos=vertices_list[-(len(indices_de_vertices)-1):])
                         objects_list.append(poligono)
                     else:

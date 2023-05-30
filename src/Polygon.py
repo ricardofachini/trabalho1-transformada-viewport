@@ -5,31 +5,29 @@ from src.Vertice import Vertice
 from math import sin, cos, pi, radians
 
 
-class WireFrame(Objeto):
+class Polygon(Objeto):
     def __init__(
             self, nome: str, center: tuple, n_linhas: int, tam_linhas: int, cor: str = "#000000", pontos=None
     ) -> None:
         super().__init__(nome, Tipo.POLIGONO, cor)
         self.nome       = nome
-        self.center     = center
         self.n_linhas   = n_linhas
         self.tam_linhas = tam_linhas
         self.retas      = []
-        if pontos is None:
-            pontos = []
-        self.points     = pontos
+        self.pontos     = [] if pontos is None else pontos
+        self.center     = center
 
         self.calculate_lines()
     
     def calculate_lines(self):
         # Calcula o raio do polígono
         radius = self.tam_linhas / (2 * sin(radians(360 / self.n_linhas)))
-        if len(self.points) == 0:
+        if len(self.pontos) == 0:
             self.calculate_points(radius)
 
         for i in range(self.n_linhas):
-            x1, y1 = self.points[i]
-            x2, y2 = self.points[i + 1]
+            x1, y1 = self.pontos[i]
+            x2, y2 = self.pontos[i + 1]
             
             p1 = Vertice(x1, y1)
             p2 = Vertice(x2, y2)
@@ -42,7 +40,7 @@ class WireFrame(Objeto):
         for i in range(self.n_linhas + 1):
             x = radius * cos(i * angle)
             y = radius * sin(i * angle)
-            self.points.append((x + self.center[0], y + self.center[1]))
+            self.pontos.append((x + self.center[0], y + self.center[1]))
 
     def zoom(self, scale):
         center_x = self.center[0]

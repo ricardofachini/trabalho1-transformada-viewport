@@ -15,7 +15,7 @@ from src.objdescriptor import ObjDescriptor
 
 from src.Ponto import Ponto
 from src.Reta import Reta
-from src.Wireframe import WireFrame
+from src.Polygon import Polygon
 from src.Curva2D import Curva2D
 from src.Vertice import Vertice
 from src.Objeto3D import Objeto3D
@@ -204,9 +204,7 @@ class UIWindow(QtWidgets.QMainWindow):
                 x2, y2 = self.get_vp_coords(item.pontos[1].cpp_coordinates)
 
                 item.draw(self.canvas, self.container, (x1, y1), (x2, y2))
-            if dialog.inserted_type == Tipo.POLIGONO:
-                dialog.object.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
-            if dialog.inserted_type == Tipo.CURVA:
+            if dialog.inserted_type in [Tipo.POLIGONO, Tipo.CURVA]:
                 dialog.object.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
 
     def render(self):
@@ -222,9 +220,7 @@ class UIWindow(QtWidgets.QMainWindow):
                 x1, y1 = self.get_vp_coords(item.pontos[0].cpp_coordinates)
                 x2, y2 = self.get_vp_coords(item.pontos[1].cpp_coordinates)
                 item.draw(self.canvas, self.container, (x1, y1), (x2, y2), world_coords)
-            elif isinstance(item, WireFrame):
-                item.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
-            elif isinstance(item, Curva2D):
+            elif isinstance(item, Polygon) or isinstance(item, Curva2D):
                 item.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
 
         self.draw_border()
