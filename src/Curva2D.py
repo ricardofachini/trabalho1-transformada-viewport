@@ -1,40 +1,35 @@
 import numpy as np
 
 from src.objeto import Objeto, Tipo
-from src.Wireframe import WireFrame
+from src.Polygon import Polygon
 from src.constants import C_MATRIX, M_BS
 
 
 class Curva2D(Objeto):
 
-    def __init__(self, nome: str, pontos_iniciais, pontos: list = []):
+    def __init__(self, nome: str, pontos_iniciais, pontos: list = [], cor: str = "#000000"):
         super().__init__(nome, Tipo.CURVA)
         self.pontos_iniciais = pontos_iniciais  # lista de tuplas
 
         # Coordenadas da letra M
-        # (-120, 0), (-100, 50), (-80, 100), (-60, 150), (-40, 100), (-20, 50), (0, 0), 
-        # (20, 50), (40, 100), (60, 150), (80, 100), (100, 50), (120, 0)
+        # (-120, 0), (-100, 50), (-80, 100), (-60, 150), (-40, 100), (-20, 50), (0, 0), (20, 50), (40, 100), (60, 150), (80, 100), (100, 50), (120, 0)
 
         if len(pontos) == 0:
             if len(pontos_iniciais) > 4:
                 segments = self.get_segments(pontos_iniciais)
                 for i in range(len(segments)):
-                    # print(f'{segment = }')
                     result = self.bspline(segments[i])
                     if i > 0:
                         prev = pontos[-1]
                         curr = result[0]
-                        print(f'{prev = }, {curr = }')
                         diff_x, diff_y = curr[0] - prev[0], curr[1] - prev[1]
                         result = list(map(lambda x: (x[0] - diff_x, x[1] - diff_y), result))
                     
-                    # print(f'{result = }')
                     pontos += result
             else:
                 pontos = self.cubic_bezier_curve()
         self.pontos = pontos
-        # print(f'{pontos = }')
-        self.poligono = WireFrame(nome, (0, 0), len(self.pontos)-1, 0, pontos=self.pontos)
+        self.poligono = Polygon(nome, (0, 0), len(self.pontos)-1, 0, pontos=self.pontos, cor=cor)
 
     def get_segments(self, points):
         segments = []
@@ -135,8 +130,8 @@ class Curva2D(Objeto):
     def translate(self, dx: int, dy: int):
         self.poligono.translate(dx, dy)
 
-    def rotate(self, rotation_side, center):
-        self.poligono.rotate(rotation_side, center)
-
     def draw(self, canvas, container, get_vp_coords, world_coords):
         self.poligono.draw(canvas, container, get_vp_coords, world_coords)
+
+    def rotate(self, rotation_side, center=None, rot_matrix=None):
+        self.poligono.rotate(rotation_side=rotation_side, center=center, rot_matrix=rot_matrix)

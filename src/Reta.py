@@ -9,8 +9,6 @@ class Reta(Objeto):
         super().__init__(nome, Tipo.SEGMENTO_RETA, cor)
         self.pontos = pontos
 
-        # Se não tiver nome é uma reta pertencente a um polígono.
-        # Nesse caso não tem necessidade de calcular o centro.
         self.center = super().calculate_center(self.pontos)
 
     def copy_world_to_cpp_coordinates(self):

@@ -3,7 +3,7 @@ from src.objeto import Tipo
 from src.Vertice import Vertice
 from src.Ponto import Ponto
 from src.Reta import Reta
-from src.Wireframe import WireFrame
+from src.Polygon import Polygon
 from src.Curva2D import Curva2D
 
 
@@ -59,7 +59,7 @@ class Dialog(QtWidgets.QDialog):
             center = ((int) (self.spinBoxXPolyCen.text()), (int) (self.spinBoxYPolyCen.text()))
             n_linhas = (int) (self.spinBoxBordersQtd.text())
             tam_linhas = (int) (self.spinBoxLinesSize.text())
-            self.object = WireFrame(nome, center, n_linhas, tam_linhas, self.color)
+            self.object = Polygon(nome, center, n_linhas, tam_linhas, self.color)
             self.close()
 
     def insert_curve(self):
@@ -71,7 +71,7 @@ class Dialog(QtWidgets.QDialog):
             points = self.curvePointsTextEdit.toPlainText().strip()
             points = points.split("),")
             points = [tuple(float(x.strip()) for x in tupl.replace("(", "").replace(")", "").split(",")) for tupl in points]
-            self.object = Curva2D(nome, pontos_iniciais=points)
+            self.object = Curva2D(nome, pontos_iniciais=points, cor=self.color)
             self.close()
 
     def missing_name_popup(self):
