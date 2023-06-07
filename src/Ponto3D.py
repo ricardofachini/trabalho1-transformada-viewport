@@ -9,7 +9,7 @@ class Ponto3D:
         self.y = y
         self.z = z
 
-    def rotate(self, angle):
+    def rotate(self, angle, axis):
         rotation_by_x_matrix = [
             [1, 0, 0, 0], [0, cos(angle), sin(angle), 0], [0, -sin(angle), cos(angle), 0], [0, 0, 0, 1]
         ]
@@ -19,7 +19,12 @@ class Ponto3D:
         rotation_by_z_matrix = [
             [cos(angle), sin(angle), 0, 0], [-sin(angle), cos(angle), 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]
         ]
-        pass
+        if axis == "x":
+            print("eixo x")
+        elif axis == "y":
+            print("eixo y")
+        elif axis == "z":
+            print("eixo z")
 
     def translate(self, Tx, Ty, Tz):
         self.x = self.x + Tx

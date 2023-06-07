@@ -18,6 +18,8 @@ from src.Reta import Reta
 from src.Wireframe import WireFrame
 from src.Curva2D import Curva2D
 from src.Vertice import Vertice
+from src.Objeto3D import Objeto3D
+from src.Ponto3D import Ponto3D
 
 
 class UIWindow(QtWidgets.QMainWindow):
@@ -94,6 +96,25 @@ class UIWindow(QtWidgets.QMainWindow):
         curva.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
         self.display_file.append(curva)
         self.listOfCurrentObjects.addItems([curva.nome])
+
+        cubo = Objeto3D("cubo1", [
+            (Ponto3D("", 0, 0, 0), Ponto3D("", 100, 0, 0)), # AB
+            (Ponto3D("", 100, 0, 0), Ponto3D("", 100, 100, 0)), #BC
+            (Ponto3D("", 100, 100, 0), Ponto3D("", 0, 100, 0)), # CD
+            (Ponto3D("", 0, 100, 0), Ponto3D("", 0, 0, 0)), # DA
+            (Ponto3D("", 0, 0, 100), Ponto3D("", 100, 0, 100)), # EF
+            (Ponto3D("", 100, 0, 100), Ponto3D("", 100, 100, 100)), # FG
+            (Ponto3D("", 100, 100, 100), Ponto3D("", 0, 100, 100)), # GH
+            (Ponto3D("", 0, 100, 100), Ponto3D("", 0, 0, 100)), # HE
+            (Ponto3D("", 0, 0, 0), Ponto3D("", 0, 0, 100)), # AE
+            (Ponto3D("", 100, 0, 0), Ponto3D("", 100, 0, 100)), # BF
+            (Ponto3D("", 100, 100, 0), Ponto3D("", 100, 100, 100)), # CG
+            (Ponto3D("", 0, 100, 0), Ponto3D("", 0, 100, 100)) # DH
+        ])
+        self.parallel_projection_algorithm()
+
+        
+        
         
         # poligono200 = WireFrame('Poligono200', (0, 0), 8, 200)
         # poligono300 = WireFrame('Poligono300', (0, 0), 8, 300)
@@ -105,6 +126,9 @@ class UIWindow(QtWidgets.QMainWindow):
         # poligono300.draw(self.canvas, self.container, self.get_vp_coords, world_coords)
         # self.display_file.append(poligono300)
         # self.listOfCurrentObjects.addItems(['Polígono300'])
+
+    def parallel_projection_algorithm(self):
+        pass
 
     def setup_view(self):
         uic.loadUi("UI/MainWindow.ui", self)  # carrega o arquivo de interface gráfica para a janela do qt
